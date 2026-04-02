@@ -54,7 +54,9 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
       ))}
     </div>
     <div class="card chart-card">
-      <canvas id="depth-chart"></canvas>
+      <div class="chart-wrapper">
+        <canvas id="depth-chart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -125,6 +127,7 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
   }
   .tab-btn.active, .tab-btn:hover { border-color: #38bdf8; color: #38bdf8; }
   .chart-card { padding: 1.5rem; }
+  .chart-wrapper { position: relative; height: 320px; }
   .dive-list { display: flex; flex-direction: column; gap: 0.6rem; }
   .dive-row {
     display: flex;
@@ -160,5 +163,30 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
   }
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .map-container { height: 280px; }
+
+    /* 深度曲線 tab 橫向捲動，不換行 */
+    .profile-tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .profile-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      padding: 0.35rem 0.75rem;
+    }
+
+    /* chart 區域在手機上縮小高度 */
+    .chart-card { padding: 0.75rem 0.5rem; }
+    .chart-wrapper { height: 220px; }
+
+    /* 潛水列表手機版 */
+    .dive-row { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+    .dive-stats { width: 100%; }
   }
 </style>

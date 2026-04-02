@@ -152,6 +152,7 @@
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           animation: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
@@ -169,7 +170,10 @@
           },
           scales: {
             x: {
-              ticks: { color: '#475569', maxTicksLimit: 10 },
+              ticks: {
+                color: '#475569',
+                maxTicksLimit: window.innerWidth < 640 ? 5 : 10,
+              },
               grid: { color: '#1e2535' },
               title: { display: true, text: '時間 (分鐘)', color: '#64748b' }
             },
