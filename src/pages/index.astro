@@ -2,27 +2,46 @@
 import Layout from '../layouts/Layout.astro';
 import type { Dive } from '../types/dive';
 import divesRaw from '../data/dives.json';
+import skiRaw from '../data/ski.json';
 
 const dives = divesRaw as Dive[];
+const ski = skiRaw as any[];
 
 const totalDives = dives.length;
 const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
-const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
-const totalHours = Math.floor(totalMinutes / 60);
+const totalDiveMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
+const totalDiveHours = Math.floor(totalDiveMinutes / 60);
+
+const totalSkiDays = ski.length;
+const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
+const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 ---
 <Layout title="Home">
   <div class="hero">
     <div class="hero-text">
       <h1>blesscat<span>.dev</span></h1>
-      <p class="tagline">Diver · Explorer · Tinkerer</p>
+      <p class="tagline">Diver · Skier · Explorer · Tinkerer</p>
+
+      <!-- 潛水 -->
+      <div class="section-label">🤿 潛水</div>
       <div class="stats-row">
-        <div class="stat"><span class="num">{totalDives}</span><span class="label">次潛水</span></div>
-        <div class="stat"><span class="num">{maxDepth.toFixed(1)}m</span><span class="label">最大深度</span></div>
-        <div class="stat"><span class="num">{totalHours}h</span><span class="label">水下時間</span></div>
+        <div class="stat"><span class="num dive">{totalDives}</span><span class="label">次潛水</span></div>
+        <div class="stat"><span class="num dive">{maxDepth.toFixed(1)}m</span><span class="label">最大深度</span></div>
+        <div class="stat"><span class="num dive">{totalDiveHours}h</span><span class="label">水下時間</span></div>
       </div>
+
+      <!-- 滑雪 -->
+      <div class="section-label">⛷️ 滑雪</div>
+      <div class="stats-row">
+        <div class="stat"><span class="num ski">{totalSkiDays}</span><span class="label">滑雪天數</span></div>
+        <div class="stat"><span class="num ski">{maxSpeed.toFixed(1)}km/h</span><span class="label">最高速度</span></div>
+        <div class="stat"><span class="num ski">{(totalVertical / 1000).toFixed(1)}km</span><span class="label">累計落差</span></div>
+      </div>
+
       <div class="cta-row">
-        <a href="/dives" class="btn-primary">🤿 查看潛水紀錄</a>
-        <a href="/blog" class="btn-secondary">📝 技術文章</a>
+        <a href="/dives" class="btn-primary">🤿 潛水紀錄</a>
+        <a href="/ski" class="btn-ski">⛷️ 滑雪紀錄</a>
+        <a href="/blog" class="btn-secondary">📝 日記</a>
       </div>
     </div>
   </div>
@@ -43,12 +62,15 @@ const totalHours = Math.floor(totalMinutes / 60);
     letter-spacing: -2px;
   }
   h1 span { color: #818cf8; }
-  .tagline { color: #64748b; font-size: 1.2rem; margin: 0.75rem 0 2rem; letter-spacing: 2px; text-transform: uppercase; }
-  .stats-row { display: flex; gap: 3rem; justify-content: center; margin-bottom: 2.5rem; }
+  .tagline { color: #64748b; font-size: 1.1rem; margin: 0.75rem 0 2rem; letter-spacing: 2px; text-transform: uppercase; }
+  .section-label { font-size: 0.8rem; color: #475569; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .stats-row { display: flex; gap: 3rem; justify-content: center; margin-bottom: 1.5rem; }
   .stat { display: flex; flex-direction: column; }
-  .num { font-size: 2rem; font-weight: 800; color: #38bdf8; }
+  .num { font-size: 2rem; font-weight: 800; }
+  .num.dive { color: #38bdf8; }
+  .num.ski { color: #818cf8; }
   .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-  .cta-row { display: flex; gap: 1rem; justify-content: center; }
+  .cta-row { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
   .btn-primary {
     padding: 0.8rem 1.8rem;
     background: #38bdf8;
@@ -59,6 +81,16 @@ const totalHours = Math.floor(totalMinutes / 60);
     transition: opacity 0.2s;
   }
   .btn-primary:hover { opacity: 0.85; }
+  .btn-ski {
+    padding: 0.8rem 1.8rem;
+    background: #818cf8;
+    color: #0a0e1a;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: opacity 0.2s;
+  }
+  .btn-ski:hover { opacity: 0.85; }
   .btn-secondary {
     padding: 0.8rem 1.8rem;
     border: 1px solid #1e2535;
@@ -68,4 +100,12 @@ const totalHours = Math.floor(totalMinutes / 60);
     transition: border-color 0.2s, color 0.2s;
   }
   .btn-secondary:hover { border-color: #38bdf8; color: #e2e8f0; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 2.8rem; }
+    .stats-row { gap: 1.5rem; }
+    .num { font-size: 1.6rem; }
+    .cta-row { gap: 0.75rem; }
+    .btn-primary, .btn-ski, .btn-secondary { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+  }
 </style>
