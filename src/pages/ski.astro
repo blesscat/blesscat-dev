@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+import skiRaw from '../data/ski.json';
+
+const ski = skiRaw as any[];
+
+const totalDays = ski.length;
+const totalRuns = ski.reduce((s, d) => s + (d.runs || 0), 0);
+const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
+const totalDistance = ski.reduce((s, d) => s + (d.distance_m || 0), 0);
+const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
+const maxSpeedDay = ski.find(d => d.top_speed_kmh === maxSpeed);
+const resorts = [...new Set(ski.map(d => d.resort.split('/')[0].trim()))].length;
+---
+
+<Layout title="滑雪紀錄">
+  <div class="page-header">
+    <h1>⛷️ 滑雪紀錄</h1>
+    <p class="subtitle">日本雪場巡禮</p>
+  </div>
+
+  <!-- 統計卡片 -->
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-num">{totalDays}</div>
+      <div class="stat-label">滑雪天數</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{totalRuns}</div>
+      <div class="stat-label">總滑行次數</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{(totalVertical / 1000).toFixed(1)}km</div>
+      <div class="stat-label">累計垂直落差</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{maxSpeed.toFixed(1)}<span class="stat-unit">km/h</span></div>
+      <div class="stat-label">最高速度</div>
+      <div class="stat-sub">{maxSpeedDay?.resort}</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{(totalDistance / 1000).toFixed(1)}km</div>
+      <div class="stat-label">總滑行距離</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{resorts}</div>
+      <div class="stat-label">造訪雪場</div>
+    </div>
+  </div>
+
+  <!-- 地圖 -->
+  <div class="section">
+    <h2>雪場地圖</h2>
+    <div id="ski-map" class="map-container"></div>
+  </div>
+
+  <!-- 滑雪列表 -->
+  <div class="section">
+    <h2>所有紀錄</h2>
+    <div class="ski-list">
+      {ski.map(d => (
+        <div class="ski-row card">
+          <div class="ski-date">{d.date}</div>
+          <div class="ski-info">
+            <div class="ski-resort">{d.resort}</div>
+            <div class="ski-country">{d.country}</div>
+          </div>
+          <div class="ski-stats">
+            <span class="pill runs">🎿 {d.runs} runs</span>
+            <span class="pill vert">↕ {(d.vertical_m / 1000).toFixed(2)}km</span>
+            <span class="pill dist">📏 {(d.distance_m / 1000).toFixed(1)}km</span>
+            <span class="pill speed">💨 {d.top_speed_kmh.toFixed(1)}km/h</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ ski }}>
+  window.__SKI_DATA__ = ski;
+</script>
+<script>
+  (function () {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = function () {
+      const L = window.L;
+      const data = window.__SKI_DATA__ || [];
+      const map = L.map('ski-map', { zoomControl: true });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18,
+      }).addTo(map);
+
+      const icon = L.divIcon({
+        html: `<div style="width:12px;height:12px;border-radius:50%;background:#818cf8;border:2px solid #fff;box-shadow:0 0 8px #818cf8;"></div>`,
+        className: '',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+      });
+
+      const markers = [];
+      data.forEach(d => {
+        if (d.lat == null || d.lon == null) return;
+        const marker = L.marker([d.lat, d.lon], { icon })
+          .addTo(map)
+          .bindTooltip(
+            `<div style="font-family:sans-serif;color:#0f172a;min-width:140px;max-width:200px;word-break:break-word;white-space:normal;">
+              <div style="font-weight:700;font-size:1rem;margin-bottom:4px;line-height:1.3;">${d.resort}</div>
+              <div style="color:#64748b;font-size:0.82rem;">${d.date}</div>
+              <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span style="background:#ede9fe;color:#7c3aed;padding:2px 8px;border-radius:99px;font-size:0.78rem;">🎿 ${d.runs} runs</span>
+                <span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:99px;font-size:0.78rem;">💨 ${d.top_speed_kmh.toFixed(1)}km/h</span>
+              </div>
+            </div>`,
+            { sticky: true }
+          );
+        markers.push(marker);
+      });
+
+      if (markers.length) {
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.3));
+      }
+    };
+    document.head.appendChild(script);
+  })();
+</script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+  .page-header { margin-bottom: 2rem; }
+  .subtitle { color: #64748b; margin-top: 0.3rem; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .card {
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .stat-card { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 800; color: #818cf8; }
+  .stat-unit { font-size: 1rem; font-weight: 600; }
+  .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
+  .stat-sub { font-size: 0.72rem; color: #475569; margin-top: 0.2rem; }
+  .section { margin-bottom: 3rem; }
+  .map-container { height: 450px; border-radius: 12px; overflow: hidden; border: 1px solid #1e2535; }
+  .ski-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .ski-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .ski-row:hover { border-color: #818cf8; }
+  .ski-date { font-size: 0.8rem; color: #475569; min-width: 6rem; font-weight: 700; }
+  .ski-info { flex: 1; min-width: 0; }
+  .ski-resort { font-weight: 600; font-size: 0.95rem; }
+  .ski-country { font-size: 0.78rem; color: #64748b; margin-top: 0.1rem; }
+  .ski-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .pill {
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill.runs { background: #1e1a2e; color: #818cf8; }
+  .pill.vert { background: #0c2d48; color: #38bdf8; }
+  .pill.dist { background: #1a2e1a; color: #4ade80; }
+  .pill.speed { background: #2e1a1a; color: #f87171; }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .map-container { height: 280px; }
+    .ski-row { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+    .ski-date { min-width: auto; }
+    .ski-stats { width: 100%; }
+  }
+</style>
