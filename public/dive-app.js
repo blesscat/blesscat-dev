@@ -32,7 +32,7 @@
     dives.forEach(d => {
       const marker = L.marker([d.lat, d.lon], { icon })
         .addTo(map)
-        .bindPopup(`
+        .bindTooltip(`
           <div style="font-family:sans-serif; color:#0f172a; min-width:160px;">
             <div style="font-weight:700; font-size:1rem; margin-bottom:4px;">#${d.num} ${d.location || 'Unknown'}</div>
             <div style="color:#64748b; font-size:0.82rem;">${d.date}</div>
@@ -42,7 +42,7 @@
               ${d.water_temp ? `<span style="background:#fef9c3;color:#ca8a04;padding:2px 8px;border-radius:99px;font-size:0.78rem;">🌡 ${d.water_temp}°C</span>` : ''}
             </div>
           </div>
-        `);
+        `, { sticky: true });
       markers.push(marker);
     });
 
