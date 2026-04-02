@@ -65,44 +65,34 @@ declare global {
 })();
 
 // =====================
-// Chart.js 深度曲線
+// Chart.js 深度曲線（收折式，懶載入）
 // =====================
 (function initChart(): void {
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
   script.onload = async function () {
-    const dives: Dive[] = window.__DIVES_PROFILE__ || [];
-    if (!dives.length) return;
-
     let profiles: DiveProfiles = {};
     try {
       const r = await fetch('/dive_profiles.json');
       profiles = (await r.json()) as DiveProfiles;
-    } catch (_e) {
-      // profiles 讀取失敗時保持空物件
-    }
+    } catch (_e) {}
 
-    const canvas = document.getElementById('depth-chart') as HTMLCanvasElement | null;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
+    const chartInstances = new Map<number, InstanceType<typeof window.Chart>>();
 
-    let currentChart: InstanceType<typeof window.Chart> | null = null;
+    function buildChart(diveNum: number): void {
+      const canvas = document.getElementById(`chart-${diveNum}`) as HTMLCanvasElement | null;
+      if (!canvas) return;
+      if (chartInstances.has(diveNum)) return; // 已建立不重複
 
-    function renderChart(diveNum: number): void {
       const profile = profiles[String(diveNum)];
       if (!profile?.length) return;
 
-      if (currentChart) currentChart.destroy();
-
       const hasHr = profile.some((p) => p.hr !== null);
-
-      // 每隔 N 點取樣，避免太多點卡頓
       const step = Math.max(1, Math.floor(profile.length / 300));
       const sampled = profile.filter((_, i) => i % step === 0);
-
       const isMobile = window.innerWidth < 640;
 
-      currentChart = new window.Chart(ctx, {
+      const chart = new window.Chart(canvas.getContext('2d')!, {
         type: 'line',
         data: {
           labels: sampled.map((p) => p.t.toFixed(1)),
@@ -150,64 +140,55 @@ declare global {
               xAlign: 'center',
               caretPadding: isMobile ? 20 : 4,
               callbacks: {
-                label: (ctx) => {
-                  if (ctx.dataset.label?.includes('深度')) {
-                    return `深度: ${Math.abs(ctx.raw as number).toFixed(1)} m`;
-                  }
-                  return `心率: ${ctx.raw} bpm`;
+                label: (c) => {
+                  if (c.dataset.label?.includes('深度')) return `深度: ${Math.abs(c.raw as number).toFixed(1)} m`;
+                  return `心率: ${c.raw} bpm`;
                 },
               },
             },
           },
           scales: {
             x: {
-              ticks: {
-                color: '#475569',
-                maxTicksLimit: isMobile ? 4 : 10,
-                font: { size: isMobile ? 10 : 12 },
-              },
+              ticks: { color: '#475569', maxTicksLimit: isMobile ? 4 : 10, font: { size: isMobile ? 10 : 12 } },
               grid: { color: '#1e2535' },
               title: { display: !isMobile, text: '時間 (分鐘)', color: '#64748b' },
             },
             yDepth: {
               position: 'left',
-              ticks: {
-                color: '#38bdf8',
-                callback: (v) => Math.abs(v as number) + 'm',
-                font: { size: isMobile ? 10 : 12 },
-                maxTicksLimit: isMobile ? 4 : 8,
-              },
+              ticks: { color: '#38bdf8', callback: (v) => Math.abs(v as number) + 'm', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
               grid: { color: '#1e2535' },
               title: { display: !isMobile, text: '深度', color: '#38bdf8' },
             },
-            ...(hasHr
-              ? {
-                  yHr: {
-                    position: 'right',
-                    ticks: {
-                      color: '#f87171',
-                      font: { size: isMobile ? 10 : 12 },
-                      maxTicksLimit: isMobile ? 4 : 8,
-                    },
-                    grid: { drawOnChartArea: false },
-                    title: { display: !isMobile, text: 'BPM', color: '#f87171' },
-                  },
-                }
-              : {}),
+            ...(hasHr ? {
+              yHr: {
+                position: 'right',
+                ticks: { color: '#f87171', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
+                grid: { drawOnChartArea: false },
+                title: { display: !isMobile, text: 'BPM', color: '#f87171' },
+              },
+            } : {}),
           },
         },
       });
+      chartInstances.set(diveNum, chart);
     }
 
-    // 預設渲染第一個
-    if (dives.length) renderChart(dives[0].num);
-
-    // Tab 切換
-    document.querySelectorAll<HTMLButtonElement>('.tab-btn').forEach((btn) => {
+    // 收折 toggle
+    document.querySelectorAll<HTMLButtonElement>('.chart-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderChart(parseInt(btn.dataset.dive ?? '0', 10));
+        const diveNum = parseInt(btn.dataset.dive ?? '0', 10);
+        const panel = document.getElementById(`chart-panel-${diveNum}`);
+        if (!panel) return;
+
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          panel.hidden = true;
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          panel.hidden = false;
+          btn.setAttribute('aria-expanded', 'true');
+          buildChart(diveNum); // 第一次打開才建立
+        }
       });
     });
   };

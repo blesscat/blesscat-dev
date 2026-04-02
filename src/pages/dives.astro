@@ -45,40 +45,38 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
     <div id="dive-map" class="map-container"></div>
   </div>
 
-  <!-- 深度曲線 -->
-  <div class="section">
-    <h2>深度曲線 <span class="badge">Garmin 資料</span></h2>
-    <div class="profile-tabs">
-      {divesWithProfile.map((d, i) => (
-        <button class:list={["tab-btn", {active: i===0}]} data-dive={d.num}>
-          #{d.num} {d.location?.split(',')[0]}
-        </button>
-      ))}
-    </div>
-    <div class="card chart-card">
-      <div class="chart-wrapper">
-        <canvas id="depth-chart"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <!-- 潛水列表 -->
+  <!-- 潛水列表（含內嵌深度曲線） -->
   <div class="section">
     <h2>所有紀錄</h2>
     <div class="dive-list">
       {dives.slice().reverse().map(d => (
         <div class="dive-row card">
-          <div class="dive-num">#{d.num}</div>
-          <div class="dive-info">
-            <div class="dive-location">{d.location || 'Unknown'}</div>
-            <div class="dive-date">{d.date}</div>
+          <div class="dive-main">
+            <div class="dive-num">#{d.num}</div>
+            <div class="dive-info">
+              <div class="dive-location">{d.location || 'Unknown'}</div>
+              <div class="dive-date">{d.date}</div>
+            </div>
+            <div class="dive-stats">
+              <span class="pill depth">▼ {d.max_depth}m</span>
+              <span class="pill time">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
+              {d.water_temp && <span class="pill temp">🌡 {d.water_temp}°C</span>}
+              {d.gas && d.gas !== 'Air' && <span class="pill gas">{d.gas}</span>}
+            </div>
+            {d.garmin_id && (
+              <button class="chart-toggle" data-dive={d.num} aria-expanded="false">
+                <span class="toggle-icon">▶</span>
+                <span class="toggle-label">深度曲線</span>
+              </button>
+            )}
           </div>
-          <div class="dive-stats">
-            <span class="pill depth">▼ {d.max_depth}m</span>
-            <span class="pill time">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
-            {d.water_temp && <span class="pill temp">🌡 {d.water_temp}°C</span>}
-            {d.gas && d.gas !== 'Air' && <span class="pill gas">{d.gas}</span>}
-          </div>
+          {d.garmin_id && (
+            <div class="dive-chart-panel" id={`chart-panel-${d.num}`} hidden>
+              <div class="chart-wrapper">
+                <canvas id={`chart-${d.num}`}></canvas>
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -134,18 +132,42 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
   .chart-wrapper { position: relative; height: 320px; }
   .dive-list { display: flex; flex-direction: column; gap: 0.6rem; }
   .dive-row {
+    padding: 0;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .dive-row:hover { border-color: #38bdf8; }
+  .dive-main {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    transition: border-color 0.2s;
+    flex-wrap: wrap;
   }
-  .dive-row:hover { border-color: #38bdf8; }
   .dive-num { font-size: 0.8rem; color: #475569; min-width: 2.5rem; font-weight: 700; }
-  .dive-info { flex: 1; }
+  .dive-info { flex: 1; min-width: 0; }
   .dive-location { font-weight: 600; font-size: 0.95rem; }
   .dive-date { font-size: 0.8rem; color: #64748b; margin-top: 0.1rem; }
   .dive-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chart-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    background: transparent;
+    border: 1px solid #1e2535;
+    border-radius: 6px;
+    color: #38bdf8;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .chart-toggle:hover { border-color: #38bdf8; background: rgba(56,189,248,0.05); }
+  .chart-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(90deg); }
+  .toggle-icon { display: inline-block; transition: transform 0.2s; font-size: 0.6rem; }
+  .dive-chart-panel { border-top: 1px solid #1e2535; padding: 1rem 1.5rem 1.5rem; }
+  .dive-chart-panel .chart-wrapper { position: relative; height: 200px; }
   .pill {
     padding: 0.2rem 0.6rem;
     border-radius: 99px;
@@ -185,12 +207,10 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
       padding: 0.35rem 0.75rem;
     }
 
-    /* chart 區域在手機上縮小高度 */
-    .chart-card { padding: 0.75rem 0.25rem; }
-    .chart-wrapper { height: 200px; overflow-x: auto; }
-
     /* 潛水列表手機版 */
-    .dive-row { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+    .dive-main { gap: 0.5rem; padding: 0.75rem 1rem; }
     .dive-stats { width: 100%; }
+    .dive-chart-panel { padding: 0.75rem 0.75rem 1rem; }
+    .dive-chart-panel .chart-wrapper { height: 180px; }
   }
 </style>
