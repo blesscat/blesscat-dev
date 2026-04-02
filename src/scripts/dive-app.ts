@@ -44,8 +44,8 @@ declare global {
       const marker = L.marker([d.lat, d.lon], { icon })
         .addTo(map)
         .bindTooltip(
-          `<div style="font-family:sans-serif; color:#0f172a; min-width:160px;">
-            <div style="font-weight:700; font-size:1rem; margin-bottom:4px;">#${d.num} ${d.location || 'Unknown'}</div>
+          `<div style="font-family:sans-serif; color:#0f172a; min-width:140px; max-width:200px; word-break:break-word; white-space:normal;">
+            <div style="font-weight:700; font-size:1rem; margin-bottom:4px; line-height:1.3;">#${d.num} ${d.location || 'Unknown'}</div>
             <div style="color:#64748b; font-size:0.82rem;">${d.date}</div>
             <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
               <span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:99px;font-size:0.78rem;">▼ ${d.max_depth}m</span>
