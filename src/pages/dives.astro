@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+import dives from '../data/dives.json';
+
+const totalDives = dives.length;
+const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
+const maxDepthDive = dives.find(d => d.max_depth === maxDepth);
+const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
+const avgDepth = (dives.reduce((s,d) => s+(d.avg_depth||0),0)/totalDives).toFixed(1);
+const divesWithGPS = dives.filter(d => d.lat && d.lon);
+const divesWithProfile = dives.filter(d => d.garmin_id);
+---
+<Layout title="潛水紀錄">
+  <div class="page-header">
+    <h1>🤿 潛水紀錄</h1>
+    <p class="subtitle">從 2024 年開始的每一支</p>
+  </div>
+
+  <!-- 統計卡片 -->
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-num">{totalDives}</div>
+      <div class="stat-label">總潛水次數</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{maxDepth.toFixed(1)}m</div>
+      <div class="stat-label">最大深度</div>
+      <div class="stat-sub">{maxDepthDive?.location}</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{Math.floor(totalMinutes/60)}h {Math.round(totalMinutes%60)}m</div>
+      <div class="stat-label">總水下時間</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-num">{avgDepth}m</div>
+      <div class="stat-label">平均深度</div>
+    </div>
+  </div>
+
+  <!-- 地圖 -->
+  <div class="section">
+    <h2>潛點地圖</h2>
+    <div id="dive-map" class="map-container"></div>
+  </div>
+
+  <!-- 深度曲線 -->
+  <div class="section">
+    <h2>深度曲線 <span class="badge">Garmin 資料</span></h2>
+    <div class="profile-tabs">
+      {divesWithProfile.map((d, i) => (
+        <button class:list={["tab-btn", {active: i===0}]} data-dive={d.num}>
+          #{d.num} {d.location?.split(',')[0]}
+        </button>
+      ))}
+    </div>
+    <div class="card chart-card">
+      <canvas id="depth-chart"></canvas>
+    </div>
+  </div>
+
+  <!-- 潛水列表 -->
+  <div class="section">
+    <h2>所有紀錄</h2>
+    <div class="dive-list">
+      {dives.slice().reverse().map(d => (
+        <div class="dive-row card">
+          <div class="dive-num">#{d.num}</div>
+          <div class="dive-info">
+            <div class="dive-location">{d.location || 'Unknown'}</div>
+            <div class="dive-date">{d.date}</div>
+          </div>
+          <div class="dive-stats">
+            <span class="pill depth">▼ {d.max_depth}m</span>
+            <span class="pill time">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
+            {d.water_temp && <span class="pill temp">🌡 {d.water_temp}°C</span>}
+            {d.gas && d.gas !== 'Air' && <span class="pill gas">{d.gas}</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<!-- 傳資料給前端 JS -->
+<script define:vars={{ divesWithGPS, divesWithProfile }}>
+  window.__DIVES_GPS__ = divesWithGPS;
+  window.__DIVES_PROFILE__ = divesWithProfile;
+</script>
+<script src="/dive-app.js" is:inline></script>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+  .page-header { margin-bottom: 2rem; }
+  .subtitle { color: #64748b; margin-top: 0.3rem; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .card {
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .stat-card { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 800; color: #38bdf8; }
+  .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
+  .stat-sub { font-size: 0.75rem; color: #475569; margin-top: 0.2rem; }
+  .section { margin-bottom: 3rem; }
+  .map-container { height: 450px; border-radius: 12px; overflow: hidden; border: 1px solid #1e2535; }
+  .profile-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 0.4rem 0.9rem;
+    background: #111827;
+    border: 1px solid #1e2535;
+    color: #94a3b8;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+  .chart-card { padding: 1.5rem; }
+  .dive-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .dive-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .dive-row:hover { border-color: #38bdf8; }
+  .dive-num { font-size: 0.8rem; color: #475569; min-width: 2.5rem; font-weight: 700; }
+  .dive-info { flex: 1; }
+  .dive-location { font-weight: 600; font-size: 0.95rem; }
+  .dive-date { font-size: 0.8rem; color: #64748b; margin-top: 0.1rem; }
+  .dive-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .pill {
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .pill.depth { background: #0c2d48; color: #38bdf8; }
+  .pill.time { background: #1a1a2e; color: #818cf8; }
+  .pill.temp { background: #1a2e1a; color: #4ade80; }
+  .pill.gas { background: #2e1a1a; color: #f87171; }
+  .badge {
+    font-size: 0.7rem;
+    background: #0c2d48;
+    color: #38bdf8;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

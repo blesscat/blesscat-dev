@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import dives from '../data/dives.json';
+
+const totalDives = dives.length;
+const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
+const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
+const totalHours = Math.floor(totalMinutes / 60);
+---
+<Layout title="Home">
+  <div class="hero">
+    <div class="hero-text">
+      <h1>blesscat<span>.dev</span></h1>
+      <p class="tagline">Diver · Explorer · Tinkerer</p>
+      <div class="stats-row">
+        <div class="stat"><span class="num">{totalDives}</span><span class="label">次潛水</span></div>
+        <div class="stat"><span class="num">{maxDepth.toFixed(1)}m</span><span class="label">最大深度</span></div>
+        <div class="stat"><span class="num">{totalHours}h</span><span class="label">水下時間</span></div>
+      </div>
+      <div class="cta-row">
+        <a href="/dives" class="btn-primary">🤿 查看潛水紀錄</a>
+        <a href="/blog" class="btn-secondary">📝 技術文章</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #38bdf8;
+    letter-spacing: -2px;
+  }
+  h1 span { color: #818cf8; }
+  .tagline { color: #64748b; font-size: 1.2rem; margin: 0.75rem 0 2rem; letter-spacing: 2px; text-transform: uppercase; }
+  .stats-row { display: flex; gap: 3rem; justify-content: center; margin-bottom: 2.5rem; }
+  .stat { display: flex; flex-direction: column; }
+  .num { font-size: 2rem; font-weight: 800; color: #38bdf8; }
+  .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+  .cta-row { display: flex; gap: 1rem; justify-content: center; }
+  .btn-primary {
+    padding: 0.8rem 1.8rem;
+    background: #38bdf8;
+    color: #0a0e1a;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    padding: 0.8rem 1.8rem;
+    border: 1px solid #1e2535;
+    color: #94a3b8;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: #38bdf8; color: #e2e8f0; }
+</style>
