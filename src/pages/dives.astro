@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import dives from '../data/dives.json';
+import type { Dive } from '../types/dive';
+import divesRaw from '../data/dives.json';
 
+const dives = divesRaw as Dive[];
 const totalDives = dives.length;
 const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
 const maxDepthDive = dives.find(d => d.max_depth === maxDepth);
@@ -88,7 +90,9 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
   window.__DIVES_GPS__ = divesWithGPS;
   window.__DIVES_PROFILE__ = divesWithProfile;
 </script>
-<script src="/dive-app.js" is:inline></script>
+<script>
+  import '../scripts/dive-app.ts';
+</script>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

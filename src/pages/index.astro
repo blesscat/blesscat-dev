@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import dives from '../data/dives.json';
+import type { Dive } from '../types/dive';
+import divesRaw from '../data/dives.json';
+
+const dives = divesRaw as Dive[];
 
 const totalDives = dives.length;
 const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
