@@ -142,7 +142,7 @@ declare global {
           interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: {
-              labels: { color: '#94a3b8', font: { size: 12 } },
+              labels: { color: '#94a3b8', font: { size: isMobile ? 10 : 12 }, boxWidth: isMobile ? 12 : 40 },
             },
             tooltip: {
               callbacks: {
@@ -159,27 +159,34 @@ declare global {
             x: {
               ticks: {
                 color: '#475569',
-                maxTicksLimit: isMobile ? 5 : 10,
+                maxTicksLimit: isMobile ? 4 : 10,
+                font: { size: isMobile ? 10 : 12 },
               },
               grid: { color: '#1e2535' },
-              title: { display: true, text: '時間 (分鐘)', color: '#64748b' },
+              title: { display: !isMobile, text: '時間 (分鐘)', color: '#64748b' },
             },
             yDepth: {
               position: 'left',
               ticks: {
                 color: '#38bdf8',
                 callback: (v) => Math.abs(v as number) + 'm',
+                font: { size: isMobile ? 10 : 12 },
+                maxTicksLimit: isMobile ? 4 : 8,
               },
               grid: { color: '#1e2535' },
-              title: { display: true, text: '深度', color: '#38bdf8' },
+              title: { display: !isMobile, text: '深度', color: '#38bdf8' },
             },
             ...(hasHr
               ? {
                   yHr: {
                     position: 'right',
-                    ticks: { color: '#f87171' },
+                    ticks: {
+                      color: '#f87171',
+                      font: { size: isMobile ? 10 : 12 },
+                      maxTicksLimit: isMobile ? 4 : 8,
+                    },
                     grid: { drawOnChartArea: false },
-                    title: { display: true, text: 'BPM', color: '#f87171' },
+                    title: { display: !isMobile, text: 'BPM', color: '#f87171' },
                   },
                 }
               : {}),
