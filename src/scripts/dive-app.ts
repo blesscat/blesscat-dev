@@ -145,6 +145,10 @@ declare global {
               labels: { color: '#94a3b8', font: { size: isMobile ? 10 : 12 }, boxWidth: isMobile ? 12 : 40 },
             },
             tooltip: {
+              position: 'nearest',
+              yAlign: isMobile ? 'bottom' : 'center',
+              xAlign: 'center',
+              caretPadding: isMobile ? 20 : 4,
               callbacks: {
                 label: (ctx) => {
                   if (ctx.dataset.label?.includes('深度')) {
