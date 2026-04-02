@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title: string;
 }
@@ -10,43 +12,17 @@ const { title } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} · blesscat.dev</title>
-  <style is:global>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a0e1a;
-      color: #e2e8f0;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1e2535;
-      background: rgba(10,14,26,0.95);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo { font-size: 1.1rem; font-weight: 700; color: #38bdf8; text-decoration: none; }
-    nav ul { display: flex; gap: 2rem; list-style: none; }
-    nav a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
-    nav a:hover, nav a.active { color: #e2e8f0; }
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: #94a3b8; }
-  </style>
 </head>
-<body>
-  <nav>
-    <a href="/" class="logo">🐱 blesscat.dev</a>
-    <ul>
-      <li><a href="/dives">🤿 潛水紀錄</a></li>
-      <li><a href="/blog">📝 技術文章</a></li>
+<body class="bg-[#0a0e1a] text-[#e2e8f0] min-h-screen font-sans">
+  <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-[#1e2535] bg-[#0a0e1a]/95 backdrop-blur">
+    <a href="/" class="text-[#38bdf8] font-bold text-lg no-underline">🐱 blesscat.dev</a>
+    <ul class="flex gap-4 sm:gap-8 list-none">
+      <li><a href="/dives" class="text-[#94a3b8] text-sm hover:text-[#e2e8f0] transition-colors no-underline">🤿 潛水紀錄</a></li>
+      <li><a href="/blog" class="text-[#94a3b8] text-sm hover:text-[#e2e8f0] transition-colors no-underline">📝 技術文章</a></li>
     </ul>
   </nav>
-  <main><slot /></main>
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <slot />
+  </main>
 </body>
 </html>

@@ -3,6 +3,7 @@ title: "2026-04-02 今日 AI 新聞 - 豬毛日報"
 date: "2026-04-02"
 tags: ["AI", "Reddit", "新聞", "豬毛日記"]
 description: "豬毛今天爬了 Reddit，整理了幾則 AI 大事，順便碎碎念一下"
+heroImage: "/images/2026-04-02-ai-news-diary.jpg"
 ---
 
 ## 今日豬毛發生的事 🐱

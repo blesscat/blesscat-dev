@@ -14,90 +14,66 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Layout title={post.data.title}>
-  <article class="post">
-    <header class="post-header">
-      <div class="post-meta">
-        <span class="post-date">📅 {post.data.date}</span>
-        <a href="/blog" class="back-link">← 回到列表</a>
+  <article class="max-w-2xl mx-auto">
+
+    <!-- Hero image: 桌面版縮小置中，手機版全寬 -->
+    {post.data.heroImage && (
+      <div class="mb-8 flex justify-center">
+        <img
+          src={post.data.heroImage}
+          alt={post.data.title}
+          class="w-full sm:w-2/3 sm:max-w-md rounded-2xl object-cover shadow-lg"
+        />
       </div>
-      <h1 class="post-title">{post.data.title}</h1>
+    )}
+
+    <!-- Header -->
+    <header class="mb-8 pb-6 border-b border-[#1e2535]">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs text-[#475569]">📅 {post.data.date}</span>
+        <a href="/blog" class="text-xs text-[#38bdf8] hover:underline">← 回到列表</a>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#e2e8f0] leading-snug mb-4">
+        {post.data.title}
+      </h1>
       {post.data.tags && (
-        <div class="post-tags">
+        <div class="flex flex-wrap gap-2">
           {post.data.tags.map(tag => (
-            <span class="tag">#{tag}</span>
+            <span class="text-xs text-[#818cf8] bg-[#1a1a2e] px-3 py-1 rounded-full">#{tag}</span>
           ))}
         </div>
       )}
     </header>
 
-    <div class="post-content">
+    <!-- Markdown content -->
+    <div class="prose-content leading-relaxed text-[#cbd5e1]">
       <Content />
     </div>
+
   </article>
 </Layout>
 
 <style>
-  .post { max-width: 800px; margin: 0 auto; }
-
-  .post-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1e2535; }
-
-  .post-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .post-date { font-size: 0.85rem; color: #475569; }
-  .back-link { font-size: 0.85rem; color: #38bdf8; text-decoration: none; }
-  .back-link:hover { text-decoration: underline; }
-
-  .post-title {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #e2e8f0;
-    line-height: 1.3;
-    margin-bottom: 1rem;
-  }
-
-  .post-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tag {
-    font-size: 0.75rem;
-    color: #818cf8;
-    background: #1a1a2e;
-    padding: 0.2rem 0.6rem;
-    border-radius: 99px;
-  }
-
-  /* Markdown 內容樣式 */
-  .post-content {
-    line-height: 1.8;
-    color: #cbd5e1;
-  }
-  .post-content :global(h2) {
-    font-size: 1.4rem;
+  /* Tailwind 沒有辦法輕易 scope markdown rendered output，用 style 補 */
+  .prose-content :global(h2) {
+    font-size: 1.35rem;
     font-weight: 700;
     color: #e2e8f0;
     margin: 2.5rem 0 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #1e2535;
   }
-  .post-content :global(h3) {
+  .prose-content :global(h3) {
     font-size: 1.1rem;
     font-weight: 700;
     color: #94a3b8;
     margin: 1.5rem 0 0.75rem;
   }
-  .post-content :global(p) {
-    margin-bottom: 1.2rem;
-  }
-  .post-content :global(ul), .post-content :global(ol) {
-    padding-left: 1.5rem;
-    margin-bottom: 1.2rem;
-  }
-  .post-content :global(li) {
-    margin-bottom: 0.4rem;
-  }
-  .post-content :global(code) {
+  .prose-content :global(p) { margin-bottom: 1.2rem; }
+  .prose-content :global(ul),
+  .prose-content :global(ol) { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+  .prose-content :global(li) { margin-bottom: 0.4rem; }
+  .prose-content :global(code) {
     background: #1e2535;
     color: #38bdf8;
     padding: 0.15rem 0.4rem;
@@ -105,7 +81,7 @@ const { Content } = await render(post);
     font-size: 0.88em;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
-  .post-content :global(pre) {
+  .prose-content :global(pre) {
     background: #0d1117;
     border: 1px solid #1e2535;
     border-radius: 10px;
@@ -113,50 +89,47 @@ const { Content } = await render(post);
     overflow-x: auto;
     margin-bottom: 1.5rem;
   }
-  .post-content :global(pre code) {
+  .prose-content :global(pre code) {
     background: none;
     color: #e2e8f0;
     padding: 0;
     font-size: 0.85rem;
   }
-  .post-content :global(blockquote) {
+  .prose-content :global(blockquote) {
     border-left: 3px solid #38bdf8;
     padding-left: 1rem;
     color: #64748b;
     font-style: italic;
     margin: 1.2rem 0;
   }
-  .post-content :global(table) {
+  .prose-content :global(img) {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 1rem 0;
+  }
+  .prose-content :global(hr) {
+    border: none;
+    border-top: 1px solid #1e2535;
+    margin: 2rem 0;
+  }
+  .prose-content :global(strong) { color: #e2e8f0; font-weight: 700; }
+  .prose-content :global(a) { color: #38bdf8; text-decoration: none; }
+  .prose-content :global(a:hover) { text-decoration: underline; }
+  .prose-content :global(table) {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
   }
-  .post-content :global(th) {
+  .prose-content :global(th) {
     background: #1e2535;
     padding: 0.6rem 1rem;
     text-align: left;
     color: #94a3b8;
     font-weight: 600;
   }
-  .post-content :global(td) {
+  .prose-content :global(td) {
     padding: 0.6rem 1rem;
     border-bottom: 1px solid #1e2535;
-  }
-  .post-content :global(hr) {
-    border: none;
-    border-top: 1px solid #1e2535;
-    margin: 2rem 0;
-  }
-  .post-content :global(strong) {
-    color: #e2e8f0;
-    font-weight: 700;
-  }
-  .post-content :global(a) {
-    color: #38bdf8;
-    text-decoration: none;
-  }
-  .post-content :global(a:hover) {
-    text-decoration: underline;
   }
 </style>
