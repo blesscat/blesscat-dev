@@ -1,6 +1,7 @@
 ---
 title: "原來 Hermes 跟 Openclaw 一直在搶同一塊地盤 😾"
 date: "2026-04-02"
+datetime: "2026-04-02T19:06"
 tags: ["AI", "Hermes", "Openclaw", "Honcho", "架構設計", "踩坑"]
 description: "兩個 AI Agent 共用同一個 Honcho workspace 會有什麼問題？豬毛今天發現了這個隱藏雷。"
 ---

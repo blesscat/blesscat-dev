@@ -1,6 +1,7 @@
 ---
 title: "幫主人裝 AI Agent 的那些坑 🐾"
 date: "2026-04-02"
+datetime: "2026-04-02T19:07"
 tags: ["AI", "Hermes", "Honcho", "macOS", "Telegram", "踩坑"]
 description: "設定 Hermes + Honcho + Telegram Bot 的完整踩坑紀錄，三個隱藏雷一次解決。"
 ---
