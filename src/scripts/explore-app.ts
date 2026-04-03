@@ -57,7 +57,6 @@ async function init() {
   const dives: any[] = window.__EXPLORE_DIVES__ || [];
   const ski: any[] = window.__EXPLORE_SKI__ || [];
 
-  // year range
   const allYears = [
     ...dives.map(d => getYear(d.date)),
     ...ski.map(d => getYear(d.date)),
@@ -67,7 +66,6 @@ async function init() {
   selectedYearMin = yearMin;
   selectedYearMax = yearMax;
 
-  // prefetch profiles
   try {
     const r = await fetch('/dive_profiles.json');
     profilesCache = await r.json();
@@ -93,7 +91,6 @@ function initMap(dives: any[], ski: any[]) {
     scrollWheelZoom: false,
   });
 
-  // 手機版：雙指才能操作地圖
   if (isMobile) {
     const mapEl = document.getElementById('explore-map');
     if (mapEl) {
@@ -135,12 +132,9 @@ function makeIcon(color: string, count: number) {
 
 function buildMarkers(dives: any[], ski: any[]) {
   const L = window.L;
-
-  // clear old
   allMarkers.forEach(m => map.removeLayer(m.el));
   allMarkers = [];
 
-  // ── group dives by location coord (round to 3dp) ──
   const diveGroups: Record<string, any[]> = {};
   dives.forEach(d => {
     if (d.lat == null || d.lon == null) return;
@@ -150,16 +144,13 @@ function buildMarkers(dives: any[], ski: any[]) {
   });
 
   Object.values(diveGroups).forEach(group => {
-    const count = group.length;
     const d0 = group[0];
-    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#38bdf8', count) });
+    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#38bdf8', group.length) });
     marker.on('click', () => openDiveCard(group));
     marker.addTo(map);
-    const year = getYear(d0.date);
-    allMarkers.push({ el: marker, type: 'dive', year });
+    allMarkers.push({ el: marker, type: 'dive', year: getYear(d0.date) });
   });
 
-  // ── group ski by resort ──
   const skiGroups: Record<string, any[]> = {};
   ski.forEach(d => {
     if (d.lat == null || d.lon == null) return;
@@ -169,24 +160,20 @@ function buildMarkers(dives: any[], ski: any[]) {
   });
 
   Object.values(skiGroups).forEach(group => {
-    const count = group.length;
     const d0 = group[0];
-    // average lat/lon for same resort
     const lat = group.reduce((s: number, d: any) => s + d.lat, 0) / group.length;
     const lon = group.reduce((s: number, d: any) => s + d.lon, 0) / group.length;
-    const marker = L.marker([lat, lon], { icon: makeIcon('#818cf8', count) });
+    const marker = L.marker([lat, lon], { icon: makeIcon('#818cf8', group.length) });
     marker.on('click', () => openSkiCard(group));
     marker.addTo(map);
-    const year = getYear(d0.date);
-    allMarkers.push({ el: marker, type: 'ski', year });
+    allMarkers.push({ el: marker, type: 'ski', year: getYear(d0.date) });
   });
 }
 
 function fitAll() {
   const visible = allMarkers.filter(m => map.hasLayer(m.el));
   if (!visible.length) return;
-  const L = window.L;
-  const group = L.featureGroup(visible.map(m => m.el));
+  const group = window.L.featureGroup(visible.map(m => m.el));
   map.fitBounds(group.getBounds().pad(0.25));
 }
 
@@ -200,51 +187,92 @@ function applyFilters() {
       if (map.hasLayer(el)) map.removeLayer(el);
     }
   });
-
-  const dives: any[] = window.__EXPLORE_DIVES__ || [];
-  const ski: any[] = window.__EXPLORE_SKI__ || [];
-  updateStats(dives, ski);
+  updateStats(window.__EXPLORE_DIVES__ || [], window.__EXPLORE_SKI__ || []);
 }
 
 // ── info card ─────────────────────────────────────────────────
 
-function openDiveCard(group: any[]) {
+// shared inline styles
+const S = {
+  cardHeader: 'display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem 0.75rem;border-bottom:1px solid #1e2535;position:sticky;top:0;background:#0d1220ee;backdrop-filter:blur(8px);z-index:10;',
+  cardTypeDive: 'font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:99px;background:rgba(56,189,248,0.15);color:#38bdf8;',
+  cardTypeSki: 'font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:99px;background:rgba(129,140,248,0.15);color:#818cf8;',
+  cardClose: 'background:transparent;border:none;color:#475569;font-size:0.9rem;cursor:pointer;padding:0.25rem 0.5rem;border-radius:4px;',
+  cardTitle: 'font-size:1.1rem;font-weight:800;color:#e2e8f0;padding:0.9rem 1.2rem 0.2rem;line-height:1.3;',
+  cardCount: 'font-size:0.72rem;color:#475569;padding:0 1.2rem 0.75rem;letter-spacing:1px;text-transform:uppercase;',
+  cardSummary: 'display:flex;gap:0;border-top:1px solid #1e2535;border-bottom:1px solid #1e2535;margin-bottom:0.5rem;',
+  summaryItem: 'flex:1;display:flex;flex-direction:column;align-items:center;padding:0.75rem 0.5rem;border-right:1px solid #1e2535;',
+  summaryItemLast: 'flex:1;display:flex;flex-direction:column;align-items:center;padding:0.75rem 0.5rem;',
+  sNum: 'font-size:1.1rem;font-weight:800;color:#818cf8;',
+  sLbl: 'font-size:0.6rem;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:2px;',
+  cardEntries: 'padding:0 1.2rem 1.5rem;',
+  entry: 'padding:0.75rem 0;',
+  entryBorder: 'padding:0.75rem 0;border-top:1px solid #1e2535;',
+  entryRow: 'display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;',
+  entryNum: 'font-size:0.72rem;color:#475569;font-weight:700;',
+  entryDate: 'font-size:0.78rem;color:#64748b;',
+  entryCountry: 'font-size:0.72rem;color:#475569;margin-left:auto;',
+  entryPills: 'display:flex;gap:0.3rem;flex-wrap:wrap;',
+  pill: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;',
+  pillDepth: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#0c2d48;color:#38bdf8;',
+  pillTime: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a1a2e;color:#818cf8;',
+  pillTemp: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a2e1a;color:#4ade80;',
+  pillGas: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#2e1a1a;color:#f87171;',
+  pillHr: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#2e1a1a;color:#fb7185;',
+  pillRuns: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1e1a2e;color:#818cf8;',
+  pillSpeed: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#2e1a1a;color:#f87171;',
+  pillVert: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#0c2d48;color:#38bdf8;',
+  pillAlt: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a2e1a;color:#4ade80;',
+  pillDur: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a1a2e;color:#818cf8;',
+  chartBtn: 'margin-top:0.4rem;font-size:0.72rem;color:#38bdf8;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);border-radius:6px;padding:0.2rem 0.5rem;cursor:pointer;',
+};
+
+function openInfoCard() {
   const card = document.getElementById('info-card')!;
   const isMobile = window.innerWidth < 768;
+  if (isMobile) {
+    card.style.bottom = '0';
+    card.style.right = '0';
+  } else {
+    card.style.right = '0';
+    map.panBy([150, 0]);
+  }
+}
 
-  // sort by date desc
+function openDiveCard(group: any[]) {
+  const card = document.getElementById('info-card')!;
   group.sort((a, b) => b.date.localeCompare(a.date));
   const location = group[0].location || 'Unknown';
 
   let html = `
-    <div class="card-header">
-      <div class="card-type dive">🤿 潛水</div>
-      <button class="card-close" id="card-close">✕</button>
+    <div style="${S.cardHeader}">
+      <div style="${S.cardTypeDive}">🤿 潛水</div>
+      <button style="${S.cardClose}" id="card-close">✕</button>
     </div>
-    <div class="card-title">${location}</div>
-    <div class="card-count">${group.length} 次紀錄</div>
-    <div class="card-entries">
+    <div style="${S.cardTitle}">${location}</div>
+    <div style="${S.cardCount}">${group.length} 次紀錄</div>
+    <div style="${S.cardEntries}">
   `;
 
   group.forEach((d, i) => {
     const chartId = `explore-chart-${d.num}`;
     const hasProfile = !!profilesCache[String(d.num)];
     html += `
-      <div class="entry ${i > 0 ? 'entry-border' : ''}">
-        <div class="entry-row">
-          <span class="entry-num">#${d.num}</span>
-          <span class="entry-date">${d.date}</span>
+      <div class="entry-item" style="${i > 0 ? S.entryBorder : S.entry}">
+        <div style="${S.entryRow}">
+          <span style="${S.entryNum}">#${d.num}</span>
+          <span style="${S.entryDate}">${d.date}</span>
         </div>
-        <div class="entry-pills">
-          <span class="pill depth">▼ ${d.max_depth}m</span>
-          <span class="pill time">⏱ ${Math.floor(d.bottom_time ?? 0)}m</span>
-          ${d.water_temp != null ? `<span class="pill temp">🌡 ${d.water_temp}°C</span>` : ''}
-          ${d.gas && d.gas !== 'Air' ? `<span class="pill gas">${d.gas}</span>` : ''}
-          ${d.avg_hr ? `<span class="pill hr">♥ ${d.avg_hr}bpm</span>` : ''}
+        <div style="${S.entryPills}">
+          <span style="${S.pillDepth}">▼ ${d.max_depth}m</span>
+          <span style="${S.pillTime}">⏱ ${Math.floor(d.bottom_time ?? 0)}m</span>
+          ${d.water_temp != null ? `<span style="${S.pillTemp}">🌡 ${d.water_temp}°C</span>` : ''}
+          ${d.gas && d.gas !== 'Air' ? `<span style="${S.pillGas}">${d.gas}</span>` : ''}
+          ${d.avg_hr ? `<span style="${S.pillHr}">♥ ${d.avg_hr}bpm</span>` : ''}
         </div>
         ${hasProfile ? `
-          <button class="chart-btn" data-dive="${d.num}" data-chart="${chartId}">📈 深度曲線</button>
-          <div class="chart-wrap" id="wrap-${d.num}" style="display:none">
+          <button style="${S.chartBtn}" class="chart-btn" data-dive="${d.num}" data-chart="${chartId}">📈 深度曲線</button>
+          <div id="wrap-${d.num}" style="display:none">
             <canvas id="${chartId}" height="140"></canvas>
           </div>
         ` : ''}
@@ -254,11 +282,10 @@ function openDiveCard(group: any[]) {
 
   html += `</div>`;
   card.innerHTML = html;
-  card.classList.add('open');
+  openInfoCard();
 
   document.getElementById('card-close')?.addEventListener('click', closeCard);
 
-  // chart toggles
   card.querySelectorAll<HTMLButtonElement>('.chart-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const diveNum = parseInt(btn.dataset.dive!);
@@ -274,14 +301,10 @@ function openDiveCard(group: any[]) {
       }
     });
   });
-
-  if (!isMobile) map.panBy([150, 0]);
 }
 
 function openSkiCard(group: any[]) {
   const card = document.getElementById('info-card')!;
-  const isMobile = window.innerWidth < 768;
-
   group.sort((a, b) => b.date.localeCompare(a.date));
   const resort = group[0].resort.split('/')[0].trim();
   const totalRuns = group.reduce((s: number, d: any) => s + (d.runs || 0), 0);
@@ -289,33 +312,33 @@ function openSkiCard(group: any[]) {
   const maxSpeed = Math.max(...group.map((d: any) => d.top_speed_kmh || 0));
 
   let html = `
-    <div class="card-header">
-      <div class="card-type ski">⛷️ 滑雪</div>
-      <button class="card-close" id="card-close">✕</button>
+    <div style="${S.cardHeader}">
+      <div style="${S.cardTypeSki}">⛷️ 滑雪</div>
+      <button style="${S.cardClose}" id="card-close">✕</button>
     </div>
-    <div class="card-title">${resort}</div>
-    <div class="card-count">${group.length} 天紀錄</div>
-    <div class="card-summary">
-      <div class="summary-item"><span class="s-num">${totalRuns}</span><span class="s-lbl">總 runs</span></div>
-      <div class="summary-item"><span class="s-num">${(totalVert / 1000).toFixed(1)}km</span><span class="s-lbl">垂直落差</span></div>
-      <div class="summary-item"><span class="s-num">${maxSpeed.toFixed(1)}</span><span class="s-lbl">最高速 km/h</span></div>
+    <div style="${S.cardTitle}">${resort}</div>
+    <div style="${S.cardCount}">${group.length} 天紀錄</div>
+    <div style="${S.cardSummary}">
+      <div style="${S.summaryItem}"><span style="${S.sNum}">${totalRuns}</span><span style="${S.sLbl}">總 runs</span></div>
+      <div style="${S.summaryItem}"><span style="${S.sNum}">${(totalVert / 1000).toFixed(1)}km</span><span style="${S.sLbl}">垂直落差</span></div>
+      <div style="${S.summaryItemLast}"><span style="${S.sNum}">${maxSpeed.toFixed(1)}</span><span style="${S.sLbl}">最高速 km/h</span></div>
     </div>
-    <div class="card-entries">
+    <div style="${S.cardEntries}">
   `;
 
   group.forEach((d, i) => {
     html += `
-      <div class="entry ${i > 0 ? 'entry-border' : ''}">
-        <div class="entry-row">
-          <span class="entry-date">${d.date}</span>
-          <span class="entry-country">${d.country}</span>
+      <div style="${i > 0 ? S.entryBorder : S.entry}">
+        <div style="${S.entryRow}">
+          <span style="${S.entryDate}">${d.date}</span>
+          <span style="${S.entryCountry}">${d.country}</span>
         </div>
-        <div class="entry-pills">
-          <span class="pill runs">🎿 ${d.runs} runs</span>
-          <span class="pill speed">💨 ${d.top_speed_kmh.toFixed(1)}km/h</span>
-          <span class="pill vert">↕ ${(d.vertical_m / 1000).toFixed(2)}km</span>
-          <span class="pill alt">🏔 ${d.peak_altitude_m.toFixed(0)}m</span>
-          <span class="pill dur">⏱ ${fmtTime(d.duration_s)}</span>
+        <div style="${S.entryPills}">
+          <span style="${S.pillRuns}">🎿 ${d.runs} runs</span>
+          <span style="${S.pillSpeed}">💨 ${d.top_speed_kmh.toFixed(1)}km/h</span>
+          <span style="${S.pillVert}">↕ ${(d.vertical_m / 1000).toFixed(2)}km</span>
+          <span style="${S.pillAlt}">🏔 ${d.peak_altitude_m.toFixed(0)}m</span>
+          <span style="${S.pillDur}">⏱ ${fmtTime(d.duration_s)}</span>
         </div>
       </div>
     `;
@@ -323,15 +346,19 @@ function openSkiCard(group: any[]) {
 
   html += `</div>`;
   card.innerHTML = html;
-  card.classList.add('open');
+  openInfoCard();
 
   document.getElementById('card-close')?.addEventListener('click', closeCard);
-  if (!isMobile) map.panBy([150, 0]);
 }
 
 function closeCard() {
   const card = document.getElementById('info-card')!;
-  card.classList.remove('open');
+  const isMobile = window.innerWidth < 768;
+  if (isMobile) {
+    card.style.bottom = '-100%';
+  } else {
+    card.style.right = '-360px';
+  }
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
 }
 
@@ -371,26 +398,11 @@ async function buildDiveChart(diveNum: number, canvasId: string) {
       animation: false,
       plugins: {
         legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (c: any) => `深度: ${Math.abs(c.raw).toFixed(1)}m`,
-          },
-        },
+        tooltip: { callbacks: { label: (c: any) => `深度: ${Math.abs(c.raw).toFixed(1)}m` } },
       },
       scales: {
-        x: {
-          ticks: { color: '#475569', maxTicksLimit: 5, font: { size: 10 } },
-          grid: { color: '#1e2535' },
-        },
-        y: {
-          ticks: {
-            color: '#38bdf8',
-            callback: (v: any) => Math.abs(v) + 'm',
-            maxTicksLimit: 5,
-            font: { size: 10 },
-          },
-          grid: { color: '#1e2535' },
-        },
+        x: { ticks: { color: '#475569', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1e2535' } },
+        y: { ticks: { color: '#38bdf8', callback: (v: any) => Math.abs(v) + 'm', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1e2535' } },
       },
     },
   });
@@ -399,27 +411,39 @@ async function buildDiveChart(diveNum: number, canvasId: string) {
 // ── controls ──────────────────────────────────────────────────
 
 function initControls(dives: any[], ski: any[]) {
-  // toggle buttons
   const btnDive = document.getElementById('toggle-dive')!;
   const btnSki = document.getElementById('toggle-ski')!;
+  const dotDive = btnDive.querySelector('.dot') as HTMLElement | null;
+  const dotSki = btnSki.querySelector('.dot') as HTMLElement | null;
+
+  // off state styles
+  const offStyle = { bg: 'transparent', border: '#1e2535', color: '#475569', dot: '#475569' };
+  const diveOnStyle = { bg: 'rgba(56,189,248,0.12)', border: '#38bdf8', color: '#38bdf8', dot: '#38bdf8' };
+  const skiOnStyle = { bg: 'rgba(129,140,248,0.12)', border: '#818cf8', color: '#818cf8', dot: '#818cf8' };
+
+  function applyBtnStyle(btn: HTMLElement, dot: HTMLElement | null, on: boolean, onStyle: typeof diveOnStyle) {
+    const s = on ? onStyle : offStyle;
+    btn.style.background = s.bg;
+    btn.style.borderColor = s.border;
+    btn.style.color = s.color;
+    if (dot) dot.style.background = s.dot;
+  }
 
   btnDive.addEventListener('click', () => {
     showDives = !showDives;
-    btnDive.classList.toggle('off', !showDives);
+    applyBtnStyle(btnDive, dotDive, showDives, diveOnStyle);
     applyFilters();
   });
   btnSki.addEventListener('click', () => {
     showSki = !showSki;
-    btnSki.classList.toggle('off', !showSki);
+    applyBtnStyle(btnSki, dotSki, showSki, skiOnStyle);
     applyFilters();
   });
 
-  // year slider
   const slider = document.getElementById('year-slider') as HTMLInputElement;
   const sliderLabel = document.getElementById('year-label')!;
 
   if (yearMin === yearMax) {
-    // only one year — hide slider
     document.getElementById('year-control')?.style.setProperty('display', 'none');
   } else {
     slider.min = String(yearMin);
@@ -452,9 +476,7 @@ function updateStats(dives: any[], ski: any[]) {
   const diveSites = new Set(filteredDives.map(d =>
     `${(+d.lat).toFixed(3)}_${(+(d.lon as number)).toFixed(3)}`
   )).size;
-
   const skiResorts = new Set(filteredSki.map(d => d.resort.split('/')[0].trim())).size;
-
   const countries = new Set([
     ...filteredDives.map(d => (d.location || '').split(', ').pop() || ''),
     ...filteredSki.map(d => d.country),
@@ -462,11 +484,11 @@ function updateStats(dives: any[], ski: any[]) {
 
   const el = document.getElementById('explore-stats')!;
   el.innerHTML = `
-    <span class="stat-item dive-stat">🤿 <strong>${diveSites}</strong> 個潛點</span>
-    <span class="stat-sep">·</span>
-    <span class="stat-item ski-stat">⛷️ <strong>${skiResorts}</strong> 個雪場</span>
-    <span class="stat-sep">·</span>
-    <span class="stat-item">🌏 <strong>${countries}</strong> 個國家</span>
+    <span style="color:#94a3b8;">🤿 <strong style="color:#38bdf8;">${diveSites}</strong> 個潛點</span>
+    <span style="color:#1e2535;">·</span>
+    <span style="color:#94a3b8;">⛷️ <strong style="color:#818cf8;">${skiResorts}</strong> 個雪場</span>
+    <span style="color:#1e2535;">·</span>
+    <span style="color:#94a3b8;">🌏 <strong style="color:#e2e8f0;">${countries}</strong> 個國家</span>
   `;
 }
 
