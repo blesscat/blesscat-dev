@@ -27,32 +27,32 @@ const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
 
     <!-- 左：簡介 -->
     <div class="flex flex-col anim-fade-up delay-1">
-      <p class="text-[0.72rem] tracking-[3px] uppercase text-[#38bdf8] border-l-2 border-[#38bdf8] pl-[10px] mb-4">
+      <p class="text-[0.72rem] tracking-[3px] uppercase text-accent border-l-2 border-accent pl-[10px] mb-4">
         Explorer · Since 2024
       </p>
-      <h1 class="text-[3.8rem] font-black text-[#e2e8f0] tracking-[-2px] leading-none mb-5 [animation:pulse-glow_4s_ease-in-out_infinite] max-md:text-[2.8rem] max-[480px]:text-[2.2rem]">
-        blesscat<span class="text-[#38bdf8]">.dev</span>
+      <h1 class="text-[3.8rem] font-black text-text tracking-[-2px] leading-none mb-5 animate-[pulse-glow_4s_ease-in-out_infinite] max-md:text-[2.8rem] max-[480px]:text-[2.2rem]">
+        blesscat<span class="text-accent">.dev</span>
       </h1>
-      <p class="text-[#64748b] text-base leading-[1.75] mb-8">
+      <p class="text-subtle text-base leading-[1.75] mb-8">
         潛過太平洋的珊瑚礁，滑過日本的粉雪斜坡，<br/>
         順便把 AI agent 搞爆幾次。<br/>
         這裡是我的探索紀錄。
       </p>
       <div class="flex gap-3 flex-wrap max-[480px]:gap-2">
         <a href="/dives"
-           class="px-6 py-3 bg-[#38bdf8] text-[#0a0e1a] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
+           class="px-6 py-3 bg-accent text-bg rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
           🤿 潛水紀錄
         </a>
         <a href="/ski"
-           class="px-6 py-3 bg-[#818cf8] text-[#0a0e1a] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(129,140,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
+           class="px-6 py-3 bg-indigo text-bg rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(129,140,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
           ⛷️ 滑雪紀錄
         </a>
         <a href="/explore"
-           class="px-6 py-3 bg-[rgba(56,189,248,0.1)] border border-[#38bdf8] text-[#38bdf8] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:bg-[rgba(56,189,248,0.2)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.2)]">
+           class="px-6 py-3 bg-[rgba(56,189,248,0.1)] border border-accent text-accent rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:bg-[rgba(56,189,248,0.2)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.2)]">
           🌏 探索地圖
         </a>
         <a href="/blog"
-           class="px-6 py-3 border border-[#1e2535] text-[#64748b] rounded-lg no-underline text-[0.9rem] transition-all hover:border-[#38bdf8] hover:text-[#e2e8f0] hover:-translate-y-0.5">
+           class="px-6 py-3 border border-border text-subtle rounded-lg no-underline text-[0.9rem] transition-all hover:border-accent hover:text-text hover:-translate-y-0.5">
           📝 日記
         </a>
       </div>
@@ -60,29 +60,29 @@ const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
 
     <!-- 右：2×2 數字卡 -->
     <div class="grid grid-cols-2 gap-4">
-      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#38bdf8] hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-2">
+      <div class="bg-surface border border-border rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-accent hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-2">
         <div class="text-xl mb-1">🤿</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#38bdf8] count-up max-md:text-[1.6rem]"
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-accent count-up max-md:text-[1.6rem]"
              data-target={totalDives} data-decimals="0">{totalDives}</div>
-        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">次潛水</div>
+        <div class="text-[0.72rem] text-faint uppercase tracking-[1.5px] mt-0.5">次潛水</div>
       </div>
-      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#38bdf8] hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-3">
+      <div class="bg-surface border border-border rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-accent hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-3">
         <div class="text-xl mb-1">▼</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#38bdf8] count-up max-md:text-[1.6rem]"
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-accent count-up max-md:text-[1.6rem]"
              data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</div>
-        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">最大深度</div>
+        <div class="text-[0.72rem] text-faint uppercase tracking-[1.5px] mt-0.5">最大深度</div>
       </div>
-      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#818cf8] hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-4">
+      <div class="bg-surface border border-border rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-indigo hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-4">
         <div class="text-xl mb-1">⛷️</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#818cf8] count-up max-md:text-[1.6rem]"
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-indigo count-up max-md:text-[1.6rem]"
              data-target={totalSkiDays} data-decimals="0">{totalSkiDays}</div>
-        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">滑雪天數</div>
+        <div class="text-[0.72rem] text-faint uppercase tracking-[1.5px] mt-0.5">滑雪天數</div>
       </div>
-      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#818cf8] hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-5">
+      <div class="bg-surface border border-border rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-indigo hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-5">
         <div class="text-xl mb-1">⚡</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#818cf8] count-up max-md:text-[1.6rem]"
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-indigo count-up max-md:text-[1.6rem]"
              data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}km/h</div>
-        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">最高速度</div>
+        <div class="text-[0.72rem] text-faint uppercase tracking-[1.5px] mt-0.5">最高速度</div>
       </div>
     </div>
 

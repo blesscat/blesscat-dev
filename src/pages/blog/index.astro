@@ -18,11 +18,11 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
   {allTags.length > 0 && (
     <div class="flex flex-wrap gap-2 mb-6" id="tag-filter">
       <button
-        class="tag-btn border border-[#1e2535] text-[#64748b] px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-[#38bdf8] hover:text-[#38bdf8]"
+        class="tag-btn border border-border text-subtle px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-accent hover:text-accent"
         data-tag="all" data-active="true">全部</button>
       {allTags.map(tag => (
         <button
-          class="tag-btn border border-[#1e2535] text-[#64748b] px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-[#38bdf8] hover:text-[#38bdf8]"
+          class="tag-btn border border-border text-subtle px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-accent hover:text-accent"
           data-tag={tag}>#{tag}</button>
       ))}
     </div>
@@ -32,7 +32,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
     {posts.map(post => (
       <a
         href={`/blog/${post.id.replace(/\.md$/, '')}`}
-        class="post-card block bg-[#111827] border border-[#1e2535] rounded-xl no-underline transition-all hover:border-[#38bdf8] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] reveal"
+        class="post-card block bg-surface border border-border rounded-xl no-underline transition-all hover:border-accent hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] reveal"
         data-tags={(post.data.tags || []).join(',')}
       >
         <div class="flex items-center gap-6 p-6 max-[640px]:flex-col max-[640px]:gap-0 max-[640px]:p-0 max-[640px]:overflow-hidden">
@@ -47,22 +47,22 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
           )}
           <div class="flex-1 min-w-0 max-[640px]:p-4">
             <div class="flex items-center gap-4 mb-3">
-              <span class="text-[0.8rem] text-[#475569]">{post.data.date}</span>
+              <span class="text-[0.8rem] text-faint">{post.data.date}</span>
               {post.data.tags && (
                 <div class="flex gap-1 flex-wrap">
                   {post.data.tags.slice(0, 3).map(tag => (
-                    <span class="text-[0.72rem] text-[#818cf8] bg-[#1a1a2e] px-2 py-0.5 rounded-full">#{tag}</span>
+                    <span class="text-[0.72rem] text-indigo bg-[#1a1a2e] px-2 py-0.5 rounded-full">#{tag}</span>
                   ))}
                 </div>
               )}
             </div>
-            <h2 class="text-[1.2rem] font-bold text-[#e2e8f0] mb-2 leading-snug">
+            <h2 class="text-[1.2rem] font-bold text-text mb-2 leading-snug">
               {post.data.title.replace(/^\d{4}-\d{2}-\d{2}\s+/, '')}
             </h2>
             {post.data.description && (
-              <p class="text-[0.88rem] text-[#64748b] leading-relaxed mb-3">{post.data.description}</p>
+              <p class="text-[0.88rem] text-subtle leading-relaxed mb-3">{post.data.description}</p>
             )}
-            <span class="text-[0.82rem] text-[#38bdf8] font-semibold">閱讀全文 →</span>
+            <span class="text-[0.82rem] text-accent font-semibold">閱讀全文 →</span>
           </div>
         </div>
       </a>

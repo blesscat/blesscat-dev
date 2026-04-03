@@ -7,6 +7,6 @@ const { title, class: className } = Astro.props;
 ---
 
 <div class:list={['mt-10', className]}>
-  {title && <h2 class="text-sm font-bold text-[#94a3b8] uppercase tracking-widest mb-4">{title}</h2>}
+  {title && <h2 class="text-sm font-bold text-muted uppercase tracking-widest mb-4">{title}</h2>}
   <slot />
 </div>

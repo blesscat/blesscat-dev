@@ -21,7 +21,7 @@ const {
 } = Astro.props;
 ---
 
-<div class={`bg-[#0d1220] border border-[#1e2535] rounded-xl p-5 text-center anim-fade-up delay-${delay}`}>
+<div class={`bg-surface2 border border-border rounded-xl p-5 text-center anim-fade-up delay-${delay}`}>
   <div
     class:list={['text-3xl font-extrabold leading-tight', target != null ? 'count-up' : '']}
     data-target={target}
@@ -31,6 +31,6 @@ const {
   >
     {value}
   </div>
-  <div class="text-xs text-[#64748b] uppercase tracking-widest mt-1">{label}</div>
-  {sub && <div class="text-xs text-[#475569] mt-0.5">{sub}</div>}
+  <div class="text-xs text-subtle uppercase tracking-widest mt-1">{label}</div>
+  {sub && <div class="text-xs text-faint mt-0.5">{sub}</div>}
 </div>

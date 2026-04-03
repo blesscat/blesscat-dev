@@ -85,23 +85,23 @@ const diveYearData = {
   <div class="mb-12">
     <h2 class="mb-4">🏆 個人紀錄 PB</h2>
     <div class="grid grid-cols-3 max-md:grid-cols-1 gap-4">
-      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-1">
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-border rounded-xl text-center relative py-8 px-6 anim-fade-up delay-1">
         <div class="text-2xl mb-2">🏆</div>
-        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最大深度</div>
-        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">33.9<span class="text-base font-semibold ml-[0.2rem]">m</span></div>
-        <div class="text-[0.8rem] text-[#475569] mt-2">Koror, Belau</div>
+        <div class="text-xs text-subtle uppercase tracking-[1px] mb-2">最大深度</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-accent">33.9<span class="text-base font-semibold ml-[0.2rem]">m</span></div>
+        <div class="text-[0.8rem] text-faint mt-2">Koror, Belau</div>
       </div>
-      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-2">
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-border rounded-xl text-center relative py-8 px-6 anim-fade-up delay-2">
         <div class="text-2xl mb-2">🏆</div>
-        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最長底部時間</div>
-        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">{maxBottomTime.toFixed(1)}<span class="text-base font-semibold ml-[0.2rem]">min</span></div>
-        <div class="text-[0.8rem] text-[#475569] mt-2">單次最長水下停留</div>
+        <div class="text-xs text-subtle uppercase tracking-[1px] mb-2">最長底部時間</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-accent">{maxBottomTime.toFixed(1)}<span class="text-base font-semibold ml-[0.2rem]">min</span></div>
+        <div class="text-[0.8rem] text-faint mt-2">單次最長水下停留</div>
       </div>
-      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-3">
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-border rounded-xl text-center relative py-8 px-6 anim-fade-up delay-3">
         <div class="text-2xl mb-2">🏆</div>
-        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最多潛水月份</div>
-        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">{busiestMonthName}</div>
-        <div class="text-[0.8rem] text-[#475569] mt-2">共 {busiestMonthCount} 支潛水</div>
+        <div class="text-xs text-subtle uppercase tracking-[1px] mb-2">最多潛水月份</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-accent">{busiestMonthName}</div>
+        <div class="text-[0.8rem] text-faint mt-2">共 {busiestMonthCount} 支潛水</div>
       </div>
     </div>
   </div>
@@ -109,8 +109,8 @@ const diveYearData = {
   <!-- 年度比較 -->
   <div class="mb-12">
     <h2>📊 年度比較</h2>
-    <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
-      <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">潛水次數 vs 總小時數</div>
+    <div class="bg-surface border border-border rounded-xl pt-5 px-6 pb-6">
+      <div class="text-[0.8rem] text-subtle uppercase tracking-[1px] mb-3">潛水次數 vs 總小時數</div>
       <div class="relative h-55">
         <canvas data-chart="year-compare"></canvas>
       </div>
@@ -124,14 +124,14 @@ const diveYearData = {
   <div class="mb-12">
     <h2>數據圖表</h2>
     <div class="grid grid-cols-2 max-md:grid-cols-1 gap-4">
-      <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
-        <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">深度分布</div>
+      <div class="bg-surface border border-border rounded-xl pt-5 px-6 pb-6">
+        <div class="text-[0.8rem] text-subtle uppercase tracking-[1px] mb-3">深度分布</div>
         <div class="relative h-55">
           <canvas data-chart="depth-dist"></canvas>
         </div>
       </div>
-      <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
-        <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">每月潛水次數</div>
+      <div class="bg-surface border border-border rounded-xl pt-5 px-6 pb-6">
+        <div class="text-[0.8rem] text-subtle uppercase tracking-[1px] mb-3">每月潛水次數</div>
         <div class="relative h-55">
           <canvas data-chart="monthly"></canvas>
         </div>
@@ -147,42 +147,42 @@ const diveYearData = {
       <input
         type="text"
         data-ref="search"
-        class="flex-1 min-w-45 py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm outline-none transition-[border-color] duration-200 focus:border-[#38bdf8] placeholder:text-[#475569]"
+        class="flex-1 min-w-45 py-2 px-[0.85rem] bg-surface border border-border rounded-lg text-muted text-sm outline-none transition-[border-color] duration-200 focus:border-accent placeholder:text-faint"
         placeholder="搜尋地點關鍵字..."
         autocomplete="off"
       />
-      <select data-ref="year-select" class="py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm cursor-pointer outline-none transition-[border-color] duration-200 focus:border-[#38bdf8]">
+      <select data-ref="year-select" class="py-2 px-[0.85rem] bg-surface border border-border rounded-lg text-muted text-sm cursor-pointer outline-none transition-[border-color] duration-200 focus:border-accent">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
       </select>
-      <span data-ref="count" class="text-[0.8rem] text-[#475569] whitespace-nowrap ml-auto max-md:ml-0">顯示 {totalDives} / {totalDives} 筆</span>
+      <span data-ref="count" class="text-[0.8rem] text-faint whitespace-nowrap ml-auto max-md:ml-0">顯示 {totalDives} / {totalDives} 筆</span>
     </div>
     <div class="flex flex-col gap-[0.6rem]">
       {dives.slice().reverse().map(d => (
-        <div class="dive-row bg-[#111827] border border-[#1e2535] rounded-xl p-0 overflow-hidden transition-[border-color,transform,box-shadow] duration-[250ms] hover:border-[#38bdf8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.1)] reveal">
+        <div class="dive-row bg-surface border border-border rounded-xl p-0 overflow-hidden transition-[border-color,transform,box-shadow] duration-[250ms] hover:border-accent hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.1)] reveal">
           <div class="dive-main flex items-center gap-4 max-md:gap-2 px-6 py-4 max-md:px-4 max-md:py-3 flex-wrap">
-            <div class="text-[0.8rem] text-[#475569] min-w-10 font-bold">#{d.num}</div>
+            <div class="text-[0.8rem] text-faint min-w-10 font-bold">#{d.num}</div>
             <div class="flex-1 min-w-0">
               <div class="dive-location font-semibold text-[0.95rem]">{d.location || 'Unknown'}</div>
-              <div class="dive-date text-[0.8rem] text-[#64748b] mt-[0.1rem]">{d.date}</div>
+              <div class="dive-date text-[0.8rem] text-subtle mt-[0.1rem]">{d.date}</div>
             </div>
             <div class="flex gap-[0.4rem] flex-wrap max-md:w-full">
-              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#0c2d48] text-[#38bdf8]">▼ {d.max_depth}m</span>
-              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a1a2e] text-[#818cf8]">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
-              {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a2e1a] text-[#4ade80]">🌡 {d.water_temp}°C</span>}
-              {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#2e1a1a] text-[#f87171]">{d.gas}</span>}
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#0c2d48] text-accent">▼ {d.max_depth}m</span>
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a1a2e] text-indigo">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
+              {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a2e1a] text-green">🌡 {d.water_temp}°C</span>}
+              {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#2e1a1a] text-red">{d.gas}</span>}
             </div>
             {d.garmin_id && (
-              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-[#1e2535] rounded-md text-[#38bdf8] text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-[#38bdf8] hover:bg-[rgba(56,189,248,0.05)]" data-dive={d.num} aria-expanded="false">
+              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-accent text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-accent hover:bg-[rgba(56,189,248,0.05)]" data-dive={d.num} aria-expanded="false">
                 <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
                 <span>深度曲線</span>
               </button>
             )}
           </div>
           {d.garmin_id && (
-            <div class="border-t border-[#1e2535] pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`chart-panel-${d.num}`} hidden>
+            <div class="border-t border-border pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`chart-panel-${d.num}`} hidden>
               <div class="relative h-50 max-md:h-45">
                 <canvas id={`chart-${d.num}`}></canvas>
               </div>

@@ -1,14 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0e1a;
-  --color-surface: #1e2535;
-  --color-border: #1e2535;
-  --color-text: #e2e8f0;
-  --color-muted: #94a3b8;
-  --color-accent: #38bdf8;
-  --color-tag-bg: #1a1a2e;
+  /* ── Brand colors ── */
+  --color-bg:       #0a0e1a;
+  --color-surface:  #111827;
+  --color-surface2: #0d1220;
+  --color-border:   #1e2535;
+  --color-text:     #e2e8f0;
+  --color-muted:    #94a3b8;
+  --color-subtle:   #64748b;
+  --color-faint:    #475569;
+  --color-accent:   #38bdf8;
+  --color-indigo:   #818cf8;
+  --color-green:    #4ade80;
+  --color-red:      #f87171;
+  --color-tag-bg:   #1a1a2e;
   --color-tag-text: #818cf8;
+
+  /* ── Custom animations ── */
+  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
+  --animate-float:      floatY 3s ease-in-out infinite;
+  --animate-float-slow: floatY 3.5s ease-in-out infinite;
+  --animate-ripple-1:   ripple-expand 4s ease-out infinite;
+  --animate-ripple-2:   ripple-expand 4s ease-out 1.3s infinite;
+  --animate-ripple-3:   ripple-expand 4s ease-out 2.6s infinite;
+  --animate-swing:      swing 1.4s ease-in-out infinite;
 }
 
 /* ── Micro-animation keyframes ── */
