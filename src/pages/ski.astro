@@ -25,6 +25,18 @@ ski.forEach(d => {
   monthCount[m] = (monthCount[m] || 0) + 1;
 });
 const months = Object.keys(monthCount).sort();
+
+// 年度比較資料
+const yearMap: Record<string, number> = {};
+ski.forEach(d => {
+  const y = d.date.slice(0, 4);
+  yearMap[y] = (yearMap[y] || 0) + 1;
+});
+const yearLabels = Object.keys(yearMap).sort();
+const skiYearData = {
+  labels: yearLabels,
+  days: yearLabels.map(y => yearMap[y]),
+};
 ---
 
 <Layout title="滑雪紀錄" description={`${totalDays} 天滑雪 · 最高速 ${maxSpeed.toFixed(1)}km/h · 累計落差 ${(totalVertical/1000).toFixed(1)}km`} ogImage="/og/ski.png">
@@ -165,11 +177,12 @@ const months = Object.keys(monthCount).sort();
   </div>
 </Layout>
 
-<script define:vars={{ ski, months, monthCount, totalCount: ski.length }} is:inline>
+<script define:vars={{ ski, months, monthCount, totalCount: ski.length, skiYearData }} is:inline>
   window.__SKI_DATA__ = ski;
   window.__SKI_MONTHS__ = months;
   window.__SKI_MONTH_COUNT__ = monthCount;
   window.__SKI_TOTAL__ = totalCount;
+  window.__SKI_YEAR_DATA__ = skiYearData;
 </script>
 
 <script>
@@ -212,16 +225,27 @@ const months = Object.keys(monthCount).sort();
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.onload = function () {
-      const ghCss = document.createElement('link');
-      ghCss.rel = 'stylesheet';
-      ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
-      document.head.appendChild(ghCss);
-      const gh = document.createElement('script');
-      gh.src = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js';
-      gh.onload = function () {
         const L = window.L;
         const data = window.__SKI_DATA__ || [];
-        const map = L.map('ski-map', { zoomControl: true, gestureHandling: true });
+        const isMobile = window.matchMedia('(max-width: 768px)').matches ||
+          /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const map = L.map('ski-map', {
+          zoomControl: true,
+          dragging: !isMobile,
+          tap: false,
+          scrollWheelZoom: false,
+        });
+        if (isMobile) {
+          const mapEl = document.getElementById('ski-map');
+          if (mapEl) {
+            mapEl.addEventListener('touchstart', function(e) {
+              if (e.touches.length >= 2) map.dragging.enable();
+            }, { passive: true });
+            mapEl.addEventListener('touchend', function(e) {
+              if (e.touches.length < 2) map.dragging.disable();
+            }, { passive: true });
+          }
+        }
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18,
       }).addTo(map);
@@ -250,8 +274,6 @@ const months = Object.keys(monthCount).sort();
         const group = L.featureGroup(markers);
         map.fitBounds(group.getBounds().pad(0.3));
       }
-      };
-      document.head.appendChild(gh);
     };
     document.head.appendChild(script);
   })();
