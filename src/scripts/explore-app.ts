@@ -54,6 +54,13 @@ function loadScript(src: string): Promise<void> {
 async function init() {
   await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
 
+  // gesture handling
+  const ghCss = document.createElement('link');
+  ghCss.rel = 'stylesheet';
+  ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
+  document.head.appendChild(ghCss);
+  await loadScript('https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js');
+
   const dives: any[] = window.__EXPLORE_DIVES__ || [];
   const ski: any[] = window.__EXPLORE_SKI__ || [];
 
@@ -82,7 +89,7 @@ async function init() {
 
 function initMap(dives: any[], ski: any[]) {
   const L = window.L;
-  map = L.map('explore-map', { zoomControl: true, attributionControl: false });
+  map = L.map('explore-map', { zoomControl: true, attributionControl: false, gestureHandling: true });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 18,

@@ -16,8 +16,21 @@ declare global {
   const script = document.createElement('script');
   script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
   script.onload = function () {
+    // gesture handling plugin
+    const gh = document.createElement('script');
+    gh.src = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js';
+    const ghCss = document.createElement('link');
+    ghCss.rel = 'stylesheet';
+    ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
+    document.head.appendChild(ghCss);
+    document.head.appendChild(gh);
+    gh.onload = function () { initDiveMap(); };
+  };
+  document.head.appendChild(script);
+
+  function initDiveMap() {
     const L = window.L;
-    const map = L.map('dive-map', { zoomControl: true });
+    const map = L.map('dive-map', { zoomControl: true, gestureHandling: true });
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
@@ -60,8 +73,7 @@ declare global {
 
     const group = L.featureGroup(markers);
     map.fitBounds(group.getBounds().pad(0.3));
-  };
-  document.head.appendChild(script);
+  }
 })();
 
 // =====================

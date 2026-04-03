@@ -212,9 +212,16 @@ const months = Object.keys(monthCount).sort();
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.onload = function () {
-      const L = window.L;
-      const data = window.__SKI_DATA__ || [];
-      const map = L.map('ski-map', { zoomControl: true });
+      const ghCss = document.createElement('link');
+      ghCss.rel = 'stylesheet';
+      ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
+      document.head.appendChild(ghCss);
+      const gh = document.createElement('script');
+      gh.src = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js';
+      gh.onload = function () {
+        const L = window.L;
+        const data = window.__SKI_DATA__ || [];
+        const map = L.map('ski-map', { zoomControl: true, gestureHandling: true });
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18,
       }).addTo(map);
@@ -243,6 +250,8 @@ const months = Object.keys(monthCount).sort();
         const group = L.featureGroup(markers);
         map.fitBounds(group.getBounds().pad(0.3));
       }
+      };
+      document.head.appendChild(gh);
     };
     document.head.appendChild(script);
   })();
