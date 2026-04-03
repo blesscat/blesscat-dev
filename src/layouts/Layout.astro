@@ -40,7 +40,7 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 <body class="bg-[#0a0e1a] text-[#e2e8f0] min-h-screen font-sans">
-  <nav id="top-nav" class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-[#1e2535] bg-[#0a0e1a]/95 backdrop-blur">
+  <nav id="top-nav" class="top-nav-bar z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-[#1e2535] bg-[#0a0e1a]/95 backdrop-blur">
     <a href="/" class="nav-logo text-[#38bdf8] font-bold text-lg no-underline"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="豬毛" /> <span class="nav-brand-text">blesscat.dev</span></a>
     <ul class="flex gap-3 sm:gap-8 list-none">
       <li><a href="/dives" class="nav-link text-[#94a3b8] text-sm hover:text-[#e2e8f0] transition-colors no-underline"><span class="nav-icon">🤿</span><span class="nav-text"> 潛水</span></a></li>
@@ -113,15 +113,28 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
     .nav-icon { font-size: 1.1rem; }
   }
 
-  /* 手機版 header 淡入淡出 */
+  /* Desktop: sticky */
+  .top-nav-bar {
+    position: sticky;
+    top: 0;
+  }
+
+  /* 手機版：fixed + transform，transform 才能正常作用 */
   @media (max-width: 768px) {
-    #top-nav {
-      transition: opacity 0.3s ease, transform 0.3s ease;
+    .top-nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: transform 0.3s ease;
     }
-    #top-nav.nav-hidden {
-      opacity: 0;
+    .top-nav-bar.nav-hidden {
       transform: translateY(-100%);
       pointer-events: none;
+    }
+    /* 補上 header 佔位，避免內容被遮 */
+    body {
+      padding-top: 57px;
     }
   }
 
