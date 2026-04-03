@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: string;
+  title?: string;
+  height?: string; // desktop height, default 450px
+  heightMobile?: string; // mobile height, default 280px
+}
+const {
+  id,
+  title,
+  height = '450px',
+  heightMobile = '280px',
+} = Astro.props;
+---
+
+<div class="section">
+  {title && <h2>{title}</h2>}
+  <div id={id} class="map-container"></div>
+</div>
+
+<style define:vars={{ height, heightMobile }}>
+  .map-container {
+    height: var(--height);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e2535;
+  }
+  @media (max-width: 768px) {
+    .map-container {
+      height: var(--heightMobile);
+    }
+  }
+</style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

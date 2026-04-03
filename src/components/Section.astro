@@ -1,0 +1,26 @@
+---
+interface Props {
+  title?: string;
+  class?: string;
+}
+const { title, class: className } = Astro.props;
+---
+
+<div class:list={['section', className]}>
+  {title && <h2>{title}</h2>}
+  <slot />
+</div>
+
+<style>
+  .section {
+    margin-top: 2.5rem;
+  }
+  .section h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 1rem;
+  }
+</style>

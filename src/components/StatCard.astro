@@ -1,0 +1,64 @@
+---
+interface Props {
+  value: string | number;
+  label: string;
+  sub?: string;
+  target?: number;
+  decimals?: number;
+  suffix?: string;
+  delay?: number;
+  color?: string; // CSS color for stat-num, default #38bdf8
+}
+const {
+  value,
+  label,
+  sub,
+  target,
+  decimals = 0,
+  suffix = '',
+  delay = 1,
+  color = '#38bdf8',
+} = Astro.props;
+---
+
+<div class={`card stat-card anim-fade-up delay-${delay}`}>
+  <div
+    class="stat-num"
+    class:list={[target != null ? 'count-up' : '']}
+    data-target={target}
+    data-decimals={decimals}
+    data-suffix={suffix}
+    style={`color: ${color}`}
+  >
+    {value}
+  </div>
+  <div class="stat-label">{label}</div>
+  {sub && <div class="stat-sub">{sub}</div>}
+</div>
+
+<style>
+  .card {
+    background: #0d1220;
+    border: 1px solid #1e2535;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .stat-card { text-align: center; }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.25rem;
+  }
+  .stat-sub {
+    font-size: 0.75rem;
+    color: #475569;
+    margin-top: 0.2rem;
+  }
+</style>

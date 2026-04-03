@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
 import divesRaw from '../data/dives.json';
 import skiRaw from '../data/ski.json';
 
@@ -16,10 +17,7 @@ const yearMax = Math.max(...allYears);
 ---
 
 <Layout title="探索地圖" description="潛水潛點 × 滑雪雪場，橫跨多個國家的探索足跡" ogImage="/og/explore.png">
-  <div class="page-header anim-fade-up delay-1">
-    <h1>🌏 探索地圖</h1>
-    <p class="subtitle">潛水潛點 × 滑雪雪場，點擊標記查看詳情</p>
-  </div>
+  <PageHeader title="🌏 探索地圖" subtitle="潛水潛點 × 滑雪雪場，點擊標記查看詳情" />
 
   <!-- 統計 mini bar -->
   <div id="explore-stats" class="stats-bar anim-fade-up delay-2">
@@ -65,7 +63,7 @@ const yearMax = Math.max(...allYears);
   import '../scripts/explore-app.ts';
 </script>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 
 <style>
   /* ── 頁首 ── */
