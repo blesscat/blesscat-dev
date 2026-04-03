@@ -57,7 +57,7 @@ const yearMax = Math.max(...allYears);
 </Layout>
 
 <!-- 傳資料給前端 -->
-<script define:vars={{ dives, ski }}>
+<script define:vars={{ dives, ski }} is:inline>
   window.__EXPLORE_DIVES__ = dives;
   window.__EXPLORE_SKI__ = ski;
 </script>

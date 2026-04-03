@@ -165,7 +165,7 @@ const months = Object.keys(monthCount).sort();
   </div>
 </Layout>
 
-<script define:vars={{ ski, months, monthCount, totalCount: ski.length }}>
+<script define:vars={{ ski, months, monthCount, totalCount: ski.length }} is:inline>
   window.__SKI_DATA__ = ski;
   window.__SKI_MONTHS__ = months;
   window.__SKI_MONTH_COUNT__ = monthCount;
