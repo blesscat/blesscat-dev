@@ -112,7 +112,7 @@ const diveYearData = {
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
       <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">潛水次數 vs 總小時數</div>
       <div class="relative h-[220px]">
-        <canvas id="year-compare-chart"></canvas>
+        <canvas data-chart="year-compare"></canvas>
       </div>
     </div>
   </div>
@@ -127,13 +127,13 @@ const diveYearData = {
       <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
         <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">深度分布</div>
         <div class="relative h-[220px]">
-          <canvas id="depth-dist-chart"></canvas>
+          <canvas data-chart="depth-dist"></canvas>
         </div>
       </div>
       <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
         <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">每月潛水次數</div>
         <div class="relative h-[220px]">
-          <canvas id="monthly-chart"></canvas>
+          <canvas data-chart="monthly"></canvas>
         </div>
       </div>
     </div>
@@ -146,18 +146,18 @@ const diveYearData = {
     <div class="flex items-center gap-3 max-md:gap-2 mb-4 flex-wrap">
       <input
         type="text"
-        id="dive-search"
+        data-ref="search"
         class="flex-1 min-w-[180px] py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm outline-none transition-[border-color] duration-200 focus:border-[#38bdf8] placeholder:text-[#475569]"
         placeholder="搜尋地點關鍵字..."
         autocomplete="off"
       />
-      <select id="year-filter" class="py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm cursor-pointer outline-none transition-[border-color] duration-200 focus:border-[#38bdf8]">
+      <select data-ref="year-select" class="py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm cursor-pointer outline-none transition-[border-color] duration-200 focus:border-[#38bdf8]">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
       </select>
-      <span id="filter-count" class="text-[0.8rem] text-[#475569] whitespace-nowrap ml-auto max-md:ml-0">顯示 {totalDives} / {totalDives} 筆</span>
+      <span data-ref="count" class="text-[0.8rem] text-[#475569] whitespace-nowrap ml-auto max-md:ml-0">顯示 {totalDives} / {totalDives} 筆</span>
     </div>
     <div class="flex flex-col gap-[0.6rem]">
       {dives.slice().reverse().map(d => (

@@ -2,6 +2,15 @@
 
 const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
 
+const $ = <T extends Element = Element>(sel: string) =>
+  document.querySelector<T>(sel);
+const $$ = <T extends HTMLElement = HTMLElement>(sel: string) =>
+  document.querySelectorAll<T>(sel);
+
+function getCtx(name: string) {
+  return $<HTMLCanvasElement>(`[data-chart="${name}"]`)?.getContext('2d') ?? null;
+}
+
 function loadChartJS(cb: () => void) {
   if ((window as any).Chart) { cb(); return; }
   const s = document.createElement('script');
@@ -19,12 +28,12 @@ function loadChartJS(cb: () => void) {
     const Chart = (window as any).Chart;
     if (!depthData || !monthData || !Chart) return;
 
-    const depthCanvas = document.getElementById('depth-dist-chart') as HTMLCanvasElement;
-    if (depthCanvas) {
+    const depthCtx = getCtx('depth-dist');
+    if (depthCtx) {
       const colors = depthData.labels.map((l: string) =>
         l === '30m+' ? '#f87171' : '#38bdf8'
       );
-      new Chart(depthCanvas.getContext('2d'), {
+      new Chart(depthCtx, {
         type: 'bar',
         data: {
           labels: depthData.labels,
@@ -41,11 +50,11 @@ function loadChartJS(cb: () => void) {
       });
     }
 
-    const monthCanvas = document.getElementById('monthly-chart') as HTMLCanvasElement;
-    if (monthCanvas) {
+    const monthCtx = getCtx('monthly');
+    if (monthCtx) {
       const yearColors: Record<string, string> = { '2024': '#38bdf8', '2025': '#818cf8', '2026': '#4ade80' };
       const bgColors = monthData.labels.map((ym: string) => yearColors[ym.slice(0, 4)] || '#38bdf8');
-      new Chart(monthCanvas.getContext('2d'), {
+      new Chart(monthCtx, {
         type: 'bar',
         data: {
           labels: monthData.labels,
@@ -63,7 +72,7 @@ function loadChartJS(cb: () => void) {
     }
   }
 
-  const trigger = document.querySelector('#depth-dist-chart');
+  const trigger = $('[data-chart="depth-dist"]');
   if (!trigger) return;
   const io = new IntersectionObserver((entries) => {
     if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildCharts); }
@@ -78,9 +87,9 @@ function loadChartJS(cb: () => void) {
     const yearData = (window as any).__DIVE_YEAR_DATA__;
     const Chart = (window as any).Chart;
     if (!yearData || !Chart) return;
-    const canvas = document.getElementById('year-compare-chart') as HTMLCanvasElement;
-    if (!canvas) return;
-    new Chart(canvas.getContext('2d'), {
+    const ctx = getCtx('year-compare');
+    if (!ctx) return;
+    new Chart(ctx, {
       type: 'bar',
       data: {
         labels: yearData.labels,
@@ -103,7 +112,7 @@ function loadChartJS(cb: () => void) {
     });
   }
 
-  const canvas = document.querySelector('#year-compare-chart');
+  const canvas = $('[data-chart="year-compare"]');
   if (!canvas) return;
   const io = new IntersectionObserver((entries) => {
     if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildYearChart); }
@@ -114,15 +123,15 @@ function loadChartJS(cb: () => void) {
 // ── 搜尋 + 篩選 ────────────────────────────────────────────────
 
 (function initFilter() {
-  const searchInput = document.getElementById('dive-search') as HTMLInputElement;
-  const yearSelect = document.getElementById('year-filter') as HTMLSelectElement;
-  const countEl = document.getElementById('filter-count') as HTMLSpanElement;
-  const rows = document.querySelectorAll<HTMLElement>('.dive-row');
+  const searchInput = $<HTMLInputElement>('[data-ref="search"]');
+  const yearSelect = $<HTMLSelectElement>('[data-ref="year-select"]');
+  const countEl = $<HTMLSpanElement>('[data-ref="count"]');
+  const rows = $$('.dive-row');
   const total = (window as any).__TOTAL_DIVES__ || rows.length;
 
   function applyFilter() {
-    const keyword = searchInput.value.trim().toLowerCase();
-    const year = yearSelect.value;
+    const keyword = searchInput?.value.trim().toLowerCase() ?? '';
+    const year = yearSelect?.value ?? '';
     let shown = 0;
     rows.forEach(row => {
       const location = (row.querySelector('.dive-location')?.textContent || '').toLowerCase();

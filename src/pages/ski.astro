@@ -67,35 +67,35 @@ const skiYearData = {
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
       <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">各天最高速度 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">km/h</span></h3>
       <div class="relative h-[180px] md:h-[220px]">
-        <canvas id="speed-chart"></canvas>
+        <canvas data-chart="speed"></canvas>
       </div>
     </div>
     <!-- 月份分布 -->
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
       <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">月份滑雪天數</h3>
       <div class="relative h-[180px] md:h-[220px]">
-        <canvas id="month-chart"></canvas>
+        <canvas data-chart="month"></canvas>
       </div>
     </div>
     <!-- 速度 vs 垂直落差 散點圖 -->
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
       <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">速度 vs 垂直落差 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">scatter</span></h3>
       <div class="relative h-[180px] md:h-[220px]">
-        <canvas id="scatter-chart"></canvas>
+        <canvas data-chart="scatter"></canvas>
       </div>
     </div>
     <!-- 雪場比較橫條圖 -->
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
       <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">雪場總滑行次數 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">runs</span></h3>
       <div class="relative h-[180px] md:h-[220px]">
-        <canvas id="resort-chart"></canvas>
+        <canvas data-chart="resort"></canvas>
       </div>
     </div>
     <!-- 年度比較 grouped bar chart -->
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6 col-span-full">
       <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">年度比較 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">滑雪天數 vs 總 runs</span></h3>
       <div class="relative" style="height:200px;">
-        <canvas id="year-compare-chart"></canvas>
+        <canvas data-chart="year-compare"></canvas>
       </div>
     </div>
   </div>
@@ -107,19 +107,19 @@ const skiYearData = {
     <!-- 篩選列 -->
     <div class="flex items-center gap-3 mb-4 flex-wrap">
       <input
-        id="ski-search"
+        data-ref="search"
         type="search"
         placeholder="搜尋雪場名稱…"
         class="flex-1 min-w-[180px] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] px-[0.85rem] py-2 text-[0.88rem] outline-none transition-colors duration-200 placeholder:text-[#475569] focus:border-[#818cf8]"
         autocomplete="off"
       />
-      <select id="ski-year" class="bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] px-3 py-2 text-[0.88rem] outline-none cursor-pointer transition-colors duration-200 focus:border-[#818cf8]">
+      <select data-ref="year-select" class="bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] px-3 py-2 text-[0.88rem] outline-none cursor-pointer transition-colors duration-200 focus:border-[#818cf8]">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
       </select>
-      <span id="ski-count" class="text-[0.78rem] text-[#475569] whitespace-nowrap ml-auto">顯示 {ski.length} / {ski.length} 筆</span>
+      <span data-ref="count" class="text-[0.78rem] text-[#475569] whitespace-nowrap ml-auto">顯示 {ski.length} / {ski.length} 筆</span>
     </div>
 
     <div class="flex flex-col gap-[0.6rem]">

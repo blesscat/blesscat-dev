@@ -12,6 +12,15 @@ declare global {
   }
 }
 
+const $ = <T extends Element = Element>(sel: string) =>
+  document.querySelector<T>(sel);
+const $$ = <T extends HTMLElement = HTMLElement>(sel: string) =>
+  document.querySelectorAll<T>(sel);
+
+function getCtx(name: string) {
+  return $<HTMLCanvasElement>(`[data-chart="${name}"]`)?.getContext('2d') ?? null;
+}
+
 // ── 地圖 ───────────────────────────────────────────────────────
 
 (function initMap() {
@@ -28,7 +37,7 @@ declare global {
     });
 
     if (isMobile) {
-      const mapEl = document.getElementById('ski-map');
+      const mapEl = $('#ski-map');
       if (mapEl) {
         mapEl.addEventListener('touchstart', (e: TouchEvent) => {
           if (e.touches.length >= 2) map.dragging.enable();
@@ -88,7 +97,7 @@ declare global {
 
     // 速度分布
     const sorted = [...data].sort((a, b) => b.top_speed_kmh - a.top_speed_kmh);
-    const speedCtx = (document.getElementById('speed-chart') as HTMLCanvasElement)?.getContext('2d');
+    const speedCtx = getCtx('speed');
     if (speedCtx) new C(speedCtx, {
       type: 'bar',
       data: {
@@ -108,7 +117,7 @@ declare global {
     });
 
     // 月份分布
-    const monthCtx = (document.getElementById('month-chart') as HTMLCanvasElement)?.getContext('2d');
+    const monthCtx = getCtx('month');
     if (monthCtx) new C(monthCtx, {
       type: 'bar',
       data: { labels: months, datasets: [{ label: '滑雪天數', data: months.map(m => monthCount[m]), backgroundColor: '#38bdf8', borderRadius: 4 }] },
@@ -125,7 +134,7 @@ declare global {
     // 速度 vs 垂直落差散點圖
     const scatterData = data.filter(d => d.vertical_m != null && d.top_speed_kmh != null)
       .map(d => ({ x: parseFloat((d.vertical_m / 1000).toFixed(2)), y: parseFloat(d.top_speed_kmh.toFixed(1)), resort: d.resort, date: d.date }));
-    const scatterCtx = (document.getElementById('scatter-chart') as HTMLCanvasElement)?.getContext('2d');
+    const scatterCtx = getCtx('scatter');
     if (scatterCtx) new C(scatterCtx, {
       type: 'scatter',
       data: { datasets: [{ label: '速度 vs 垂直落差', data: scatterData, backgroundColor: '#f87171', pointRadius: 8, pointHoverRadius: 10 }] },
@@ -145,7 +154,7 @@ declare global {
     const resortRuns: Record<string, number> = {};
     data.forEach(d => { const n = d.resort.split('/')[0].trim(); resortRuns[n] = (resortRuns[n] || 0) + (d.runs || 0); });
     const resortsSorted = Object.entries(resortRuns).sort((a, b) => b[1] - a[1]);
-    const resortCtx = (document.getElementById('resort-chart') as HTMLCanvasElement)?.getContext('2d');
+    const resortCtx = getCtx('resort');
     if (resortCtx) new C(resortCtx, {
       type: 'bar',
       data: { labels: resortsSorted.map(r => r[0]), datasets: [{ label: '總 runs', data: resortsSorted.map(r => r[1]), backgroundColor: '#818cf8', borderRadius: 4 }] },
@@ -161,7 +170,7 @@ declare global {
 
     // 年度比較
     const yearData = window.__SKI_YEAR_DATA__;
-    const yearCtx = (document.getElementById('year-compare-chart') as HTMLCanvasElement)?.getContext('2d');
+    const yearCtx = getCtx('year-compare');
     if (yearData && yearCtx) new C(yearCtx, {
       type: 'bar',
       data: {
@@ -186,10 +195,10 @@ declare global {
 // ── 搜尋篩選 ───────────────────────────────────────────────────
 
 (function initFilter() {
-  const searchEl = document.getElementById('ski-search') as HTMLInputElement | null;
-  const yearEl = document.getElementById('ski-year') as HTMLSelectElement | null;
-  const countEl = document.getElementById('ski-count');
-  const rows = document.querySelectorAll<HTMLElement>('.ski-row');
+  const searchEl = $<HTMLInputElement>('[data-ref="search"]');
+  const yearEl = $<HTMLSelectElement>('[data-ref="year-select"]');
+  const countEl = $('[data-ref="count"]');
+  const rows = $$('.ski-row');
   const total = window.__SKI_TOTAL__ || rows.length;
 
   function applyFilter() {
