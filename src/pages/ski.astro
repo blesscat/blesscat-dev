@@ -35,42 +35,42 @@ const months = Object.keys(monthCount).sort();
 
   <!-- 統計卡片 -->
   <div class="stats-grid">
-    <div class="card stat-card">
-      <div class="stat-num">{totalDays}</div>
+    <div class="card stat-card anim-fade-up delay-1">
+      <div class="stat-num count-up" data-target={totalDays} data-decimals="0">{totalDays}</div>
       <div class="stat-label">滑雪天數</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{totalRuns}</div>
+    <div class="card stat-card anim-fade-up delay-2">
+      <div class="stat-num count-up" data-target={totalRuns} data-decimals="0">{totalRuns}</div>
       <div class="stat-label">總滑行次數</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{(totalVertical / 1000).toFixed(1)}km</div>
+    <div class="card stat-card anim-fade-up delay-3">
+      <div class="stat-num count-up" data-target={totalVertical / 1000} data-decimals="1" data-suffix="km">{(totalVertical / 1000).toFixed(1)}km</div>
       <div class="stat-label">累計垂直落差</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{maxSpeed.toFixed(1)}<span class="stat-unit">km/h</span></div>
+    <div class="card stat-card anim-fade-up delay-4">
+      <div class="stat-num count-up" data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}<span class="stat-unit">km/h</span></div>
       <div class="stat-label">最高速度</div>
       <div class="stat-sub">{maxSpeedDay?.resort}</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{totalHours}h {totalMins}m</div>
+    <div class="card stat-card anim-fade-up delay-5">
+      <div class="stat-num count-up" data-target={totalHours} data-decimals="0" data-suffix={`h ${totalMins}m`}>{totalHours}h {totalMins}m</div>
       <div class="stat-label">總滑行時間</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{maxAlt.toFixed(0)}<span class="stat-unit">m</span></div>
+    <div class="card stat-card anim-fade-up delay-6">
+      <div class="stat-num count-up" data-target={maxAlt} data-decimals="0" data-suffix="m">{maxAlt.toFixed(0)}<span class="stat-unit">m</span></div>
       <div class="stat-label">最高海拔</div>
       <div class="stat-sub">{maxAltDay?.resort}</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{(totalDistance / 1000).toFixed(1)}km</div>
+    <div class="card stat-card anim-fade-up delay-7">
+      <div class="stat-num count-up" data-target={totalDistance / 1000} data-decimals="1" data-suffix="km">{(totalDistance / 1000).toFixed(1)}km</div>
       <div class="stat-label">總滑行距離</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{totalLifts}</div>
+    <div class="card stat-card anim-fade-up delay-8">
+      <div class="stat-num count-up" data-target={totalLifts} data-decimals="0">{totalLifts}</div>
       <div class="stat-label">總搭纜車次數</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{resorts}</div>
+    <div class="card stat-card anim-fade-up delay-8">
+      <div class="stat-num count-up" data-target={resorts} data-decimals="0">{resorts}</div>
       <div class="stat-label">造訪雪場</div>
     </div>
   </div>
@@ -104,7 +104,7 @@ const months = Object.keys(monthCount).sort();
     <h2>所有紀錄</h2>
     <div class="ski-list">
       {ski.map(d => (
-        <div class="ski-row card">
+        <div class="ski-row card reveal">
           <div class="ski-date">{d.date}</div>
           <div class="ski-info">
             <div class="ski-resort">{d.resort}</div>
@@ -256,6 +256,33 @@ const months = Object.keys(monthCount).sort();
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+<script>
+  function animateCountUp(el: HTMLElement) {
+    const target = parseFloat(el.dataset.target || '0');
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const suffix = el.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = (target * ease).toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const counters = document.querySelectorAll<HTMLElement>('.count-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCountUp(entry.target as HTMLElement);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => io.observe(el));
+</script>
+
 <style>
   .page-header { margin-bottom: 2rem; }
   .subtitle { color: #64748b; margin-top: 0.3rem; }
@@ -296,9 +323,14 @@ const months = Object.keys(monthCount).sort();
   .ski-list { display: flex; flex-direction: column; gap: 0.6rem; }
   .ski-row {
     display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 1.5rem; transition: border-color 0.2s;
+    padding: 1rem 1.5rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   }
-  .ski-row:hover { border-color: #818cf8; }
+  .ski-row:hover {
+    border-color: #818cf8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(129,140,248,0.1);
+  }
   .ski-date { font-size: 0.8rem; color: #475569; min-width: 6rem; font-weight: 700; }
   .ski-info { flex: 1; min-width: 0; }
   .ski-resort { font-weight: 600; font-size: 0.95rem; }
