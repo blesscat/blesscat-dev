@@ -3,7 +3,9 @@ import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="404 — 豬毛迷路了">
   <div class="not-found-container">
-    <div class="cat-emoji pulse-glow">🐱</div>
+    <div class="cat-emoji">
+      <img src="/zhumao-avatar.jpg" alt="豬毛" class="cat-img" />
+    </div>
     <h1 class="title">404 — 豬毛迷路了</h1>
     <p class="subtitle">這個頁面不存在，豬毛也找不到它 (´･ω･`)</p>
     <a href="/" class="btn-home">回首頁</a>
@@ -28,10 +30,18 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .cat-emoji {
-    font-size: 6rem;
     display: inline-block;
-    animation: swing 1.4s ease-in-out infinite, pulse-glow 2.5s ease-in-out infinite;
+    animation: swing 1.4s ease-in-out infinite;
     transform-origin: center bottom;
+  }
+  .cat-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #38bdf8;
+    box-shadow: 0 0 24px rgba(56,189,248,0.4), 0 0 48px rgba(56,189,248,0.15);
+    animation: pulse-glow 2.5s ease-in-out infinite;
   }
 
   .title {
