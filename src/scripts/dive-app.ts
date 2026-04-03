@@ -15,22 +15,37 @@ declare global {
 (function initMap(): void {
   const script = document.createElement('script');
   script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  script.onload = function () {
-    // gesture handling plugin
-    const gh = document.createElement('script');
-    gh.src = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js';
-    const ghCss = document.createElement('link');
-    ghCss.rel = 'stylesheet';
-    ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
-    document.head.appendChild(ghCss);
-    document.head.appendChild(gh);
-    gh.onload = function () { initDiveMap(); };
-  };
+  script.onload = function () { initDiveMap(); };
   document.head.appendChild(script);
 
   function initDiveMap() {
     const L = window.L;
-    const map = L.map('dive-map', { zoomControl: true, gestureHandling: true });
+    const isMobile = window.matchMedia('(max-width: 768px)').matches ||
+      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const map = L.map('dive-map', {
+      zoomControl: true,
+      dragging: !isMobile,
+      tap: false,
+      scrollWheelZoom: false,
+    });
+
+    // 手機版：雙指才能操作地圖
+    if (isMobile) {
+      const mapEl = document.getElementById('dive-map');
+      if (mapEl) {
+        mapEl.addEventListener('touchstart', function (e: TouchEvent) {
+          if (e.touches.length >= 2) {
+            map.dragging.enable();
+          }
+        }, { passive: true });
+        mapEl.addEventListener('touchend', function (e: TouchEvent) {
+          if (e.touches.length < 2) {
+            map.dragging.disable();
+          }
+        }, { passive: true });
+      }
+    }
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
