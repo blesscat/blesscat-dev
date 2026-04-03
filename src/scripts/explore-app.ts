@@ -54,13 +54,6 @@ function loadScript(src: string): Promise<void> {
 async function init() {
   await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
 
-  // gesture handling
-  const ghCss = document.createElement('link');
-  ghCss.rel = 'stylesheet';
-  ghCss.href = 'https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.css';
-  document.head.appendChild(ghCss);
-  await loadScript('https://unpkg.com/leaflet-gesture-handling@1.4.0/dist/leaflet-gesture-handling.min.js');
-
   const dives: any[] = window.__EXPLORE_DIVES__ || [];
   const ski: any[] = window.__EXPLORE_SKI__ || [];
 
@@ -89,7 +82,29 @@ async function init() {
 
 function initMap(dives: any[], ski: any[]) {
   const L = window.L;
-  map = L.map('explore-map', { zoomControl: true, attributionControl: false, gestureHandling: true });
+  const isMobile = window.matchMedia('(max-width: 768px)').matches ||
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  map = L.map('explore-map', {
+    zoomControl: true,
+    attributionControl: false,
+    dragging: !isMobile,
+    tap: false,
+    scrollWheelZoom: false,
+  });
+
+  // 手機版：雙指才能操作地圖
+  if (isMobile) {
+    const mapEl = document.getElementById('explore-map');
+    if (mapEl) {
+      mapEl.addEventListener('touchstart', (e: TouchEvent) => {
+        if (e.touches.length >= 2) map.dragging.enable();
+      }, { passive: true });
+      mapEl.addEventListener('touchend', (e: TouchEvent) => {
+        if (e.touches.length < 2) map.dragging.disable();
+      }, { passive: true });
+    }
+  }
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 18,
