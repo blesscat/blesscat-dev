@@ -17,11 +17,12 @@ const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
 const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 ---
 <Layout title="Home" description="潛水、滑雪、探索、搗鼓 AI — Blesscat 的個人紀錄網站" ogImage="/og/index.png">
-  <div class="hero">
+  <div class="grid grid-cols-[1.1fr_1fr] gap-16 items-center min-h-[80vh] relative max-md:grid-cols-1 max-md:gap-10 max-md:min-h-0 max-md:py-8"
+       style="background: radial-gradient(ellipse at 20% 80%, rgba(14,30,60,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(10,14,26,0.0) 0%, transparent 50%);">
 
     <!-- 水波紋 SVG 動畫背景 -->
-    <div class="ripple-container" aria-hidden="true">
-      <svg class="ripple-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <div class="absolute left-[10%] bottom-[10%] w-[300px] h-[300px] pointer-events-none z-0 overflow-visible" aria-hidden="true">
+      <svg class="w-full h-full overflow-visible" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
         <circle class="ripple ripple-1" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
         <circle class="ripple ripple-2" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
         <circle class="ripple ripple-3" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
@@ -29,43 +30,63 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     </div>
 
     <!-- 左：簡介 -->
-    <div class="left anim-fade-up delay-1">
-      <p class="kicker">Explorer · Since 2024</p>
-      <h1>blesscat<span>.dev</span></h1>
-      <p class="desc">
-        潛過太平洋的珊瑚礁，滑過日本的粉雪斜坡，
-        順便把 AI agent 搞爆幾次。
+    <div class="flex flex-col anim-fade-up delay-1">
+      <p class="text-[0.72rem] tracking-[3px] uppercase text-[#38bdf8] border-l-2 border-[#38bdf8] pl-[10px] mb-4">
+        Explorer · Since 2024
+      </p>
+      <h1 class="text-[3.8rem] font-black text-[#e2e8f0] tracking-[-2px] leading-none mb-5 [animation:pulse-glow_4s_ease-in-out_infinite] max-md:text-[2.8rem] max-[480px]:text-[2.2rem]">
+        blesscat<span class="text-[#38bdf8]">.dev</span>
+      </h1>
+      <p class="text-[#64748b] text-base leading-[1.75] mb-8">
+        潛過太平洋的珊瑚礁，滑過日本的粉雪斜坡，<br/>
+        順便把 AI agent 搞爆幾次。<br/>
         這裡是我的探索紀錄。
       </p>
-      <div class="cta-row">
-        <a href="/dives" class="btn-primary">🤿 潛水紀錄</a>
-        <a href="/ski" class="btn-ski">⛷️ 滑雪紀錄</a>
-        <a href="/explore" class="btn-explore">🌏 探索地圖</a>
-        <a href="/blog" class="btn-secondary">📝 日記</a>
+      <div class="flex gap-3 flex-wrap max-[480px]:gap-2">
+        <a href="/dives"
+           class="px-6 py-3 bg-[#38bdf8] text-[#0a0e1a] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
+          🤿 潛水紀錄
+        </a>
+        <a href="/ski"
+           class="px-6 py-3 bg-[#818cf8] text-[#0a0e1a] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(129,140,248,0.35)] max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
+          ⛷️ 滑雪紀錄
+        </a>
+        <a href="/explore"
+           class="px-6 py-3 bg-[rgba(56,189,248,0.1)] border border-[#38bdf8] text-[#38bdf8] rounded-lg no-underline font-bold text-[0.9rem] transition-all hover:bg-[rgba(56,189,248,0.2)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.2)]">
+          🌏 探索地圖
+        </a>
+        <a href="/blog"
+           class="px-6 py-3 border border-[#1e2535] text-[#64748b] rounded-lg no-underline text-[0.9rem] transition-all hover:border-[#38bdf8] hover:text-[#e2e8f0] hover:-translate-y-0.5">
+          📝 日記
+        </a>
       </div>
     </div>
 
     <!-- 右：2×2 數字卡 -->
-    <div class="right">
-      <div class="stat-card dive anim-fade-up delay-2">
-        <div class="card-icon">🤿</div>
-        <div class="card-num count-up" data-target={totalDives} data-decimals="0">{totalDives}</div>
-        <div class="card-label">次潛水</div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#38bdf8] hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-2">
+        <div class="text-xl mb-1">🤿</div>
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#38bdf8] count-up max-md:text-[1.6rem]"
+             data-target={totalDives} data-decimals="0">{totalDives}</div>
+        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">次潛水</div>
       </div>
-      <div class="stat-card dive anim-fade-up delay-3">
-        <div class="card-icon">▼</div>
-        <div class="card-num count-up" data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</div>
-        <div class="card-label">最大深度</div>
+      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#38bdf8] hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] anim-fade-up delay-3">
+        <div class="text-xl mb-1">▼</div>
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#38bdf8] count-up max-md:text-[1.6rem]"
+             data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</div>
+        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">最大深度</div>
       </div>
-      <div class="stat-card ski anim-fade-up delay-4">
-        <div class="card-icon">⛷️</div>
-        <div class="card-num count-up" data-target={totalSkiDays} data-decimals="0">{totalSkiDays}</div>
-        <div class="card-label">滑雪天數</div>
+      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#818cf8] hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-4">
+        <div class="text-xl mb-1">⛷️</div>
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#818cf8] count-up max-md:text-[1.6rem]"
+             data-target={totalSkiDays} data-decimals="0">{totalSkiDays}</div>
+        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">滑雪天數</div>
       </div>
-      <div class="stat-card ski anim-fade-up delay-5">
-        <div class="card-icon">⚡</div>
-        <div class="card-num count-up" data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}km/h</div>
-        <div class="card-label">最高速度</div>
+      <div class="bg-[#111827] border border-[#1e2535] rounded-2xl p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-1 hover:border-[#818cf8] hover:shadow-[0_8px_28px_rgba(129,140,248,0.12)] anim-fade-up delay-5">
+        <div class="text-xl mb-1">⚡</div>
+        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#818cf8] count-up max-md:text-[1.6rem]"
+             data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}km/h</div>
+        <div class="text-[0.72rem] text-[#475569] uppercase tracking-[1.5px] mt-0.5">最高速度</div>
       </div>
     </div>
 
@@ -73,60 +94,11 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 </Layout>
 
 <script>
-  function animateCountUp(el: HTMLElement) {
-    const target = parseFloat(el.dataset.target || '0');
-    const decimals = parseInt(el.dataset.decimals || '0');
-    const suffix = el.dataset.suffix || '';
-    const duration = 1200;
-    const start = performance.now();
-    function tick(now: number) {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = (target * ease).toFixed(decimals) + suffix;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-  const counters = document.querySelectorAll<HTMLElement>('.count-up');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCountUp(entry.target as HTMLElement);
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  counters.forEach(el => io.observe(el));
+  import '../scripts/count-up.ts';
 </script>
 
+<!-- ripple 動畫用了 SVG r attribute keyframe，Tailwind 無法處理，只保留這部分 -->
 <style>
-  .hero {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    min-height: 80vh;
-    position: relative;
-    background: radial-gradient(ellipse at 20% 80%, rgba(14,30,60,0.55) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(10,14,26,0.0) 0%, transparent 50%);
-  }
-
-  /* ── 水波紋 ── */
-  .ripple-container {
-    position: absolute;
-    left: 10%;
-    bottom: 10%;
-    width: 300px;
-    height: 300px;
-    pointer-events: none;
-    z-index: 0;
-    overflow: visible;
-  }
-  .ripple-svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
   .ripple {
     transform-origin: 150px 150px;
     animation: ripple-expand 4s ease-out infinite;
@@ -136,167 +108,5 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
   @keyframes ripple-expand {
     0%   { r: 30;  stroke-opacity: 0.6; }
     100% { r: 140; stroke-opacity: 0; }
-  }
-
-  /* ── 左欄 ── */
-  .left { display: flex; flex-direction: column; }
-
-  .kicker {
-    font-size: 0.72rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #38bdf8;
-    border-left: 2px solid #38bdf8;
-    padding-left: 10px;
-    margin-bottom: 1rem;
-  }
-
-  h1 {
-    font-size: 3.8rem;
-    font-weight: 900;
-    color: #e2e8f0;
-    letter-spacing: -2px;
-    line-height: 1;
-    margin-bottom: 1.2rem;
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-  h1 span { color: #38bdf8; }
-
-  .desc {
-    color: #64748b;
-    font-size: 1rem;
-    line-height: 1.75;
-    margin-bottom: 2rem;
-  }
-
-  .cta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-  .btn-primary {
-    padding: 0.75rem 1.6rem;
-    background: #38bdf8;
-    color: #0a0e1a;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56,189,248,0.35);
-  }
-
-  .btn-ski {
-    padding: 0.75rem 1.6rem;
-    background: #818cf8;
-    color: #0a0e1a;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-ski:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(129,140,248,0.35);
-  }
-
-  .btn-explore {
-    padding: 0.75rem 1.6rem;
-    background: rgba(56,189,248,0.1);
-    border: 1px solid #38bdf8;
-    color: #38bdf8;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-  }
-  .btn-explore:hover {
-    background: rgba(56,189,248,0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56,189,248,0.2);
-  }
-
-  .btn-secondary {
-    padding: 0.75rem 1.6rem;
-    border: 1px solid #1e2535;
-    color: #64748b;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: border-color 0.2s, color 0.2s, transform 0.2s;
-  }
-  .btn-secondary:hover {
-    border-color: #38bdf8;
-    color: #e2e8f0;
-    transform: translateY(-2px);
-  }
-
-  /* ── 右欄 2×2 卡片 ── */
-  .right {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .stat-card {
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 16px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-  }
-  .stat-card:hover {
-    transform: translateY(-4px);
-  }
-  .stat-card.dive:hover {
-    border-color: #38bdf8;
-    box-shadow: 0 8px 28px rgba(56,189,248,0.12);
-  }
-  .stat-card.ski:hover {
-    border-color: #818cf8;
-    box-shadow: 0 8px 28px rgba(129,140,248,0.12);
-  }
-
-  .card-icon { font-size: 1.2rem; margin-bottom: 0.4rem; }
-
-  .card-num {
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    line-height: 1;
-  }
-  .stat-card.dive .card-num { color: #38bdf8; }
-  .stat-card.ski  .card-num { color: #818cf8; }
-
-  .card-label {
-    font-size: 0.72rem;
-    color: #475569;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 0.2rem;
-  }
-
-  /* ── RWD ── */
-  @media (max-width: 768px) {
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      min-height: unset;
-      padding: 2rem 0;
-    }
-    h1 { font-size: 2.8rem; }
-    .right { grid-template-columns: 1fr 1fr; }
-    .card-num { font-size: 1.6rem; }
-  }
-
-  @media (max-width: 480px) {
-    h1 { font-size: 2.2rem; }
-    .cta-row { gap: 0.5rem; }
-    .btn-primary, .btn-ski, .btn-secondary { padding: 0.65rem 1.2rem; font-size: 0.85rem; }
   }
 </style>
