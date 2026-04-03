@@ -113,10 +113,11 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
     .nav-icon { font-size: 1.1rem; }
   }
 
-  /* Desktop: sticky */
+  /* Desktop: sticky，z-index 要高過 Leaflet（預設最高 ~1000） */
   .top-nav-bar {
     position: sticky;
     top: 0;
+    z-index: 1100;
   }
 
   /* 手機版：fixed + transform，transform 才能正常作用 */
@@ -126,6 +127,7 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
       top: 0;
       left: 0;
       right: 0;
+      z-index: 1100;
       transition: transform 0.3s ease;
     }
     .top-nav-bar.nav-hidden {
