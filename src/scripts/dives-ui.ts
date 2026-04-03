@@ -1,38 +1,47 @@
 // dives-ui.ts — stat charts + search/filter for dives page
 
-const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+declare global {
+  interface Window {
+    __DEPTH_CHART_DATA__: { labels: string[]; values: number[] };
+    __MONTH_CHART_DATA__: { labels: string[]; values: number[] };
+    __TOTAL_DIVES__: number;
+    __DIVE_YEAR_DATA__: { labels: string[]; counts: number[]; hours: number[] };
+  }
+}
+
+const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
 
 const $ = <T extends Element = Element>(sel: string) =>
-  document.querySelector<T>(sel);
+  document.querySelector<T>(sel)
 const $$ = <T extends HTMLElement = HTMLElement>(sel: string) =>
-  document.querySelectorAll<T>(sel);
+  document.querySelectorAll<T>(sel)
 
 function getCtx(name: string) {
-  return $<HTMLCanvasElement>(`[data-chart="${name}"]`)?.getContext('2d') ?? null;
+  return $<HTMLCanvasElement>(`[data-chart="${name}"]`)?.getContext('2d') ?? null
 }
 
 function loadChartJS(cb: () => void) {
-  if ((window as any).Chart) { cb(); return; }
-  const s = document.createElement('script');
-  s.src = CHART_CDN;
-  s.onload = cb;
-  document.head.appendChild(s);
+  if ((window as any).Chart) { cb(); return }
+  const s = document.createElement('script')
+  s.src = CHART_CDN
+  s.onload = cb
+  document.head.appendChild(s)
 }
 
 // ── 深度分布 + 月份活動 ──────────────────────────────────────────
 
 (function initStatCharts() {
   function buildCharts() {
-    const depthData = (window as any).__DEPTH_CHART_DATA__;
-    const monthData = (window as any).__MONTH_CHART_DATA__;
-    const Chart = (window as any).Chart;
-    if (!depthData || !monthData || !Chart) return;
+    const depthData = window.__DEPTH_CHART_DATA__
+    const monthData = window.__MONTH_CHART_DATA__
+    const Chart = (window as any).Chart
+    if (!depthData || !monthData || !Chart) return
 
-    const depthCtx = getCtx('depth-dist');
+    const depthCtx = getCtx('depth-dist')
     if (depthCtx) {
       const colors = depthData.labels.map((l: string) =>
         l === '30m+' ? '#f87171' : '#38bdf8'
-      );
+      )
       new Chart(depthCtx, {
         type: 'bar',
         data: {
@@ -47,13 +56,13 @@ function loadChartJS(cb: () => void) {
             y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', stepSize: 1 }, beginAtZero: true },
           }
         }
-      });
+      })
     }
 
-    const monthCtx = getCtx('monthly');
+    const monthCtx = getCtx('monthly')
     if (monthCtx) {
-      const yearColors: Record<string, string> = { '2024': '#38bdf8', '2025': '#818cf8', '2026': '#4ade80' };
-      const bgColors = monthData.labels.map((ym: string) => yearColors[ym.slice(0, 4)] || '#38bdf8');
+      const yearColors: Record<string, string> = { '2024': '#38bdf8', '2025': '#818cf8', '2026': '#4ade80' }
+      const bgColors = monthData.labels.map((ym: string) => yearColors[ym.slice(0, 4)] || '#38bdf8')
       new Chart(monthCtx, {
         type: 'bar',
         data: {
@@ -68,27 +77,27 @@ function loadChartJS(cb: () => void) {
             y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', stepSize: 1 }, beginAtZero: true },
           }
         }
-      });
+      })
     }
   }
 
-  const trigger = $('[data-chart="depth-dist"]');
-  if (!trigger) return;
+  const trigger = $('[data-chart="depth-dist"]')
+  if (!trigger) return
   const io = new IntersectionObserver((entries) => {
-    if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildCharts); }
-  }, { rootMargin: '200px' });
-  io.observe(trigger);
-})();
+    if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildCharts) }
+  }, { rootMargin: '200px' })
+  io.observe(trigger)
+})()
 
 // ── 年度比較圖 ──────────────────────────────────────────────────
 
-(function initYearChart() {
+;(function initYearChart() {
   function buildYearChart() {
-    const yearData = (window as any).__DIVE_YEAR_DATA__;
-    const Chart = (window as any).Chart;
-    if (!yearData || !Chart) return;
-    const ctx = getCtx('year-compare');
-    if (!ctx) return;
+    const yearData = window.__DIVE_YEAR_DATA__
+    const Chart = (window as any).Chart
+    if (!yearData || !Chart) return
+    const ctx = getCtx('year-compare')
+    if (!ctx) return
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -109,41 +118,43 @@ function loadChartJS(cb: () => void) {
           y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8' }, beginAtZero: true }
         }
       }
-    });
+    })
   }
 
-  const canvas = $('[data-chart="year-compare"]');
-  if (!canvas) return;
+  const canvas = $('[data-chart="year-compare"]')
+  if (!canvas) return
   const io = new IntersectionObserver((entries) => {
-    if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildYearChart); }
-  }, { rootMargin: '200px' });
-  io.observe(canvas);
-})();
+    if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildYearChart) }
+  }, { rootMargin: '200px' })
+  io.observe(canvas)
+})()
 
 // ── 搜尋 + 篩選 ────────────────────────────────────────────────
 
-(function initFilter() {
-  const searchInput = $<HTMLInputElement>('[data-ref="search"]');
-  const yearSelect = $<HTMLSelectElement>('[data-ref="year-select"]');
-  const countEl = $<HTMLSpanElement>('[data-ref="count"]');
-  const rows = $$('.dive-row');
-  const total = (window as any).__TOTAL_DIVES__ || rows.length;
+;(function initFilter() {
+  const searchInput = $<HTMLInputElement>('[data-ref="search"]')
+  const yearSelect = $<HTMLSelectElement>('[data-ref="year-select"]')
+  const countEl = $<HTMLSpanElement>('[data-ref="count"]')
+  const rows = $$('.dive-row')
+  const total = window.__TOTAL_DIVES__ || rows.length
 
   function applyFilter() {
-    const keyword = searchInput?.value.trim().toLowerCase() ?? '';
-    const year = yearSelect?.value ?? '';
-    let shown = 0;
+    const keyword = searchInput?.value.trim().toLowerCase() ?? ''
+    const year = yearSelect?.value ?? ''
+    let shown = 0
     rows.forEach(row => {
-      const location = (row.querySelector('.dive-location')?.textContent || '').toLowerCase();
-      const date = row.querySelector('.dive-date')?.textContent || '';
-      const matchKeyword = !keyword || location.includes(keyword);
-      const matchYear = !year || date.slice(0, 4) === year;
-      row.style.display = (matchKeyword && matchYear) ? '' : 'none';
-      if (matchKeyword && matchYear) shown++;
-    });
-    if (countEl) countEl.textContent = `顯示 ${shown} / ${total} 筆`;
+      const location = (row.querySelector('.dive-location')?.textContent || '').toLowerCase()
+      const date = row.querySelector('.dive-date')?.textContent || ''
+      const matchKeyword = !keyword || location.includes(keyword)
+      const matchYear = !year || date.slice(0, 4) === year
+      row.style.display = (matchKeyword && matchYear) ? '' : 'none'
+      if (matchKeyword && matchYear) shown++
+    })
+    if (countEl) countEl.textContent = `顯示 ${shown} / ${total} 筆`
   }
 
-  searchInput?.addEventListener('input', applyFilter);
-  yearSelect?.addEventListener('change', applyFilter);
-})();
+  searchInput?.addEventListener('input', applyFilter)
+  yearSelect?.addEventListener('change', applyFilter)
+})()
+
+export {}

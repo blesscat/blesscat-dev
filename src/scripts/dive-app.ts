@@ -1,11 +1,11 @@
-import type { Dive, DiveProfiles } from '../types/dive';
+import type { Dive, DiveProfiles } from '../types/dive'
 
 declare global {
   interface Window {
     __DIVES_GPS__: Dive[];
     __DIVES_PROFILE__: Dive[];
-    L: typeof import('leaflet');
-    Chart: typeof import('chart.js').Chart;
+    L: any;
+    Chart: any;
   }
 }
 
@@ -13,47 +13,47 @@ declare global {
 // Leaflet 地圖
 // =====================
 (function initMap(): void {
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  script.onload = function () { initDiveMap(); };
-  document.head.appendChild(script);
+  const script = document.createElement('script')
+  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  script.onload = function () { initDiveMap() }
+  document.head.appendChild(script)
 
   function initDiveMap() {
-    const L = window.L;
+    const L = window.L
     const isMobile = window.matchMedia('(max-width: 768px)').matches ||
-      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
     const map = L.map('dive-map', {
       zoomControl: true,
       dragging: !isMobile,
       tap: false,
       scrollWheelZoom: false,
-    });
+    })
 
     // 手機版：雙指才能操作地圖
     if (isMobile) {
-      const mapEl = document.getElementById('dive-map');
+      const mapEl = document.getElementById('dive-map')
       if (mapEl) {
         mapEl.addEventListener('touchstart', function (e: TouchEvent) {
           if (e.touches.length >= 2) {
-            map.dragging.enable();
+            map.dragging.enable()
           }
-        }, { passive: true });
+        }, { passive: true })
         mapEl.addEventListener('touchend', function (e: TouchEvent) {
           if (e.touches.length < 2) {
-            map.dragging.disable();
+            map.dragging.disable()
           }
-        }, { passive: true });
+        }, { passive: true })
       }
     }
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
       maxZoom: 18,
-    }).addTo(map);
+    }).addTo(map)
 
-    const dives: Dive[] = window.__DIVES_GPS__ || [];
-    if (!dives.length) return;
+    const dives: Dive[] = window.__DIVES_GPS__ || []
+    if (!dives.length) return
 
     const icon = L.divIcon({
       html: `<div style="
@@ -64,11 +64,11 @@ declare global {
       className: '',
       iconSize: [12, 12],
       iconAnchor: [6, 6],
-    });
+    })
 
-    const markers: ReturnType<typeof L.marker>[] = [];
+    const markers: ReturnType<typeof L.marker>[] = []
     dives.forEach((d) => {
-      if (d.lat == null || d.lon == null) return;
+      if (d.lat == null || d.lon == null) return
       const marker = L.marker([d.lat, d.lon], { icon })
         .addTo(map)
         .bindTooltip(
@@ -82,42 +82,42 @@ declare global {
             </div>
           </div>`,
           { sticky: true }
-        );
-      markers.push(marker);
-    });
+        )
+      markers.push(marker)
+    })
 
-    const group = L.featureGroup(markers);
-    map.fitBounds(group.getBounds().pad(0.3));
+    const group = L.featureGroup(markers)
+    map.fitBounds(group.getBounds().pad(0.3))
   }
-})();
+})()
 
 // =====================
 // Chart.js 深度曲線（收折式，懶載入）
 // =====================
-(function initChart(): void {
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+;(function initChart(): void {
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
   script.onload = async function () {
-    let profiles: DiveProfiles = {};
+    let profiles: DiveProfiles = {}
     try {
-      const r = await fetch('/dive_profiles.json');
-      profiles = (await r.json()) as DiveProfiles;
+      const r = await fetch('/dive_profiles.json')
+      profiles = (await r.json()) as DiveProfiles
     } catch (_e) {}
 
-    const chartInstances = new Map<number, InstanceType<typeof window.Chart>>();
+    const chartInstances = new Map<number, InstanceType<typeof window.Chart>>()
 
     function buildChart(diveNum: number): void {
-      const canvas = document.getElementById(`chart-${diveNum}`) as HTMLCanvasElement | null;
-      if (!canvas) return;
-      if (chartInstances.has(diveNum)) return; // 已建立不重複
+      const canvas = document.getElementById(`chart-${diveNum}`) as HTMLCanvasElement | null
+      if (!canvas) return
+      if (chartInstances.has(diveNum)) return // 已建立不重複
 
-      const profile = profiles[String(diveNum)];
-      if (!profile?.length) return;
+      const profile = profiles[String(diveNum)]
+      if (!profile?.length) return
 
-      const hasHr = profile.some((p) => p.hr !== null);
-      const step = Math.max(1, Math.floor(profile.length / 300));
-      const sampled = profile.filter((_, i) => i % step === 0);
-      const isMobile = window.innerWidth < 640;
+      const hasHr = profile.some((p) => p.hr !== null)
+      const step = Math.max(1, Math.floor(profile.length / 300))
+      const sampled = profile.filter((_, i) => i % step === 0)
+      const isMobile = window.innerWidth < 640
 
       const chart = new window.Chart(canvas.getContext('2d')!, {
         type: 'line',
@@ -167,9 +167,9 @@ declare global {
               xAlign: 'center',
               caretPadding: isMobile ? 20 : 4,
               callbacks: {
-                label: (c) => {
-                  if (c.dataset.label?.includes('深度')) return `深度: ${Math.abs(c.raw as number).toFixed(1)} m`;
-                  return `心率: ${c.raw} bpm`;
+                label: (c: any) => {
+                  if (c.dataset.label?.includes('深度')) return `深度: ${Math.abs(c.raw as number).toFixed(1)} m`
+                  return `心率: ${c.raw} bpm`
                 },
               },
             },
@@ -182,7 +182,7 @@ declare global {
             },
             yDepth: {
               position: 'left',
-              ticks: { color: '#38bdf8', callback: (v) => Math.abs(v as number) + 'm', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
+              ticks: { color: '#38bdf8', callback: (v: any) => Math.abs(v as number) + 'm', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
               grid: { color: '#1e2535' },
               title: { display: !isMobile, text: '深度', color: '#38bdf8' },
             },
@@ -196,28 +196,28 @@ declare global {
             } : {}),
           },
         },
-      });
-      chartInstances.set(diveNum, chart);
+      })
+      chartInstances.set(diveNum, chart)
     }
 
     // 收折 toggle
     document.querySelectorAll<HTMLButtonElement>('.chart-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const diveNum = parseInt(btn.dataset.dive ?? '0', 10);
-        const panel = document.getElementById(`chart-panel-${diveNum}`);
-        if (!panel) return;
+        const diveNum = parseInt(btn.dataset.dive ?? '0', 10)
+        const panel = document.getElementById(`chart-panel-${diveNum}`)
+        if (!panel) return
 
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const expanded = btn.getAttribute('aria-expanded') === 'true'
         if (expanded) {
-          panel.hidden = true;
-          btn.setAttribute('aria-expanded', 'false');
+          panel.hidden = true
+          btn.setAttribute('aria-expanded', 'false')
         } else {
-          panel.hidden = false;
-          btn.setAttribute('aria-expanded', 'true');
-          buildChart(diveNum); // 第一次打開才建立
+          panel.hidden = false
+          btn.setAttribute('aria-expanded', 'true')
+          buildChart(diveNum) // 第一次打開才建立
         }
-      });
-    });
-  };
-  document.head.appendChild(script);
-})();
+      })
+    })
+  }
+  document.head.appendChild(script)
+})()

@@ -15,73 +15,73 @@ declare global {
 // ── helpers ──────────────────────────────────────────────────
 
 function getYear(dateStr: string): number {
-  return parseInt(dateStr.slice(0, 4), 10);
+  return parseInt(dateStr.slice(0, 4), 10)
 }
 
 function fmtTime(secs: number): string {
-  const h = Math.floor(secs / 3600);
-  const m = Math.floor((secs % 3600) / 60);
-  return h ? `${h}h ${m}m` : `${m}m`;
+  const h = Math.floor(secs / 3600)
+  const m = Math.floor((secs % 3600) / 60)
+  return h ? `${h}h ${m}m` : `${m}m`
 }
 
 // ── state ────────────────────────────────────────────────────
 
-let map: any = null;
-let chartInstance: any = null;
-let showDives = true;
-let showSki = true;
-let yearMin = 2024;
-let yearMax = new Date().getFullYear();
-let selectedYearMin = yearMin;
-let selectedYearMax = yearMax;
-let allMarkers: { el: any; type: 'dive' | 'ski'; year: number }[] = [];
-let profilesCache: Record<string, any[]> = {};
+let map: any = null
+let chartInstance: any = null
+let showDives = true
+let showSki = true
+let yearMin = 2024
+let yearMax = new Date().getFullYear()
+let selectedYearMin = yearMin
+let selectedYearMax = yearMax
+let allMarkers: { el: any; type: 'dive' | 'ski'; year: number }[] = []
+let profilesCache: Record<string, any[]> = {}
 
 // ── load scripts ─────────────────────────────────────────────
 
 function loadScript(src: string): Promise<void> {
   return new Promise((resolve) => {
-    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload = () => resolve();
-    document.head.appendChild(s);
-  });
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return }
+    const s = document.createElement('script')
+    s.src = src
+    s.onload = () => resolve()
+    document.head.appendChild(s)
+  })
 }
 
 // ── main ─────────────────────────────────────────────────────
 
 async function init() {
-  await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
+  await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')
 
-  const dives: any[] = window.__EXPLORE_DIVES__ || [];
-  const ski: any[] = window.__EXPLORE_SKI__ || [];
+  const dives: any[] = window.__EXPLORE_DIVES__ || []
+  const ski: any[] = window.__EXPLORE_SKI__ || []
 
   const allYears = [
     ...dives.map(d => getYear(d.date)),
     ...ski.map(d => getYear(d.date)),
-  ];
-  yearMin = Math.min(...allYears);
-  yearMax = Math.max(...allYears);
-  selectedYearMin = yearMin;
-  selectedYearMax = yearMax;
+  ]
+  yearMin = Math.min(...allYears)
+  yearMax = Math.max(...allYears)
+  selectedYearMin = yearMin
+  selectedYearMax = yearMax
 
   try {
-    const r = await fetch('/dive_profiles.json');
-    profilesCache = await r.json();
+    const r = await fetch('/dive_profiles.json')
+    profilesCache = await r.json()
   } catch (_) {}
 
-  initMap(dives, ski);
-  initControls(dives, ski);
-  updateStats(dives, ski);
+  initMap(dives, ski)
+  initControls(dives, ski)
+  updateStats(dives, ski)
 }
 
 // ── map ──────────────────────────────────────────────────────
 
 function initMap(dives: any[], ski: any[]) {
-  const L = window.L;
+  const L = window.L
   const isMobile = window.matchMedia('(max-width: 768px)').matches ||
-    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
   map = L.map('explore-map', {
     zoomControl: true,
@@ -89,36 +89,36 @@ function initMap(dives: any[], ski: any[]) {
     dragging: !isMobile,
     tap: false,
     scrollWheelZoom: false,
-  });
+  })
 
   if (isMobile) {
-    const mapEl = document.getElementById('explore-map');
+    const mapEl = document.getElementById('explore-map')
     if (mapEl) {
       mapEl.addEventListener('touchstart', (e: TouchEvent) => {
-        if (e.touches.length >= 2) map.dragging.enable();
-      }, { passive: true });
+        if (e.touches.length >= 2) map.dragging.enable()
+      }, { passive: true })
       mapEl.addEventListener('touchend', (e: TouchEvent) => {
-        if (e.touches.length < 2) map.dragging.disable();
-      }, { passive: true });
+        if (e.touches.length < 2) map.dragging.disable()
+      }, { passive: true })
     }
   }
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 18,
-  }).addTo(map);
+  }).addTo(map)
 
-  L.control.attribution({ prefix: '© OpenStreetMap © CARTO', position: 'bottomright' }).addTo(map);
+  L.control.attribution({ prefix: '© OpenStreetMap © CARTO', position: 'bottomright' }).addTo(map)
 
-  buildMarkers(dives, ski);
-  fitAll();
+  buildMarkers(dives, ski)
+  fitAll()
 }
 
 function makeIcon(color: string, count: number) {
-  const L = window.L;
-  const size = count > 1 ? 18 : 12;
+  const L = window.L
+  const size = count > 1 ? 18 : 12
   const badge = count > 1
     ? `<span style="position:absolute;top:-6px;right:-6px;background:#0a0e1a;color:${color};font-size:9px;font-weight:800;border:1px solid ${color};border-radius:99px;padding:0 4px;line-height:16px;min-width:16px;text-align:center;">${count}</span>`
-    : '';
+    : ''
   return L.divIcon({
     html: `<div style="position:relative;width:${size}px;height:${size}px;">
       <div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 0 10px ${color}88;"></div>
@@ -127,67 +127,67 @@ function makeIcon(color: string, count: number) {
     className: '',
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
-  });
+  })
 }
 
 function buildMarkers(dives: any[], ski: any[]) {
-  const L = window.L;
-  allMarkers.forEach(m => map.removeLayer(m.el));
-  allMarkers = [];
+  const L = window.L
+  allMarkers.forEach(m => map.removeLayer(m.el))
+  allMarkers = []
 
-  const diveGroups: Record<string, any[]> = {};
+  const diveGroups: Record<string, any[]> = {}
   dives.forEach(d => {
-    if (d.lat == null || d.lon == null) return;
-    const key = `${(+d.lat).toFixed(3)}_${(+d.lon).toFixed(3)}`;
-    if (!diveGroups[key]) diveGroups[key] = [];
-    diveGroups[key].push(d);
-  });
+    if (d.lat == null || d.lon == null) return
+    const key = `${(+d.lat).toFixed(3)}_${(+d.lon).toFixed(3)}`
+    if (!diveGroups[key]) diveGroups[key] = []
+    diveGroups[key].push(d)
+  })
 
   Object.values(diveGroups).forEach(group => {
-    const d0 = group[0];
-    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#38bdf8', group.length) });
-    marker.on('click', () => openDiveCard(group));
-    marker.addTo(map);
-    allMarkers.push({ el: marker, type: 'dive', year: getYear(d0.date) });
-  });
+    const d0 = group[0]
+    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#38bdf8', group.length) })
+    marker.on('click', () => openDiveCard(group))
+    marker.addTo(map)
+    allMarkers.push({ el: marker, type: 'dive', year: getYear(d0.date) })
+  })
 
-  const skiGroups: Record<string, any[]> = {};
+  const skiGroups: Record<string, any[]> = {}
   ski.forEach(d => {
-    if (d.lat == null || d.lon == null) return;
-    const key = d.resort.split('/')[0].trim();
-    if (!skiGroups[key]) skiGroups[key] = [];
-    skiGroups[key].push(d);
-  });
+    if (d.lat == null || d.lon == null) return
+    const key = d.resort.split('/')[0].trim()
+    if (!skiGroups[key]) skiGroups[key] = []
+    skiGroups[key].push(d)
+  })
 
   Object.values(skiGroups).forEach(group => {
-    const d0 = group[0];
-    const lat = group.reduce((s: number, d: any) => s + d.lat, 0) / group.length;
-    const lon = group.reduce((s: number, d: any) => s + d.lon, 0) / group.length;
-    const marker = L.marker([lat, lon], { icon: makeIcon('#818cf8', group.length) });
-    marker.on('click', () => openSkiCard(group));
-    marker.addTo(map);
-    allMarkers.push({ el: marker, type: 'ski', year: getYear(d0.date) });
-  });
+    const d0 = group[0]
+    const lat = group.reduce((s: number, d: any) => s + d.lat, 0) / group.length
+    const lon = group.reduce((s: number, d: any) => s + d.lon, 0) / group.length
+    const marker = L.marker([lat, lon], { icon: makeIcon('#818cf8', group.length) })
+    marker.on('click', () => openSkiCard(group))
+    marker.addTo(map)
+    allMarkers.push({ el: marker, type: 'ski', year: getYear(d0.date) })
+  })
 }
 
 function fitAll() {
-  const visible = allMarkers.filter(m => map.hasLayer(m.el));
-  if (!visible.length) return;
-  const group = window.L.featureGroup(visible.map(m => m.el));
-  map.fitBounds(group.getBounds().pad(0.25));
+  const visible = allMarkers.filter(m => map.hasLayer(m.el))
+  if (!visible.length) return
+  const group = window.L.featureGroup(visible.map(m => m.el))
+  map.fitBounds(group.getBounds().pad(0.25))
 }
 
 function applyFilters() {
   allMarkers.forEach(({ el, type, year }) => {
-    const typeOk = type === 'dive' ? showDives : showSki;
-    const yearOk = year >= selectedYearMin && year <= selectedYearMax;
+    const typeOk = type === 'dive' ? showDives : showSki
+    const yearOk = year >= selectedYearMin && year <= selectedYearMax
     if (typeOk && yearOk) {
-      if (!map.hasLayer(el)) map.addLayer(el);
+      if (!map.hasLayer(el)) map.addLayer(el)
     } else {
-      if (map.hasLayer(el)) map.removeLayer(el);
+      if (map.hasLayer(el)) map.removeLayer(el)
     }
-  });
-  updateStats(window.__EXPLORE_DIVES__ || [], window.__EXPLORE_SKI__ || []);
+  })
+  updateStats(window.__EXPLORE_DIVES__ || [], window.__EXPLORE_SKI__ || [])
 }
 
 // ── info card ─────────────────────────────────────────────────
@@ -225,24 +225,24 @@ const S = {
   pillAlt: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a2e1a;color:#4ade80;',
   pillDur: 'padding:0.18rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;background:#1a1a2e;color:#818cf8;',
   chartBtn: 'margin-top:0.4rem;font-size:0.72rem;color:#38bdf8;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);border-radius:6px;padding:0.2rem 0.5rem;cursor:pointer;',
-};
+}
 
 function openInfoCard() {
-  const card = document.getElementById('info-card')!;
-  const isMobile = window.innerWidth < 768;
+  const card = document.getElementById('info-card')!
+  const isMobile = window.innerWidth < 768
   if (isMobile) {
-    card.style.bottom = '0';
-    card.style.right = '0';
+    card.style.bottom = '0'
+    card.style.right = '0'
   } else {
-    card.style.right = '0';
-    map.panBy([150, 0]);
+    card.style.right = '0'
+    map.panBy([150, 0])
   }
 }
 
 function openDiveCard(group: any[]) {
-  const card = document.getElementById('info-card')!;
-  group.sort((a, b) => b.date.localeCompare(a.date));
-  const location = group[0].location || 'Unknown';
+  const card = document.getElementById('info-card')!
+  group.sort((a, b) => b.date.localeCompare(a.date))
+  const location = group[0].location || 'Unknown'
 
   let html = `
     <div style="${S.cardHeader}">
@@ -252,11 +252,11 @@ function openDiveCard(group: any[]) {
     <div style="${S.cardTitle}">${location}</div>
     <div style="${S.cardCount}">${group.length} 次紀錄</div>
     <div style="${S.cardEntries}">
-  `;
+  `
 
   group.forEach((d, i) => {
-    const chartId = `explore-chart-${d.num}`;
-    const hasProfile = !!profilesCache[String(d.num)];
+    const chartId = `explore-chart-${d.num}`
+    const hasProfile = !!profilesCache[String(d.num)]
     html += `
       <div class="entry-item" style="${i > 0 ? S.entryBorder : S.entry}">
         <div style="${S.entryRow}">
@@ -277,39 +277,39 @@ function openDiveCard(group: any[]) {
           </div>
         ` : ''}
       </div>
-    `;
-  });
+    `
+  })
 
-  html += `</div>`;
-  card.innerHTML = html;
-  openInfoCard();
+  html += `</div>`
+  card.innerHTML = html
+  openInfoCard()
 
-  document.getElementById('card-close')?.addEventListener('click', closeCard);
+  document.getElementById('card-close')?.addEventListener('click', closeCard)
 
   card.querySelectorAll<HTMLButtonElement>('.chart-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const diveNum = parseInt(btn.dataset.dive!);
-      const chartId = btn.dataset.chart!;
-      const wrap = document.getElementById(`wrap-${diveNum}`)!;
+      const diveNum = parseInt(btn.dataset.dive!)
+      const chartId = btn.dataset.chart!
+      const wrap = document.getElementById(`wrap-${diveNum}`)!
       if (wrap.style.display === 'none') {
-        wrap.style.display = 'block';
-        btn.textContent = '📈 收起曲線';
-        buildDiveChart(diveNum, chartId);
+        wrap.style.display = 'block'
+        btn.textContent = '📈 收起曲線'
+        buildDiveChart(diveNum, chartId)
       } else {
-        wrap.style.display = 'none';
-        btn.textContent = '📈 深度曲線';
+        wrap.style.display = 'none'
+        btn.textContent = '📈 深度曲線'
       }
-    });
-  });
+    })
+  })
 }
 
 function openSkiCard(group: any[]) {
-  const card = document.getElementById('info-card')!;
-  group.sort((a, b) => b.date.localeCompare(a.date));
-  const resort = group[0].resort.split('/')[0].trim();
-  const totalRuns = group.reduce((s: number, d: any) => s + (d.runs || 0), 0);
-  const totalVert = group.reduce((s: number, d: any) => s + (d.vertical_m || 0), 0);
-  const maxSpeed = Math.max(...group.map((d: any) => d.top_speed_kmh || 0));
+  const card = document.getElementById('info-card')!
+  group.sort((a, b) => b.date.localeCompare(a.date))
+  const resort = group[0].resort.split('/')[0].trim()
+  const totalRuns = group.reduce((s: number, d: any) => s + (d.runs || 0), 0)
+  const totalVert = group.reduce((s: number, d: any) => s + (d.vertical_m || 0), 0)
+  const maxSpeed = Math.max(...group.map((d: any) => d.top_speed_kmh || 0))
 
   let html = `
     <div style="${S.cardHeader}">
@@ -324,7 +324,7 @@ function openSkiCard(group: any[]) {
       <div style="${S.summaryItemLast}"><span style="${S.sNum}">${maxSpeed.toFixed(1)}</span><span style="${S.sLbl}">最高速 km/h</span></div>
     </div>
     <div style="${S.cardEntries}">
-  `;
+  `
 
   group.forEach((d, i) => {
     html += `
@@ -341,42 +341,42 @@ function openSkiCard(group: any[]) {
           <span style="${S.pillDur}">⏱ ${fmtTime(d.duration_s)}</span>
         </div>
       </div>
-    `;
-  });
+    `
+  })
 
-  html += `</div>`;
-  card.innerHTML = html;
-  openInfoCard();
+  html += `</div>`
+  card.innerHTML = html
+  openInfoCard()
 
-  document.getElementById('card-close')?.addEventListener('click', closeCard);
+  document.getElementById('card-close')?.addEventListener('click', closeCard)
 }
 
 function closeCard() {
-  const card = document.getElementById('info-card')!;
-  const isMobile = window.innerWidth < 768;
+  const card = document.getElementById('info-card')!
+  const isMobile = window.innerWidth < 768
   if (isMobile) {
-    card.style.bottom = '-100%';
+    card.style.bottom = '-100%'
   } else {
-    card.style.right = '-360px';
+    card.style.right = '-360px'
   }
-  if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+  if (chartInstance) { chartInstance.destroy(); chartInstance = null }
 }
 
 // ── depth chart in card ───────────────────────────────────────
 
 async function buildDiveChart(diveNum: number, canvasId: string) {
-  await loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js');
+  await loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
 
-  const profile = profilesCache[String(diveNum)];
-  if (!profile?.length) return;
+  const profile = profilesCache[String(diveNum)]
+  if (!profile?.length) return
 
-  const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-  if (!canvas) return;
+  const canvas = document.getElementById(canvasId) as HTMLCanvasElement
+  if (!canvas) return
 
-  const step = Math.max(1, Math.floor(profile.length / 200));
-  const sampled = profile.filter((_: any, i: number) => i % step === 0);
+  const step = Math.max(1, Math.floor(profile.length / 200))
+  const sampled = profile.filter((_: any, i: number) => i % step === 0)
 
-  if (chartInstance) chartInstance.destroy();
+  if (chartInstance) chartInstance.destroy()
   chartInstance = new window.Chart(canvas.getContext('2d')!, {
     type: 'line',
     data: {
@@ -405,59 +405,59 @@ async function buildDiveChart(diveNum: number, canvasId: string) {
         y: { ticks: { color: '#38bdf8', callback: (v: any) => Math.abs(v) + 'm', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1e2535' } },
       },
     },
-  });
+  })
 }
 
 // ── controls ──────────────────────────────────────────────────
 
-function initControls(dives: any[], ski: any[]) {
-  const btnDive = document.getElementById('toggle-dive')!;
-  const btnSki = document.getElementById('toggle-ski')!;
-  const dotDive = btnDive.querySelector('.dot') as HTMLElement | null;
-  const dotSki = btnSki.querySelector('.dot') as HTMLElement | null;
+function initControls(_dives: any[], _ski: any[]) {
+  const btnDive = document.getElementById('toggle-dive')!
+  const btnSki = document.getElementById('toggle-ski')!
+  const dotDive = btnDive.querySelector('.dot') as HTMLElement | null
+  const dotSki = btnSki.querySelector('.dot') as HTMLElement | null
 
   // off state styles
-  const offStyle = { bg: 'transparent', border: '#1e2535', color: '#475569', dot: '#475569' };
-  const diveOnStyle = { bg: 'rgba(56,189,248,0.12)', border: '#38bdf8', color: '#38bdf8', dot: '#38bdf8' };
-  const skiOnStyle = { bg: 'rgba(129,140,248,0.12)', border: '#818cf8', color: '#818cf8', dot: '#818cf8' };
+  const offStyle = { bg: 'transparent', border: '#1e2535', color: '#475569', dot: '#475569' }
+  const diveOnStyle = { bg: 'rgba(56,189,248,0.12)', border: '#38bdf8', color: '#38bdf8', dot: '#38bdf8' }
+  const skiOnStyle = { bg: 'rgba(129,140,248,0.12)', border: '#818cf8', color: '#818cf8', dot: '#818cf8' }
 
   function applyBtnStyle(btn: HTMLElement, dot: HTMLElement | null, on: boolean, onStyle: typeof diveOnStyle) {
-    const s = on ? onStyle : offStyle;
-    btn.style.background = s.bg;
-    btn.style.borderColor = s.border;
-    btn.style.color = s.color;
-    if (dot) dot.style.background = s.dot;
+    const s = on ? onStyle : offStyle
+    btn.style.background = s.bg
+    btn.style.borderColor = s.border
+    btn.style.color = s.color
+    if (dot) dot.style.background = s.dot
   }
 
   btnDive.addEventListener('click', () => {
-    showDives = !showDives;
-    applyBtnStyle(btnDive, dotDive, showDives, diveOnStyle);
-    applyFilters();
-  });
+    showDives = !showDives
+    applyBtnStyle(btnDive, dotDive, showDives, diveOnStyle)
+    applyFilters()
+  })
   btnSki.addEventListener('click', () => {
-    showSki = !showSki;
-    applyBtnStyle(btnSki, dotSki, showSki, skiOnStyle);
-    applyFilters();
-  });
+    showSki = !showSki
+    applyBtnStyle(btnSki, dotSki, showSki, skiOnStyle)
+    applyFilters()
+  })
 
-  const slider = document.getElementById('year-slider') as HTMLInputElement;
-  const sliderLabel = document.getElementById('year-label')!;
+  const slider = document.getElementById('year-slider') as HTMLInputElement
+  const sliderLabel = document.getElementById('year-label')!
 
   if (yearMin === yearMax) {
-    document.getElementById('year-control')?.style.setProperty('display', 'none');
+    document.getElementById('year-control')?.style.setProperty('display', 'none')
   } else {
-    slider.min = String(yearMin);
-    slider.max = String(yearMax);
-    slider.value = String(yearMax);
-    sliderLabel.textContent = `${yearMin} – ${yearMax}`;
+    slider.min = String(yearMin)
+    slider.max = String(yearMax)
+    slider.value = String(yearMax)
+    sliderLabel.textContent = `${yearMin} – ${yearMax}`
 
     slider.addEventListener('input', () => {
-      const val = parseInt(slider.value);
-      selectedYearMin = yearMin;
-      selectedYearMax = val;
-      sliderLabel.textContent = val === yearMax ? `${yearMin} – ${yearMax}` : `${yearMin} – ${val}`;
-      applyFilters();
-    });
+      const val = parseInt(slider.value, 10)
+      selectedYearMin = yearMin
+      selectedYearMax = val
+      sliderLabel.textContent = val === yearMax ? `${yearMin} – ${yearMax}` : `${yearMin} – ${val}`
+      applyFilters()
+    })
   }
 }
 
@@ -465,32 +465,34 @@ function initControls(dives: any[], ski: any[]) {
 
 function updateStats(dives: any[], ski: any[]) {
   const filteredDives = dives.filter(d => {
-    const y = getYear(d.date);
-    return d.lat != null && showDives && y >= selectedYearMin && y <= selectedYearMax;
-  });
+    const y = getYear(d.date)
+    return d.lat != null && showDives && y >= selectedYearMin && y <= selectedYearMax
+  })
   const filteredSki = ski.filter(d => {
-    const y = getYear(d.date);
-    return d.lat != null && showSki && y >= selectedYearMin && y <= selectedYearMax;
-  });
+    const y = getYear(d.date)
+    return d.lat != null && showSki && y >= selectedYearMin && y <= selectedYearMax
+  })
 
   const diveSites = new Set(filteredDives.map(d =>
     `${(+d.lat).toFixed(3)}_${(+(d.lon as number)).toFixed(3)}`
-  )).size;
-  const skiResorts = new Set(filteredSki.map(d => d.resort.split('/')[0].trim())).size;
+  )).size
+  const skiResorts = new Set(filteredSki.map(d => d.resort.split('/')[0].trim())).size
   const countries = new Set([
     ...filteredDives.map(d => (d.location || '').split(', ').pop() || ''),
     ...filteredSki.map(d => d.country),
-  ].filter(Boolean)).size;
+  ].filter(Boolean)).size
 
-  const el = document.getElementById('explore-stats')!;
+  const el = document.getElementById('explore-stats')!
   el.innerHTML = `
     <span style="color:#94a3b8;">🤿 <strong style="color:#38bdf8;">${diveSites}</strong> 個潛點</span>
     <span style="color:#1e2535;">·</span>
     <span style="color:#94a3b8;">⛷️ <strong style="color:#818cf8;">${skiResorts}</strong> 個雪場</span>
     <span style="color:#1e2535;">·</span>
     <span style="color:#94a3b8;">🌏 <strong style="color:#e2e8f0;">${countries}</strong> 個國家</span>
-  `;
+  `
 }
 
 // ── kick off ──────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init)
+
+export {}

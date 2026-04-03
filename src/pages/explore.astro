@@ -7,7 +7,6 @@ import skiRaw from '../data/ski.json';
 const dives = divesRaw as any[];
 const ski = skiRaw as any[];
 
-const divesWithGPS = dives.filter(d => d.lat != null && d.lon != null);
 const allYears = [
   ...dives.map(d => parseInt(d.date.slice(0, 4))),
   ...ski.map(d => parseInt(d.date.slice(0, 4))),
