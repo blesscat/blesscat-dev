@@ -2,73 +2,32 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="404 — 豬毛迷路了">
-  <div class="not-found-container">
-    <div class="cat-emoji">
-      <img src="/zhumao-avatar.jpg" alt="豬毛" class="cat-img" />
+  <div class="flex flex-col items-center justify-center min-h-[60vh] text-center gap-6">
+
+    <div class="inline-block [animation:swing_1.4s_ease-in-out_infinite] [transform-origin:center_bottom]">
+      <img
+        src="/zhumao-avatar.jpg"
+        alt="豬毛"
+        class="w-[140px] h-[140px] rounded-full object-cover border-[3px] border-[#38bdf8] shadow-[0_0_24px_rgba(56,189,248,0.4),0_0_48px_rgba(56,189,248,0.15)] [animation:pulse-glow_2.5s_ease-in-out_infinite]"
+      />
     </div>
-    <h1 class="title">404 — 豬毛迷路了</h1>
-    <p class="subtitle">這個頁面不存在，豬毛也找不到它 (´･ω･`)</p>
-    <a href="/" class="btn-home">回首頁</a>
+
+    <h1 class="text-3xl font-bold text-[#e2e8f0] m-0">404 — 豬毛迷路了</h1>
+    <p class="text-[1.05rem] text-[#94a3b8] m-0">這個頁面不存在，豬毛也找不到它 (´･ω･`)</p>
+
+    <a href="/"
+       class="inline-block bg-[#38bdf8] text-[#0a0e1a] font-semibold px-6 py-2.5 rounded-lg no-underline transition-opacity hover:opacity-85">
+      回首頁
+    </a>
+
   </div>
 </Layout>
 
 <style>
-  .not-found-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    text-align: center;
-    gap: 1.5rem;
-  }
-
+  /* swing keyframe — CSS animation，Tailwind 無法定義 keyframe */
   @keyframes swing {
     0%   { transform: rotate(-10deg); }
     50%  { transform: rotate(10deg); }
     100% { transform: rotate(-10deg); }
-  }
-
-  .cat-emoji {
-    display: inline-block;
-    animation: swing 1.4s ease-in-out infinite;
-    transform-origin: center bottom;
-  }
-  .cat-img {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #38bdf8;
-    box-shadow: 0 0 24px rgba(56,189,248,0.4), 0 0 48px rgba(56,189,248,0.15);
-    animation: pulse-glow 2.5s ease-in-out infinite;
-  }
-
-  .title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    margin: 0;
-  }
-
-  .subtitle {
-    font-size: 1.05rem;
-    color: #94a3b8;
-    margin: 0;
-  }
-
-  .btn-home {
-    display: inline-block;
-    background: #38bdf8;
-    color: #0a0e1a;
-    font-weight: 600;
-    padding: 0.6rem 1.6rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .btn-home:hover {
-    opacity: 0.85;
   }
 </style>
