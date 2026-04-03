@@ -38,7 +38,7 @@ const yearMax = Math.max(...allYears);
       <span class="text-[0.75rem] text-[#475569] whitespace-nowrap">年份</span>
       <input id="year-slider" type="range"
         min={yearMin} max={yearMax} value={yearMax}
-        class="year-slider appearance-none w-[140px] h-1 bg-[#1e2535] rounded-sm outline-none cursor-pointer max-[768px]:w-[100px]"
+        class="year-slider appearance-none w-35 h-1 bg-[#1e2535] rounded-sm outline-none cursor-pointer max-[768px]:w-25"
       />
       <span id="year-label" class="text-[0.75rem] text-[#38bdf8] bg-[rgba(56,189,248,0.1)] border border-[rgba(56,189,248,0.2)] rounded-[6px] px-2 py-[0.15rem] whitespace-nowrap">{yearMin} – {yearMax}</span>
     </div>
@@ -46,7 +46,7 @@ const yearMax = Math.max(...allYears);
 
   <!-- 地圖 + 側邊資訊卡 -->
   <div class="relative rounded-2xl overflow-hidden border border-[#1e2535] mb-8 anim-fade-up delay-4">
-    <div id="explore-map" class="h-[580px] w-full bg-[#090d18] max-[768px]:h-[420px]"></div>
+    <div id="explore-map" class="h-145 w-full bg-[#090d18] max-[768px]:h-105"></div>
     <div id="info-card" class="info-card absolute top-0 right-[-360px] w-[340px] h-full bg-[#0d1220ee] backdrop-blur-[12px] border-l border-[#1e2535] overflow-y-auto transition-[right] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-[1000] p-0 max-[768px]:top-auto max-[768px]:bottom-[-100%] max-[768px]:right-0 max-[768px]:w-full max-[768px]:h-[60%] max-[768px]:border-l-0 max-[768px]:border-t max-[768px]:border-t-[#1e2535] max-[768px]:rounded-t-2xl max-[768px]:[transition-property:bottom] max-[768px]:[transition-duration:300ms] max-[768px]:[transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
       <!-- 動態填入 -->
     </div>

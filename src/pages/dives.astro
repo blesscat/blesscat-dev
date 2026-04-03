@@ -111,7 +111,7 @@ const diveYearData = {
     <h2>📊 年度比較</h2>
     <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
       <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">潛水次數 vs 總小時數</div>
-      <div class="relative h-[220px]">
+      <div class="relative h-55">
         <canvas data-chart="year-compare"></canvas>
       </div>
     </div>
@@ -126,13 +126,13 @@ const diveYearData = {
     <div class="grid grid-cols-2 max-md:grid-cols-1 gap-4">
       <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
         <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">深度分布</div>
-        <div class="relative h-[220px]">
+        <div class="relative h-55">
           <canvas data-chart="depth-dist"></canvas>
         </div>
       </div>
       <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
         <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">每月潛水次數</div>
-        <div class="relative h-[220px]">
+        <div class="relative h-55">
           <canvas data-chart="monthly"></canvas>
         </div>
       </div>
@@ -147,7 +147,7 @@ const diveYearData = {
       <input
         type="text"
         data-ref="search"
-        class="flex-1 min-w-[180px] py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm outline-none transition-[border-color] duration-200 focus:border-[#38bdf8] placeholder:text-[#475569]"
+        class="flex-1 min-w-45 py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm outline-none transition-[border-color] duration-200 focus:border-[#38bdf8] placeholder:text-[#475569]"
         placeholder="搜尋地點關鍵字..."
         autocomplete="off"
       />
@@ -183,7 +183,7 @@ const diveYearData = {
           </div>
           {d.garmin_id && (
             <div class="border-t border-[#1e2535] pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`chart-panel-${d.num}`} hidden>
-              <div class="relative h-[200px] max-md:h-[180px]">
+              <div class="relative h-50 max-md:h-45">
                 <canvas id={`chart-${d.num}`}></canvas>
               </div>
             </div>
