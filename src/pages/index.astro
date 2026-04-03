@@ -31,6 +31,7 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
       <div class="cta-row">
         <a href="/dives" class="btn-primary">🤿 潛水紀錄</a>
         <a href="/ski" class="btn-ski">⛷️ 滑雪紀錄</a>
+        <a href="/explore" class="btn-explore">🌏 探索地圖</a>
         <a href="/blog" class="btn-secondary">📝 日記</a>
       </div>
     </div>
@@ -159,6 +160,23 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
   .btn-ski:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(129,140,248,0.35);
+  }
+
+  .btn-explore {
+    padding: 0.75rem 1.6rem;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .btn-explore:hover {
+    background: rgba(56,189,248,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56,189,248,0.2);
   }
 
   .btn-secondary {
