@@ -12,6 +12,10 @@ const { title } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} · blesscat.dev</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#38bdf8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 <body class="bg-[#0a0e1a] text-[#e2e8f0] min-h-screen font-sans">
   <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-[#1e2535] bg-[#0a0e1a]/95 backdrop-blur">
@@ -26,6 +30,31 @@ const { title } = Astro.props;
   <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     <slot />
   </main>
+  <nav class="bottom-tab-bar">
+    <a href="/" class="tab-item" data-path="/">
+      <span class="tab-icon">🏠</span>
+      <span class="tab-label">首頁</span>
+    </a>
+    <a href="/dives" class="tab-item" data-path="/dives">
+      <span class="tab-icon">🤿</span>
+      <span class="tab-label">潛水</span>
+    </a>
+    <a href="/ski" class="tab-item" data-path="/ski">
+      <span class="tab-icon">⛷️</span>
+      <span class="tab-label">滑雪</span>
+    </a>
+    <a href="/explore" class="tab-item" data-path="/explore">
+      <span class="tab-icon">🌏</span>
+      <span class="tab-label">探索</span>
+    </a>
+    <a href="/blog" class="tab-item" data-path="/blog">
+      <span class="tab-icon">📝</span>
+      <span class="tab-label">日記</span>
+    </a>
+  </nav>
+
+  <!-- 豬毛探頭 -->
+  <div id="zhumao-peek" title="回到頂部 ↑" aria-label="回到頂部">🐱</div>
 </body>
 </html>
 
@@ -41,6 +70,100 @@ const { title } = Astro.props;
     .nav-brand-text { display: none; }
     .nav-text { display: none; }
     .nav-icon { font-size: 1.1rem; }
+  }
+
+  /* ── 豬毛探頭 ── */
+  #zhumao-peek {
+    position: fixed;
+    bottom: -60px;
+    right: 24px;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 999;
+    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: floatY 3s ease-in-out infinite;
+    user-select: none;
+    filter: drop-shadow(0 2px 8px rgba(56,189,248,0.25));
+  }
+  #zhumao-peek.peeking {
+    bottom: 16px;
+  }
+  #zhumao-peek.peeking.has-tabbar {
+    bottom: 80px;
+  }
+  #zhumao-peek:hover {
+    filter: drop-shadow(0 4px 16px rgba(56,189,248,0.5));
+  }
+  #zhumao-peek::after {
+    content: '回到頂部 ↑';
+    position: absolute;
+    bottom: 110%;
+    right: 0;
+    background: #111827;
+    border: 1px solid #1e2535;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: sans-serif;
+  }
+  #zhumao-peek:hover::after {
+    opacity: 1;
+  }
+
+  /* Bottom tab bar */
+  .bottom-tab-bar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .bottom-tab-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #0d1220;
+      border-top: 1px solid #1e2535;
+      height: 60px;
+      align-items: stretch;
+    }
+
+    main {
+      padding-bottom: 70px;
+    }
+  }
+
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 0.65rem;
+    transition: color 0.2s;
+  }
+
+  .tab-item.active,
+  .tab-item:hover {
+    color: #38bdf8;
+  }
+
+  .tab-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .tab-label {
+    line-height: 1;
   }
 </style>
 
@@ -59,4 +182,47 @@ const { title } = Astro.props;
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => rio.observe(el));
   }
+
+  // Bottom tab bar active state
+  const path = window.location.pathname;
+  const tabItems = document.querySelectorAll('.tab-item');
+  tabItems.forEach(tab => {
+    const tabPath = tab.getAttribute('data-path');
+    if (tabPath === '/') {
+      if (path === '/') tab.classList.add('active');
+    } else if (tabPath && path.startsWith(tabPath)) {
+      tab.classList.add('active');
+    }
+  });
+
+  // 豬毛探頭
+  (function () {
+    const cat = document.getElementById('zhumao-peek');
+    if (!cat) return;
+    const tabBar = document.querySelector('.bottom-tab-bar');
+
+    function onScroll() {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      const ratio = total > 0 ? scrolled / total : 0;
+      if (ratio >= 0.7) {
+        cat.classList.add('peeking');
+        // 判斷 bottom-tab-bar 是否可見（手機）
+        if (tabBar && window.getComputedStyle(tabBar).display !== 'none') {
+          cat.classList.add('has-tabbar');
+        } else {
+          cat.classList.remove('has-tabbar');
+        }
+      } else {
+        cat.classList.remove('peeking');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    cat.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
 </script>

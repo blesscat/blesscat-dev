@@ -111,11 +111,37 @@ const months = Object.keys(monthCount).sort();
         <canvas id="resort-chart"></canvas>
       </div>
     </div>
+    <!-- 年度比較 grouped bar chart -->
+    <div class="card chart-card chart-card--full">
+      <h3>年度比較 <span class="badge">滑雪天數 vs 總 runs</span></h3>
+      <div class="chart-wrapper" style="height:200px;">
+        <canvas id="year-compare-chart"></canvas>
+      </div>
+    </div>
   </div>
 
   <!-- 滑雪列表 -->
   <div class="section">
     <h2>所有紀錄</h2>
+
+    <!-- 篩選列 -->
+    <div class="filter-bar">
+      <input
+        id="ski-search"
+        type="search"
+        placeholder="搜尋雪場名稱…"
+        class="filter-input"
+        autocomplete="off"
+      />
+      <select id="ski-year" class="filter-select">
+        <option value="">全部年份</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+      <span id="ski-count" class="filter-count">顯示 {ski.length} / {ski.length} 筆</span>
+    </div>
+
     <div class="ski-list">
       {ski.map(d => (
         <div class="ski-row card reveal">
@@ -139,10 +165,45 @@ const months = Object.keys(monthCount).sort();
   </div>
 </Layout>
 
-<script define:vars={{ ski, months, monthCount }}>
+<script define:vars={{ ski, months, monthCount, totalCount: ski.length }}>
   window.__SKI_DATA__ = ski;
   window.__SKI_MONTHS__ = months;
   window.__SKI_MONTH_COUNT__ = monthCount;
+  window.__SKI_TOTAL__ = totalCount;
+</script>
+
+<script>
+  // 搜尋篩選
+  (function () {
+    const searchEl = document.getElementById('ski-search') as HTMLInputElement | null;
+    const yearEl = document.getElementById('ski-year') as HTMLSelectElement | null;
+    const countEl = document.getElementById('ski-count');
+    const rows = document.querySelectorAll<HTMLElement>('.ski-row');
+    const total = (window as any).__SKI_TOTAL__ || rows.length;
+
+    function applyFilter() {
+      const keyword = searchEl ? searchEl.value.trim().toLowerCase() : '';
+      const year = yearEl ? yearEl.value : '';
+      let visible = 0;
+      rows.forEach(row => {
+        const resort = (row.querySelector('.ski-resort')?.textContent || '').toLowerCase();
+        const date = (row.querySelector('.ski-date')?.textContent || '');
+        const matchKeyword = !keyword || resort.includes(keyword);
+        const matchYear = !year || date.startsWith(year);
+        if (matchKeyword && matchYear) {
+          row.style.display = '';
+          visible++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      if (countEl) countEl.textContent = `顯示 ${visible} / ${total} 筆`;
+    }
+
+    if (searchEl) searchEl.addEventListener('input', applyFilter);
+    if (yearEl) yearEl.addEventListener('change', applyFilter);
+    applyFilter();
+  })();
 </script>
 
 <script>
@@ -351,6 +412,49 @@ const months = Object.keys(monthCount).sort();
           },
         },
       });
+
+      // 年度比較 grouped bar chart
+      const yearData = window.__SKI_YEAR_DATA__;
+      const yearCtx = document.getElementById('year-compare-chart').getContext('2d');
+      if (yearData && yearCtx) {
+        new window.Chart(yearCtx, {
+          type: 'bar',
+          data: {
+            labels: yearData.labels,
+            datasets: [
+              {
+                label: '滑雪天數',
+                data: yearData.days,
+                backgroundColor: ['#38bdf8', '#818cf8', '#4ade80'],
+                borderRadius: 6,
+                borderSkipped: false,
+              },
+              {
+                label: '總 runs',
+                data: yearData.runs,
+                backgroundColor: ['rgba(56,189,248,0.4)', 'rgba(129,140,248,0.4)', 'rgba(74,222,128,0.4)'],
+                borderRadius: 6,
+                borderSkipped: false,
+              }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false, animation: false,
+            plugins: {
+              legend: { display: true, labels: { color: '#94a3b8', font: { size: 12 } } },
+              tooltip: {
+                callbacks: {
+                  label: c => c.datasetIndex === 0 ? ` ${c.raw} 天` : ` ${c.raw} runs`
+                }
+              }
+            },
+            scales: {
+              x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 13 } } },
+              y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8' }, beginAtZero: true }
+            }
+          }
+        });
+      }
     };
     document.head.appendChild(script);
   })();
@@ -415,11 +519,53 @@ const months = Object.keys(monthCount).sort();
     gap: 1rem;
   }
   .chart-card h3 { font-size: 0.9rem; color: #94a3b8; margin: 0 0 1rem; font-weight: 600; }
+  .chart-card--full { grid-column: 1 / -1; }
   .badge {
     font-size: 0.68rem; background: #1e1a2e; color: #818cf8;
     padding: 0.15rem 0.4rem; border-radius: 4px; vertical-align: middle;
   }
   .chart-wrapper { position: relative; height: 220px; }
+
+  /* 篩選列 */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-input {
+    flex: 1;
+    min-width: 180px;
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 8px;
+    color: #94a3b8;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .filter-input::placeholder { color: #475569; }
+  .filter-input:focus { border-color: #818cf8; }
+  .filter-select {
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 8px;
+    color: #94a3b8;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.88rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: #818cf8; }
+  .filter-count {
+    font-size: 0.78rem;
+    color: #475569;
+    white-space: nowrap;
+    margin-left: auto;
+  }
 
   /* 列表 */
   .ski-list { display: flex; flex-direction: column; gap: 0.6rem; }

@@ -38,6 +38,34 @@ const monthChartData = {
   labels: sortedMonths,
   values: sortedMonths.map(m => monthMap[m]),
 };
+
+// PB 牆資料
+const maxBottomTime = Math.max(...dives.map(d => d.bottom_time || 0));
+
+// 最多潛水月份（按月份數字，不分年）
+const calMonthCount: Record<string, number> = {};
+for (const d of dives) {
+  const m = d.date.slice(5, 7); // "04"
+  calMonthCount[m] = (calMonthCount[m] || 0) + 1;
+}
+const busiestMonthEntry = Object.entries(calMonthCount).sort((a, b) => b[1] - a[1])[0];
+const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const busiestMonthName = monthNames[parseInt(busiestMonthEntry[0]) - 1];
+const busiestMonthCount = busiestMonthEntry[1];
+
+// 年度比較資料
+const yearStatsMap: Record<string, { count: number, minutes: number }> = {};
+for (const d of dives) {
+  const year = d.date.slice(0, 4);
+  if (!yearStatsMap[year]) yearStatsMap[year] = { count: 0, minutes: 0 };
+  yearStatsMap[year].count++;
+  yearStatsMap[year].minutes += d.bottom_time || 0;
+}
+const diveYearData = {
+  labels: ['2024', '2025', '2026'],
+  counts: ['2024', '2025', '2026'].map(y => yearStatsMap[y]?.count || 0),
+  hours: ['2024', '2025', '2026'].map(y => parseFloat(((yearStatsMap[y]?.minutes || 0) / 60).toFixed(1))),
+};
 ---
 <Layout title="潛水紀錄">
   <div class="page-header">
@@ -63,6 +91,42 @@ const monthChartData = {
     <div class="card stat-card anim-fade-up delay-4">
       <div class="stat-num count-up" data-target={parseFloat(avgDepth)} data-decimals="1" data-suffix="m">{avgDepth}m</div>
       <div class="stat-label">平均深度</div>
+    </div>
+  </div>
+
+  <!-- PB 牆 -->
+  <div class="section pb-section">
+    <h2>🏆 個人紀錄 PB</h2>
+    <div class="pb-grid">
+      <div class="card pb-card anim-fade-up delay-1">
+        <div class="pb-badge">🏆</div>
+        <div class="pb-label">最大深度</div>
+        <div class="stat-num">33.9<span class="pb-unit">m</span></div>
+        <div class="pb-sub">Koror, Belau</div>
+      </div>
+      <div class="card pb-card anim-fade-up delay-2">
+        <div class="pb-badge">🏆</div>
+        <div class="pb-label">最長底部時間</div>
+        <div class="stat-num">{maxBottomTime.toFixed(1)}<span class="pb-unit">min</span></div>
+        <div class="pb-sub">單次最長水下停留</div>
+      </div>
+      <div class="card pb-card anim-fade-up delay-3">
+        <div class="pb-badge">🏆</div>
+        <div class="pb-label">最多潛水月份</div>
+        <div class="stat-num">{busiestMonthName}</div>
+        <div class="pb-sub">共 {busiestMonthCount} 支潛水</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 年度比較 -->
+  <div class="section">
+    <h2>📊 年度比較</h2>
+    <div class="card chart-card-stat">
+      <div class="chart-section-title">潛水次數 vs 總小時數</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="year-compare-chart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -147,12 +211,13 @@ const monthChartData = {
 </Layout>
 
 <!-- 傳資料給前端 JS -->
-<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives }}>
+<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }}>
   window.__DIVES_GPS__ = divesWithGPS;
   window.__DIVES_PROFILE__ = divesWithProfile;
   window.__DEPTH_CHART_DATA__ = depthChartData;
   window.__MONTH_CHART_DATA__ = monthChartData;
   window.__TOTAL_DIVES__ = totalDives;
+  window.__DIVE_YEAR_DATA__ = diveYearData;
 </script>
 <script>
   import '../scripts/dive-app.ts';
@@ -276,6 +341,74 @@ const monthChartData = {
       }
     }, { rootMargin: '200px' });
     io.observe(section);
+  })();
+
+  // 年度比較圖
+  (function initYearChart() {
+    const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+    function loadChartJS(cb: () => void) {
+      if ((window as any).Chart) { cb(); return; }
+      const s = document.createElement('script');
+      s.src = CHART_CDN;
+      s.onload = cb;
+      document.head.appendChild(s);
+    }
+    function buildYearChart() {
+      const yearData = (window as any).__DIVE_YEAR_DATA__;
+      const Chart = (window as any).Chart;
+      if (!yearData || !Chart) return;
+      const canvas = document.getElementById('year-compare-chart') as HTMLCanvasElement;
+      if (!canvas) return;
+      new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: yearData.labels,
+          datasets: [
+            {
+              label: '潛水次數',
+              data: yearData.counts,
+              backgroundColor: ['#38bdf8', '#818cf8', '#4ade80'],
+              borderRadius: 6,
+              borderSkipped: false,
+            },
+            {
+              label: '總小時數',
+              data: yearData.hours,
+              backgroundColor: ['rgba(56,189,248,0.4)', 'rgba(129,140,248,0.4)', 'rgba(74,222,128,0.4)'],
+              borderRadius: 6,
+              borderSkipped: false,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: true, labels: { color: '#94a3b8', font: { size: 12 } } },
+            tooltip: {
+              callbacks: {
+                label: (ctx: any) => ctx.datasetIndex === 0
+                  ? ` ${ctx.parsed.y} 次`
+                  : ` ${ctx.parsed.y} 小時`
+              }
+            }
+          },
+          scales: {
+            x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 13 } } },
+            y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8' }, beginAtZero: true }
+          }
+        }
+      });
+    }
+    const canvas = document.querySelector('#year-compare-chart');
+    if (!canvas) return;
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        io.disconnect();
+        loadChartJS(buildYearChart);
+      }
+    }, { rootMargin: '200px' });
+    io.observe(canvas);
   })();
 
   // 搜尋 + 篩選功能
@@ -443,6 +576,45 @@ const monthChartData = {
     vertical-align: middle;
     margin-left: 0.5rem;
   }
+  /* PB 牆 */
+  .pb-section h2 { margin-bottom: 1rem; }
+  .pb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .pb-card {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(56,189,248,0.05) 0%, #111827 100%);
+    position: relative;
+    padding: 2rem 1.5rem;
+  }
+  .pb-badge {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .pb-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .pb-card .stat-num {
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+  .pb-unit {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 0.2rem;
+  }
+  .pb-sub {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-top: 0.5rem;
+  }
+
   .charts-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -497,6 +669,7 @@ const monthChartData = {
     margin-left: auto;
   }
   @media (max-width: 768px) {
+    .pb-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .map-container { height: 280px; }
     .charts-grid { grid-template-columns: 1fr; }

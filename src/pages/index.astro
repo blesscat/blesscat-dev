@@ -19,6 +19,15 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 <Layout title="Home">
   <div class="hero">
 
+    <!-- 水波紋 SVG 動畫背景 -->
+    <div class="ripple-container" aria-hidden="true">
+      <svg class="ripple-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ripple ripple-1" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
+        <circle class="ripple ripple-2" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
+        <circle class="ripple ripple-3" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
+      </svg>
+    </div>
+
     <!-- 左：簡介 -->
     <div class="left anim-fade-up delay-1">
       <p class="kicker">Explorer · Since 2024</p>
@@ -97,6 +106,36 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     gap: 4rem;
     align-items: center;
     min-height: 80vh;
+    position: relative;
+    background: radial-gradient(ellipse at 20% 80%, rgba(14,30,60,0.55) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(10,14,26,0.0) 0%, transparent 50%);
+  }
+
+  /* ── 水波紋 ── */
+  .ripple-container {
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+  .ripple-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .ripple {
+    transform-origin: 150px 150px;
+    animation: ripple-expand 4s ease-out infinite;
+  }
+  .ripple-2 { animation-delay: 1.3s; }
+  .ripple-3 { animation-delay: 2.6s; }
+  @keyframes ripple-expand {
+    0%   { r: 30;  stroke-opacity: 0.6; }
+    100% { r: 140; stroke-opacity: 0; }
   }
 
   /* ── 左欄 ── */
