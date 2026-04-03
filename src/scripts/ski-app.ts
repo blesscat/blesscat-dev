@@ -1,4 +1,5 @@
 // ski-app.ts — map + charts + filter for ski page
+import { buildScatterData, aggregateResortRuns, matchSkiRow } from './lib/ski'
 
 declare global {
   interface Window {
@@ -132,8 +133,7 @@ function initCharts() {
     })
 
     // 速度 vs 垂直落差散點圖
-    const scatterData = data.filter(d => d.vertical_m != null && d.top_speed_kmh != null)
-      .map(d => ({ x: parseFloat((d.vertical_m / 1000).toFixed(2)), y: parseFloat(d.top_speed_kmh.toFixed(1)), resort: d.resort, date: d.date }))
+    const scatterData = buildScatterData(data)
     const scatterCtx = getCtx('scatter')
     if (scatterCtx) new C(scatterCtx, {
       type: 'scatter',
@@ -151,9 +151,7 @@ function initCharts() {
     })
 
     // 雪場比較
-    const resortRuns: Record<string, number> = {}
-    data.forEach(d => { const n = d.resort.split('/')[0].trim(); resortRuns[n] = (resortRuns[n] || 0) + (d.runs || 0) })
-    const resortsSorted = Object.entries(resortRuns).sort((a, b) => b[1] - a[1])
+    const resortsSorted = aggregateResortRuns(data)
     const resortCtx = getCtx('resort')
     if (resortCtx) new C(resortCtx, {
       type: 'bar',
@@ -202,13 +200,13 @@ function initFilter() {
   const total = window.__SKI_TOTAL__ || rows.length
 
   function applyFilter() {
-    const keyword = searchEl ? searchEl.value.trim().toLowerCase() : ''
+    const keyword = searchEl ? searchEl.value.trim() : ''
     const year = yearEl ? yearEl.value : ''
     let visible = 0
     rows.forEach(row => {
-      const resort = (row.querySelector('.ski-resort')?.textContent || '').toLowerCase()
-      const date = (row.querySelector('.ski-date')?.textContent || '')
-      const match = (!keyword || resort.includes(keyword)) && (!year || date.startsWith(year))
+      const resort = row.querySelector('.ski-resort')?.textContent || ''
+      const date = row.querySelector('.ski-date')?.textContent || ''
+      const match = matchSkiRow(resort, date, keyword, year)
       row.style.display = match ? '' : 'none'
       if (match) visible++
     })

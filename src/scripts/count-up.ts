@@ -1,4 +1,6 @@
 // Count-up animation for .count-up elements
+import { easeOutCubic, formatValue } from './lib/anim'
+
 function animateCountUp(el: HTMLElement) {
   const target = parseFloat(el.dataset.target || '0')
   const decimals = parseInt(el.dataset.decimals || '0')
@@ -7,8 +9,7 @@ function animateCountUp(el: HTMLElement) {
   const start = performance.now()
   function tick(now: number) {
     const progress = Math.min((now - start) / duration, 1)
-    const ease = 1 - Math.pow(1 - progress, 3)
-    el.textContent = (target * ease).toFixed(decimals) + suffix
+    el.textContent = formatValue(target * easeOutCubic(progress), decimals, suffix)
     if (progress < 1) requestAnimationFrame(tick)
   }
   requestAnimationFrame(tick)

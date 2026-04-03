@@ -14,9 +14,7 @@ declare global {
 
 // ── helpers ──────────────────────────────────────────────────
 
-function getYear(dateStr: string): number {
-  return parseInt(dateStr.slice(0, 4), 10)
-}
+import { getYear, groupDivesByLocation, groupSkiByResort, countCountries } from './lib/explore'
 
 // ── state ────────────────────────────────────────────────────
 
@@ -142,13 +140,7 @@ function buildMarkers(dives: any[], ski: any[]) {
   allMarkers.forEach(m => map.removeLayer(m.el))
   allMarkers = []
 
-  const diveGroups: Record<string, any[]> = {}
-  dives.forEach(d => {
-    if (d.lat == null || d.lon == null) return
-    const key = `${(+d.lat).toFixed(3)}_${(+d.lon).toFixed(3)}`
-    if (!diveGroups[key]) diveGroups[key] = []
-    diveGroups[key].push(d)
-  })
+  const diveGroups = groupDivesByLocation(dives)
 
   Object.values(diveGroups).forEach(group => {
     const d0 = group[0]
@@ -162,13 +154,7 @@ function buildMarkers(dives: any[], ski: any[]) {
     allMarkers.push({ el: marker, type: 'dive', year: getYear(d0.date) })
   })
 
-  const skiGroups: Record<string, any[]> = {}
-  ski.forEach(d => {
-    if (d.lat == null || d.lon == null) return
-    const key = d.resort.split('/')[0].trim()
-    if (!skiGroups[key]) skiGroups[key] = []
-    skiGroups[key].push(d)
-  })
+  const skiGroups = groupSkiByResort(ski)
 
   Object.values(skiGroups).forEach(group => {
     const d0 = group[0]
@@ -270,14 +256,9 @@ function updateStats(dives: any[], ski: any[]) {
     return d.lat != null && showSki && y >= selectedYearMin && y <= selectedYearMax
   })
 
-  const diveSites = new Set(filteredDives.map(d =>
-    `${(+d.lat).toFixed(3)}_${(+(d.lon as number)).toFixed(3)}`
-  )).size
-  const skiResorts = new Set(filteredSki.map(d => d.resort.split('/')[0].trim())).size
-  const countries = new Set([
-    ...filteredDives.map(d => (d.location || '').split(', ').pop() || ''),
-    ...filteredSki.map(d => d.country),
-  ].filter(Boolean)).size
+  const diveSites = Object.keys(groupDivesByLocation(filteredDives)).length
+  const skiResorts = Object.keys(groupSkiByResort(filteredSki)).length
+  const countries = countCountries(filteredDives, filteredSki)
 
   const el = document.getElementById('explore-stats')!
   el.innerHTML = `

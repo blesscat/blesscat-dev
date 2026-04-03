@@ -1,4 +1,5 @@
 // dives-ui.ts — stat charts + search/filter for dives page
+import { depthLabelColor, monthLabelColors, matchDiveRow } from './lib/dives'
 
 declare global {
   interface Window {
@@ -39,9 +40,7 @@ function initStatCharts() {
 
     const depthCtx = getCtx('depth-dist')
     if (depthCtx) {
-      const colors = depthData.labels.map((l: string) =>
-        l === '30m+' ? '#f87171' : '#38bdf8'
-      )
+      const colors = depthData.labels.map(depthLabelColor)
       new Chart(depthCtx, {
         type: 'bar',
         data: {
@@ -61,8 +60,7 @@ function initStatCharts() {
 
     const monthCtx = getCtx('monthly')
     if (monthCtx) {
-      const yearColors: Record<string, string> = { '2024': '#38bdf8', '2025': '#818cf8', '2026': '#4ade80' }
-      const bgColors = monthData.labels.map((ym: string) => yearColors[ym.slice(0, 4)] || '#38bdf8')
+      const bgColors = monthLabelColors(monthData.labels)
       new Chart(monthCtx, {
         type: 'bar',
         data: {
@@ -139,16 +137,15 @@ function initFilter() {
   const total = window.__TOTAL_DIVES__ || rows.length
 
   function applyFilter() {
-    const keyword = searchInput?.value.trim().toLowerCase() ?? ''
+    const keyword = searchInput?.value.trim() ?? ''
     const year = yearSelect?.value ?? ''
     let shown = 0
     rows.forEach(row => {
-      const location = (row.querySelector('.dive-location')?.textContent || '').toLowerCase()
+      const location = row.querySelector('.dive-location')?.textContent || ''
       const date = row.querySelector('.dive-date')?.textContent || ''
-      const matchKeyword = !keyword || location.includes(keyword)
-      const matchYear = !year || date.slice(0, 4) === year
-      row.style.display = (matchKeyword && matchYear) ? '' : 'none'
-      if (matchKeyword && matchYear) shown++
+      const match = matchDiveRow(location, date, keyword, year)
+      row.style.display = match ? '' : 'none'
+      if (match) shown++
     })
     if (countEl) countEl.textContent = `顯示 ${shown} / ${total} 筆`
   }

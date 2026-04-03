@@ -1,4 +1,5 @@
 import type { Dive, DiveProfiles } from '../types/dive'
+import { sampleProfile } from './lib/dives'
 
 declare global {
   interface Window {
@@ -115,8 +116,7 @@ function initChart() {
       if (!profile?.length) return
 
       const hasHr = profile.some((p) => p.hr !== null)
-      const step = Math.max(1, Math.floor(profile.length / 300))
-      const sampled = profile.filter((_, i) => i % step === 0)
+      const sampled = sampleProfile(profile, 300)
       const isMobile = window.innerWidth < 640
 
       const chart = new window.Chart(canvas.getContext('2d')!, {
