@@ -16,7 +16,7 @@ const posts = (await getCollection('blog')).sort((a, b) => {
 
   <div class="post-list">
     {posts.map(post => (
-      <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card">
+      <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card reveal">
         <div class="post-card-inner">
           <div class="post-card-text">
             <div class="post-meta">
@@ -63,11 +63,12 @@ const posts = (await getCollection('blog')).sort((a, b) => {
     border-radius: 12px;
     padding: 1.5rem 2rem;
     text-decoration: none;
-    transition: border-color 0.2s, transform 0.2s;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s, opacity 0.5s, translate 0.5s;
   }
   .post-card:hover {
     border-color: #38bdf8;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(56,189,248,0.12);
   }
   .post-card-inner {
     display: flex;

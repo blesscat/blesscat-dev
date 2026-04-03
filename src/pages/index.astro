@@ -19,26 +19,44 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 <Layout title="Home">
   <div class="hero">
     <div class="hero-text">
-      <h1>blesscat<span>.dev</span></h1>
-      <p class="tagline">Diver · Skier · Explorer · Tinkerer</p>
+      <h1 class="anim-fade-up delay-1">blesscat<span>.dev</span></h1>
+      <p class="tagline anim-fade-up delay-2">Diver · Skier · Explorer · Tinkerer</p>
 
       <!-- 潛水 -->
-      <div class="section-label">🤿 潛水</div>
-      <div class="stats-row">
-        <div class="stat"><span class="num dive">{totalDives}</span><span class="label">次潛水</span></div>
-        <div class="stat"><span class="num dive">{maxDepth.toFixed(1)}m</span><span class="label">最大深度</span></div>
-        <div class="stat"><span class="num dive">{totalDiveHours}h</span><span class="label">水下時間</span></div>
+      <div class="section-label anim-fade-up delay-3">🤿 潛水</div>
+      <div class="stats-row anim-fade-up delay-4">
+        <div class="stat">
+          <span class="num dive count-up" data-target={totalDives} data-decimals="0">{totalDives}</span>
+          <span class="label">次潛水</span>
+        </div>
+        <div class="stat">
+          <span class="num dive count-up" data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</span>
+          <span class="label">最大深度</span>
+        </div>
+        <div class="stat">
+          <span class="num dive count-up" data-target={totalDiveHours} data-decimals="0" data-suffix="h">{totalDiveHours}h</span>
+          <span class="label">水下時間</span>
+        </div>
       </div>
 
       <!-- 滑雪 -->
-      <div class="section-label">⛷️ 滑雪</div>
-      <div class="stats-row">
-        <div class="stat"><span class="num ski">{totalSkiDays}</span><span class="label">滑雪天數</span></div>
-        <div class="stat"><span class="num ski">{maxSpeed.toFixed(1)}km/h</span><span class="label">最高速度</span></div>
-        <div class="stat"><span class="num ski">{(totalVertical / 1000).toFixed(1)}km</span><span class="label">累計落差</span></div>
+      <div class="section-label anim-fade-up delay-5">⛷️ 滑雪</div>
+      <div class="stats-row anim-fade-up delay-6">
+        <div class="stat">
+          <span class="num ski count-up" data-target={totalSkiDays} data-decimals="0">{totalSkiDays}</span>
+          <span class="label">滑雪天數</span>
+        </div>
+        <div class="stat">
+          <span class="num ski count-up" data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}km/h</span>
+          <span class="label">最高速度</span>
+        </div>
+        <div class="stat">
+          <span class="num ski count-up" data-target={totalVertical / 1000} data-decimals="1" data-suffix="km">{(totalVertical / 1000).toFixed(1)}km</span>
+          <span class="label">累計落差</span>
+        </div>
       </div>
 
-      <div class="cta-row">
+      <div class="cta-row anim-fade-up delay-7">
         <a href="/dives" class="btn-primary">🤿 潛水紀錄</a>
         <a href="/ski" class="btn-ski">⛷️ 滑雪紀錄</a>
         <a href="/blog" class="btn-secondary">📝 日記</a>
@@ -46,6 +64,39 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     </div>
   </div>
 </Layout>
+
+<script>
+  // Count-up animation
+  function animateCountUp(el: HTMLElement) {
+    const target = parseFloat(el.dataset.target || '0');
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      // ease-out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const value = (target * ease).toFixed(decimals);
+      el.textContent = value + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Trigger count-up when element becomes visible
+  const counters = document.querySelectorAll<HTMLElement>('.count-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCountUp(entry.target as HTMLElement);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  counters.forEach(el => io.observe(el));
+</script>
 
 <style>
   .hero {
@@ -60,6 +111,7 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     font-weight: 900;
     color: #38bdf8;
     letter-spacing: -2px;
+    animation: pulse-glow 4s ease-in-out infinite;
   }
   h1 span { color: #818cf8; }
   .tagline { color: #64748b; font-size: 1.1rem; margin: 0.75rem 0 2rem; letter-spacing: 2px; text-transform: uppercase; }
@@ -71,6 +123,7 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
   .num.ski { color: #818cf8; }
   .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   .cta-row { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+
   .btn-primary {
     padding: 0.8rem 1.8rem;
     background: #38bdf8;
@@ -78,9 +131,14 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
   }
-  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56,189,248,0.35);
+  }
+
   .btn-ski {
     padding: 0.8rem 1.8rem;
     background: #818cf8;
@@ -88,18 +146,27 @@ const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
     border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
   }
-  .btn-ski:hover { opacity: 0.85; }
+  .btn-ski:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(129,140,248,0.35);
+  }
+
   .btn-secondary {
     padding: 0.8rem 1.8rem;
     border: 1px solid #1e2535;
     color: #94a3b8;
     border-radius: 8px;
     text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
   }
-  .btn-secondary:hover { border-color: #38bdf8; color: #e2e8f0; }
+  .btn-secondary:hover {
+    border-color: #38bdf8;
+    color: #e2e8f0;
+    transform: translateY(-2px);
+  }
 
   @media (max-width: 640px) {
     h1 { font-size: 2.8rem; }

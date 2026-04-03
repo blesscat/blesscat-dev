@@ -20,21 +20,21 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
 
   <!-- 統計卡片 -->
   <div class="stats-grid">
-    <div class="card stat-card">
-      <div class="stat-num">{totalDives}</div>
+    <div class="card stat-card anim-fade-up delay-1">
+      <div class="stat-num count-up" data-target={totalDives} data-decimals="0">{totalDives}</div>
       <div class="stat-label">總潛水次數</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{maxDepth.toFixed(1)}m</div>
+    <div class="card stat-card anim-fade-up delay-2">
+      <div class="stat-num count-up" data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</div>
       <div class="stat-label">最大深度</div>
       <div class="stat-sub">{maxDepthDive?.location}</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{Math.floor(totalMinutes/60)}h {Math.round(totalMinutes%60)}m</div>
+    <div class="card stat-card anim-fade-up delay-3">
+      <div class="stat-num count-up" data-target={Math.floor(totalMinutes/60)} data-decimals="0" data-suffix={`h ${Math.round(totalMinutes%60)}m`}>{Math.floor(totalMinutes/60)}h {Math.round(totalMinutes%60)}m</div>
       <div class="stat-label">總水下時間</div>
     </div>
-    <div class="card stat-card">
-      <div class="stat-num">{avgDepth}m</div>
+    <div class="card stat-card anim-fade-up delay-4">
+      <div class="stat-num count-up" data-target={parseFloat(avgDepth)} data-decimals="1" data-suffix="m">{avgDepth}m</div>
       <div class="stat-label">平均深度</div>
     </div>
   </div>
@@ -50,7 +50,7 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
     <h2>所有紀錄</h2>
     <div class="dive-list">
       {dives.slice().reverse().map(d => (
-        <div class="dive-row card">
+        <div class="dive-row card reveal">
           <div class="dive-main">
             <div class="dive-num">#{d.num}</div>
             <div class="dive-info">
@@ -90,6 +90,33 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
 </script>
 <script>
   import '../scripts/dive-app.ts';
+</script>
+<script>
+  // Count-up animation for stat cards
+  function animateCountUp(el: HTMLElement) {
+    const target = parseFloat(el.dataset.target || '0');
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const suffix = el.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = (target * ease).toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const counters = document.querySelectorAll<HTMLElement>('.count-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCountUp(entry.target as HTMLElement);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => io.observe(el));
 </script>
 
 <!-- Leaflet CSS -->
@@ -134,9 +161,13 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
   .dive-row {
     padding: 0;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   }
-  .dive-row:hover { border-color: #38bdf8; }
+  .dive-row:hover {
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56,189,248,0.1);
+  }
   .dive-main {
     display: flex;
     align-items: center;

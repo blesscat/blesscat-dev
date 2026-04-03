@@ -10,3 +10,57 @@
   --color-tag-bg: #1a1a2e;
   --color-tag-text: #818cf8;
 }
+
+/* ── Micro-animation keyframes ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 0px transparent; }
+  50%       { text-shadow: 0 0 12px rgba(56,189,248,0.5); }
+}
+
+/* ── Reusable animation utilities ── */
+.anim-fade-up {
+  opacity: 0;
+  animation: fadeInUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+.anim-fade {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* stagger delays */
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+.delay-5 { animation-delay: 0.40s; }
+.delay-6 { animation-delay: 0.48s; }
+.delay-7 { animation-delay: 0.56s; }
+.delay-8 { animation-delay: 0.64s; }
+
+/* scroll-reveal: hidden until JS adds .revealed */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1),
+              transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
