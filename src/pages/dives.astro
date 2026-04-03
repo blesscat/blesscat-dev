@@ -67,7 +67,7 @@ const diveYearData = {
   hours: ['2024', '2025', '2026'].map(y => parseFloat(((yearStatsMap[y]?.minutes || 0) / 60).toFixed(1))),
 };
 ---
-<Layout title="潛水紀錄">
+<Layout title="潛水紀錄" description={`${totalDives} 次潛水 · 最深 ${maxDepth.toFixed(1)}m · 水下 ${Math.floor(totalMinutes/60)} 小時`} ogImage="/og/dives.png">
   <div class="page-header">
     <h1>🤿 潛水紀錄</h1>
     <p class="subtitle">從 2024 年開始的每一支</p>

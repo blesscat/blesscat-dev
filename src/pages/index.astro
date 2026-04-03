@@ -16,7 +16,7 @@ const totalSkiDays = ski.length;
 const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
 const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
 ---
-<Layout title="Home">
+<Layout title="Home" description="潛水、滑雪、探索、搗鼓 AI — Blesscat 的個人紀錄網站" ogImage="/og/index.png">
   <div class="hero">
 
     <!-- 水波紋 SVG 動畫背景 -->

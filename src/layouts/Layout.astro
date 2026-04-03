@@ -3,15 +3,37 @@ import '../styles/global.css';
 
 export interface Props {
   title: string;
+  description?: string;
+  ogImage?: string;
 }
-const { title } = Astro.props;
+const { title, description = 'Diver · Skier · Explorer · Tinkerer', ogImage } = Astro.props;
+const site = 'https://blesscat.dev';
+const pageTitle = title === 'Home' ? 'blesscat.dev' : `${title} · blesscat.dev`;
+const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
 ---
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} · blesscat.dev</title>
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="blesscat.dev" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content={`${site}${Astro.url.pathname}`} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#38bdf8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />

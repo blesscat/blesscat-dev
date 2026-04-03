@@ -27,7 +27,7 @@ ski.forEach(d => {
 const months = Object.keys(monthCount).sort();
 ---
 
-<Layout title="滑雪紀錄">
+<Layout title="滑雪紀錄" description={`${totalDays} 天滑雪 · 最高速 ${maxSpeed.toFixed(1)}km/h · 累計落差 ${(totalVertical/1000).toFixed(1)}km`} ogImage="/og/ski.png">
   <div class="page-header">
     <h1>⛷️ 滑雪紀錄</h1>
     <p class="subtitle">日本雪場巡禮</p>
