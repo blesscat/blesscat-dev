@@ -2,8 +2,8 @@
 interface Props {
   id: string;
   title?: string;
-  height?: string; // desktop height, default 450px
-  heightMobile?: string; // mobile height, default 280px
+  height?: string;
+  heightMobile?: string;
 }
 const {
   id,
@@ -13,22 +13,18 @@ const {
 } = Astro.props;
 ---
 
-<div class="section">
-  {title && <h2>{title}</h2>}
-  <div id={id} class="map-container"></div>
+<div class="mt-10">
+  {title && <h2 class="text-sm font-bold text-[#94a3b8] uppercase tracking-widest mb-4">{title}</h2>}
+  <div
+    id={id}
+    class="map-el rounded-xl overflow-hidden border border-[#1e2535]"
+    style={`height: ${height}`}
+  ></div>
 </div>
 
-<style define:vars={{ height, heightMobile }}>
-  .map-container {
-    height: var(--height);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #1e2535;
-  }
+<style define:vars={{ heightMobile }}>
   @media (max-width: 768px) {
-    .map-container {
-      height: var(--heightMobile);
-    }
+    .map-el { height: var(--heightMobile) !important; }
   }
 </style>
 

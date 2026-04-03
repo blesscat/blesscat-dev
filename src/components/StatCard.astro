@@ -7,7 +7,7 @@ interface Props {
   decimals?: number;
   suffix?: string;
   delay?: number;
-  color?: string; // CSS color for stat-num, default #38bdf8
+  color?: string;
 }
 const {
   value,
@@ -21,10 +21,9 @@ const {
 } = Astro.props;
 ---
 
-<div class={`card stat-card anim-fade-up delay-${delay}`}>
+<div class={`bg-[#0d1220] border border-[#1e2535] rounded-xl p-5 text-center anim-fade-up delay-${delay}`}>
   <div
-    class="stat-num"
-    class:list={[target != null ? 'count-up' : '']}
+    class:list={['text-3xl font-extrabold leading-tight', target != null ? 'count-up' : '']}
     data-target={target}
     data-decimals={decimals}
     data-suffix={suffix}
@@ -32,33 +31,6 @@ const {
   >
     {value}
   </div>
-  <div class="stat-label">{label}</div>
-  {sub && <div class="stat-sub">{sub}</div>}
+  <div class="text-xs text-[#64748b] uppercase tracking-widest mt-1">{label}</div>
+  {sub && <div class="text-xs text-[#475569] mt-0.5">{sub}</div>}
 </div>
-
-<style>
-  .card {
-    background: #0d1220;
-    border: 1px solid #1e2535;
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .stat-card { text-align: center; }
-  .stat-num {
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1.1;
-  }
-  .stat-label {
-    font-size: 0.75rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 0.25rem;
-  }
-  .stat-sub {
-    font-size: 0.75rem;
-    color: #475569;
-    margin-top: 0.2rem;
-  }
-</style>
