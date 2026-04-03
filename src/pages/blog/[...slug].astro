@@ -20,11 +20,12 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
 ---
 <Layout title={displayTitle} description={ogDesc} ogImage={ogImage}>
   <!-- 閱讀進度條 -->
-  <div id="reading-progress-bar"></div>
+  <div id="reading-progress-bar"
+       class="fixed top-[57px] left-0 w-0 h-[3px] bg-[#38bdf8] z-[9999] transition-[width] duration-100 ease-linear">
+  </div>
 
   <article class="max-w-2xl mx-auto">
 
-    <!-- Hero image: 桌面版縮小置中，手機版全寬 -->
     {post.data.heroImage && (
       <div class="mb-8 flex justify-center">
         <img
@@ -35,7 +36,6 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
       </div>
     )}
 
-    <!-- Header -->
     <header class="mb-8 pb-6 border-b border-[#1e2535]">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
@@ -56,21 +56,21 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
       )}
     </header>
 
-    <!-- Markdown content -->
     <div class="prose-content leading-relaxed text-[#cbd5e1]">
       <Content />
     </div>
 
-    <!-- 分享按鈕 -->
-    <div class="share-section">
-      <button id="copy-link-btn" class="share-btn">🔗 複製連結</button>
+    <div class="mt-12 pt-8 border-t border-[#1e2535] flex justify-center">
+      <button
+        id="copy-link-btn"
+        class="bg-transparent border border-[#1e2535] text-[#94a3b8] px-6 py-2 rounded-lg text-[0.88rem] cursor-pointer transition-all hover:border-[#38bdf8] hover:text-[#38bdf8]"
+      >🔗 複製連結</button>
     </div>
 
   </article>
 </Layout>
 
 <script>
-  // 閱讀進度條
   const bar = document.getElementById('reading-progress-bar');
   function updateProgress() {
     const scrollTop = window.scrollY;
@@ -81,7 +81,6 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // 複製連結按鈕
   const copyBtn = document.getElementById('copy-link-btn');
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
@@ -98,52 +97,14 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
 </script>
 
 <style>
-  #reading-progress-bar {
-    position: fixed;
-    top: 57px;
-    left: 0;
-    width: 0%;
-    height: 3px;
-    background: #38bdf8;
-    z-index: 9999;
-    transition: width 0.1s linear;
-  }
-
-  .share-section {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #1e2535;
-    display: flex;
-    justify-content: center;
-  }
-  .share-btn {
-    background: transparent;
-    border: 1px solid #1e2535;
-    color: #94a3b8;
-    padding: 0.5rem 1.4rem;
-    border-radius: 8px;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .share-btn:hover {
-    border-color: #38bdf8;
-    color: #38bdf8;
-  }
-
-  /* Tailwind 沒有辦法輕易 scope markdown rendered output，用 style 補 */
+  /* prose-content：markdown 渲染的 HTML 無法 inline，必須用 :global() */
   .prose-content :global(h2) {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    margin: 2.5rem 0 1rem;
-    padding-bottom: 0.5rem;
+    font-size: 1.35rem; font-weight: 700; color: #e2e8f0;
+    margin: 2.5rem 0 1rem; padding-bottom: 0.5rem;
     border-bottom: 1px solid #1e2535;
   }
   .prose-content :global(h3) {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #94a3b8;
+    font-size: 1.1rem; font-weight: 700; color: #94a3b8;
     margin: 1.5rem 0 0.75rem;
   }
   .prose-content :global(p) { margin-bottom: 1.2rem; }
@@ -151,62 +112,34 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250));
   .prose-content :global(ol) { padding-left: 1.5rem; margin-bottom: 1.2rem; }
   .prose-content :global(li) { margin-bottom: 0.4rem; }
   .prose-content :global(code) {
-    background: #1e2535;
-    color: #38bdf8;
-    padding: 0.15rem 0.4rem;
-    border-radius: 4px;
+    background: #1e2535; color: #38bdf8;
+    padding: 0.15rem 0.4rem; border-radius: 4px;
     font-size: 0.88em;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
   .prose-content :global(pre) {
-    background: #0d1117;
-    border: 1px solid #1e2535;
-    border-radius: 10px;
-    padding: 1.2rem 1.5rem;
-    overflow-x: auto;
-    margin-bottom: 1.5rem;
+    background: #0d1117; border: 1px solid #1e2535;
+    border-radius: 10px; padding: 1.2rem 1.5rem;
+    overflow-x: auto; margin-bottom: 1.5rem;
   }
   .prose-content :global(pre code) {
-    background: none;
-    color: #e2e8f0;
-    padding: 0;
-    font-size: 0.85rem;
+    background: none; color: #e2e8f0; padding: 0; font-size: 0.85rem;
   }
   .prose-content :global(blockquote) {
-    border-left: 3px solid #38bdf8;
-    padding-left: 1rem;
-    color: #64748b;
-    font-style: italic;
-    margin: 1.2rem 0;
+    border-left: 3px solid #38bdf8; padding-left: 1rem;
+    color: #64748b; font-style: italic; margin: 1.2rem 0;
   }
-  .prose-content :global(img) {
-    max-width: 100%;
-    border-radius: 10px;
-    margin: 1rem 0;
-  }
-  .prose-content :global(hr) {
-    border: none;
-    border-top: 1px solid #1e2535;
-    margin: 2rem 0;
-  }
+  .prose-content :global(img) { max-width: 100%; border-radius: 10px; margin: 1rem 0; }
+  .prose-content :global(hr) { border: none; border-top: 1px solid #1e2535; margin: 2rem 0; }
   .prose-content :global(strong) { color: #e2e8f0; font-weight: 700; }
   .prose-content :global(a) { color: #38bdf8; text-decoration: none; }
   .prose-content :global(a:hover) { text-decoration: underline; }
   .prose-content :global(table) {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
+    width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.9rem;
   }
   .prose-content :global(th) {
-    background: #1e2535;
-    padding: 0.6rem 1rem;
-    text-align: left;
-    color: #94a3b8;
-    font-weight: 600;
+    background: #1e2535; padding: 0.6rem 1rem;
+    text-align: left; color: #94a3b8; font-weight: 600;
   }
-  .prose-content :global(td) {
-    padding: 0.6rem 1rem;
-    border-bottom: 1px solid #1e2535;
-  }
+  .prose-content :global(td) { padding: 0.6rem 1rem; border-bottom: 1px solid #1e2535; }
 </style>
