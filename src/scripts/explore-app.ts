@@ -67,8 +67,19 @@ async function init() {
   initMap(dives, ski)
   initControls(dives, ski)
   updateStats(dives, ski)
+
+  let isCardOpen = false
   window.addEventListener('explore:card-opened', () => {
-    if (map && window.innerWidth >= 768) map.panBy([150, 0])
+    if (map && window.innerWidth >= 768 && !isCardOpen) {
+      map.panBy([150, 0])
+      isCardOpen = true
+    }
+  })
+  window.addEventListener('explore:card-closed', () => {
+    if (map && window.innerWidth >= 768 && isCardOpen) {
+      map.panBy([-150, 0])
+      isCardOpen = false
+    }
   })
 }
 

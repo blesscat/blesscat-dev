@@ -72,6 +72,7 @@
 
   function close() {
     isOpen = false
+    window.dispatchEvent(new CustomEvent('explore:card-closed'))
   }
 
   function handleOpenDive(e: Event) {
