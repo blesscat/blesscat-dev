@@ -210,8 +210,8 @@ const diveYearData = {
   </div>
 </Layout>
 
-<!-- 傳資料給前端 JS -->
-<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }}>
+<!-- 傳資料給前端 JS（is:inline 確保同步執行，define:vars 之後立刻可取得） -->
+<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }} is:inline>
   window.__DIVES_GPS__ = divesWithGPS;
   window.__DIVES_PROFILE__ = divesWithProfile;
   window.__DEPTH_CHART_DATA__ = depthChartData;
