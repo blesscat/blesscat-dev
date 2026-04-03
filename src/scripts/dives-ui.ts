@@ -30,7 +30,7 @@ function loadChartJS(cb: () => void) {
 
 // ── 深度分布 + 月份活動 ──────────────────────────────────────────
 
-(function initStatCharts() {
+function initStatCharts() {
   function buildCharts() {
     const depthData = window.__DEPTH_CHART_DATA__
     const monthData = window.__MONTH_CHART_DATA__
@@ -87,11 +87,11 @@ function loadChartJS(cb: () => void) {
     if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildCharts) }
   }, { rootMargin: '200px' })
   io.observe(trigger)
-})()
+}
 
 // ── 年度比較圖 ──────────────────────────────────────────────────
 
-;(function initYearChart() {
+function initYearChart() {
   function buildYearChart() {
     const yearData = window.__DIVE_YEAR_DATA__
     const Chart = (window as any).Chart
@@ -127,11 +127,11 @@ function loadChartJS(cb: () => void) {
     if (entries.some(e => e.isIntersecting)) { io.disconnect(); loadChartJS(buildYearChart) }
   }, { rootMargin: '200px' })
   io.observe(canvas)
-})()
+}
 
 // ── 搜尋 + 篩選 ────────────────────────────────────────────────
 
-;(function initFilter() {
+function initFilter() {
   const searchInput = $<HTMLInputElement>('[data-ref="search"]')
   const yearSelect = $<HTMLSelectElement>('[data-ref="year-select"]')
   const countEl = $<HTMLSpanElement>('[data-ref="count"]')
@@ -155,6 +155,10 @@ function loadChartJS(cb: () => void) {
 
   searchInput?.addEventListener('input', applyFilter)
   yearSelect?.addEventListener('change', applyFilter)
-})()
+}
+
+initStatCharts()
+initYearChart()
+initFilter()
 
 export {}

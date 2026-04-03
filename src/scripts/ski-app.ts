@@ -23,7 +23,7 @@ function getCtx(name: string) {
 
 // ── 地圖 ───────────────────────────────────────────────────────
 
-(function initMap() {
+function initMap() {
   const script = document.createElement('script')
   script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
   script.onload = function () {
@@ -81,11 +81,11 @@ function getCtx(name: string) {
     }
   }
   document.head.appendChild(script)
-})()
+}
 
 // ── Charts ─────────────────────────────────────────────────────
 
-;(function initCharts() {
+function initCharts() {
   const script = document.createElement('script')
   script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
   script.onload = function () {
@@ -190,11 +190,11 @@ function getCtx(name: string) {
     })
   }
   document.head.appendChild(script)
-})()
+}
 
 // ── 搜尋篩選 ───────────────────────────────────────────────────
 
-;(function initFilter() {
+function initFilter() {
   const searchEl = $<HTMLInputElement>('[data-ref="search"]')
   const yearEl = $<HTMLSelectElement>('[data-ref="year-select"]')
   const countEl = $('[data-ref="count"]')
@@ -218,6 +218,10 @@ function getCtx(name: string) {
   searchEl?.addEventListener('input', applyFilter)
   yearEl?.addEventListener('change', applyFilter)
   applyFilter()
-})()
+}
+
+initMap()
+initCharts()
+initFilter()
 
 export {}

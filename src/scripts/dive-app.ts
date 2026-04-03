@@ -12,7 +12,7 @@ declare global {
 // =====================
 // Leaflet 地圖
 // =====================
-(function initMap(): void {
+function initMap() {
   const script = document.createElement('script')
   script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
   script.onload = function () { initDiveMap() }
@@ -89,12 +89,12 @@ declare global {
     const group = L.featureGroup(markers)
     map.fitBounds(group.getBounds().pad(0.3))
   }
-})()
+}
 
 // =====================
 // Chart.js 深度曲線（收折式，懶載入）
 // =====================
-;(function initChart(): void {
+function initChart() {
   const script = document.createElement('script')
   script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
   script.onload = async function () {
@@ -220,4 +220,7 @@ declare global {
     })
   }
   document.head.appendChild(script)
-})()
+}
+
+initMap()
+initChart()
