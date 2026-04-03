@@ -17,7 +17,7 @@ const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
        style="background: radial-gradient(ellipse at 20% 80%, rgba(14,30,60,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(10,14,26,0.0) 0%, transparent 50%);">
 
     <!-- 水波紋 SVG 動畫背景 -->
-    <div class="absolute left-[10%] bottom-[10%] w-[300px] h-[300px] pointer-events-none z-0 overflow-visible" aria-hidden="true">
+    <div class="absolute left-[10%] bottom-[10%] w-75 h-75 pointer-events-none z-0 overflow-visible" aria-hidden="true">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
         <circle class="ripple ripple-1" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>
         <circle class="ripple ripple-2" cx="150" cy="150" r="30" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="2"/>

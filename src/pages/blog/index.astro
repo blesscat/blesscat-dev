@@ -37,7 +37,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
       >
         <div class="flex items-center gap-6 p-6 max-[640px]:flex-col max-[640px]:gap-0 max-[640px]:p-0 max-[640px]:overflow-hidden">
           {post.data.heroImage && (
-            <div class="shrink-0 w-24 h-24 max-[640px]:w-full max-[640px]:h-[180px] max-[640px]:order-first">
+            <div class="shrink-0 w-24 h-24 max-[640px]:w-full max-[640px]:h-45 max-[640px]:order-first">
               <img
                 src={post.data.heroImage}
                 alt={post.data.title}
