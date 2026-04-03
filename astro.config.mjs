@@ -5,7 +5,7 @@ import svelte from '@astrojs/svelte'
 export default defineConfig({
   integrations: [svelte()],
   output: 'static',
-  site: 'https://blesscat.dev',
+  site: 'https://blog.blesscat.dev',
   vite: {
     plugins: [tailwindcss()],
   },

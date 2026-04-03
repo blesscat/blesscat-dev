@@ -7,7 +7,7 @@ export interface Props {
   ogImage?: string
 }
 const { title, description = 'Diver · Skier · Explorer · Tinkerer', ogImage } = Astro.props
-const site = 'https://blesscat.dev'
+const site = 'https://blog.blesscat.dev'
 const pageTitle = title === 'Home' ? 'blesscat.dev' : `${title} · blesscat.dev`
 const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 ---
