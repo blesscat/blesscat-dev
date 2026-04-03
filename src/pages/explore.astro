@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import InfoCard from '../components/InfoCard.svelte';
 import divesRaw from '../data/dives.json';
 import skiRaw from '../data/ski.json';
 
@@ -47,9 +48,7 @@ const yearMax = Math.max(...allYears);
   <!-- 地圖 + 側邊資訊卡 -->
   <div class="relative rounded-2xl overflow-hidden border border-border mb-8 anim-fade-up delay-4">
     <div id="explore-map" class="h-145 w-full bg-[#090d18] max-[768px]:h-105"></div>
-    <div id="info-card" class="info-card absolute top-0 right-[-360px] w-[340px] h-full bg-[#0d1220ee] backdrop-blur-[12px] border-l border-border overflow-y-auto transition-[right] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-[1000] p-0 max-[768px]:top-auto max-[768px]:bottom-[-100%] max-[768px]:right-0 max-[768px]:w-full max-[768px]:h-[60%] max-[768px]:border-l-0 max-[768px]:border-t max-[768px]:border-t-[#1e2535] max-[768px]:rounded-t-2xl max-[768px]:[transition-property:bottom] max-[768px]:[transition-duration:300ms] max-[768px]:[transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
-      <!-- 動態填入 -->
-    </div>
+    <InfoCard client:only="svelte" />
   </div>
 </Layout>
 
@@ -73,5 +72,17 @@ const yearMax = Math.max(...allYears);
     background: #38bdf8;
     cursor: pointer;
     box-shadow: 0 0 6px #38bdf8aa;
+  }
+
+  /* astro-island wrapper must not affect layout */
+  astro-island {
+    display: contents;
+  }
+
+  /* card background + border (can't be scoped in Svelte due to display:contents) */
+  .info-card {
+    background: #0d1220ee;
+    backdrop-filter: blur(12px);
+    border-left: 1px solid #1e2535;
   }
 </style>
