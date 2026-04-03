@@ -89,6 +89,15 @@
 .delay-8 { animation-delay: 0.64s; }
 
 /* scroll-reveal: hidden until JS adds .revealed */
+/* 隱藏 scrollbar 但保留滾動功能 */
+.overflow-x-auto {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(18px);
