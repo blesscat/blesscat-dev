@@ -20,35 +20,35 @@ const yearMax = Math.max(...allYears);
   <PageHeader title="🌏 探索地圖" subtitle="潛水潛點 × 滑雪雪場，點擊標記查看詳情" />
 
   <!-- 統計 mini bar -->
-  <div id="explore-stats" class="stats-bar anim-fade-up delay-2">
+  <div id="explore-stats" class="flex items-center gap-3 bg-[#111827] border border-[#1e2535] rounded-[10px] px-[1.2rem] py-[0.6rem] mb-4 text-[0.82rem] flex-wrap anim-fade-up delay-2">
     <span class="stat-item">載入中⋯</span>
   </div>
 
   <!-- 控制列 -->
-  <div class="controls anim-fade-up delay-3">
-    <div class="toggle-group">
-      <button id="toggle-dive" class="toggle-btn dive">
-        <span class="dot dive-dot"></span>🤿 潛水
+  <div class="flex items-center gap-4 mb-3 flex-wrap anim-fade-up delay-3 max-[480px]:gap-[0.6rem]">
+    <div class="flex gap-2">
+      <button id="toggle-dive" class="toggle-btn dive flex items-center gap-[0.4rem] py-[0.45rem] px-[0.9rem] rounded-full text-[0.8rem] font-semibold cursor-pointer border transition-all bg-[rgba(56,189,248,0.12)] border-[#38bdf8] text-[#38bdf8] max-[480px]:py-[0.4rem] max-[480px]:px-[0.7rem] max-[480px]:text-[0.75rem]">
+        <span class="dot dive-dot w-2 h-2 rounded-full inline-block bg-[#38bdf8]"></span>🤿 潛水
       </button>
-      <button id="toggle-ski" class="toggle-btn ski">
-        <span class="dot ski-dot"></span>⛷️ 滑雪
+      <button id="toggle-ski" class="toggle-btn ski flex items-center gap-[0.4rem] py-[0.45rem] px-[0.9rem] rounded-full text-[0.8rem] font-semibold cursor-pointer border transition-all bg-[rgba(129,140,248,0.12)] border-[#818cf8] text-[#818cf8] max-[480px]:py-[0.4rem] max-[480px]:px-[0.7rem] max-[480px]:text-[0.75rem]">
+        <span class="dot ski-dot w-2 h-2 rounded-full inline-block bg-[#818cf8]"></span>⛷️ 滑雪
       </button>
     </div>
 
-    <div id="year-control" class="year-control">
-      <span class="year-label-text">年份</span>
+    <div id="year-control" class="flex items-center gap-[0.6rem] ml-auto max-[768px]:ml-0">
+      <span class="text-[0.75rem] text-[#475569] whitespace-nowrap">年份</span>
       <input id="year-slider" type="range"
         min={yearMin} max={yearMax} value={yearMax}
-        class="year-slider"
+        class="year-slider appearance-none w-[140px] h-1 bg-[#1e2535] rounded-sm outline-none cursor-pointer max-[768px]:w-[100px]"
       />
-      <span id="year-label" class="year-badge">{yearMin} – {yearMax}</span>
+      <span id="year-label" class="text-[0.75rem] text-[#38bdf8] bg-[rgba(56,189,248,0.1)] border border-[rgba(56,189,248,0.2)] rounded-[6px] px-2 py-[0.15rem] whitespace-nowrap">{yearMin} – {yearMax}</span>
     </div>
   </div>
 
   <!-- 地圖 + 側邊資訊卡 -->
-  <div class="map-area anim-fade-up delay-4">
-    <div id="explore-map" class="map-container"></div>
-    <div id="info-card" class="info-card">
+  <div class="relative rounded-2xl overflow-hidden border border-[#1e2535] mb-8 anim-fade-up delay-4">
+    <div id="explore-map" class="h-[580px] w-full bg-[#090d18] max-[768px]:h-[420px]"></div>
+    <div id="info-card" class="info-card absolute top-0 right-[-360px] w-[340px] h-full bg-[#0d1220ee] backdrop-blur-[12px] border-l border-[#1e2535] overflow-y-auto transition-[right] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-[1000] p-0 max-[768px]:top-auto max-[768px]:bottom-[-100%] max-[768px]:right-0 max-[768px]:w-full max-[768px]:h-[60%] max-[768px]:border-l-0 max-[768px]:border-t max-[768px]:border-t-[#1e2535] max-[768px]:rounded-t-2xl max-[768px]:[transition-property:bottom] max-[768px]:[transition-duration:300ms] max-[768px]:[transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
       <!-- 動態填入 -->
     </div>
   </div>
@@ -65,96 +65,8 @@ const yearMax = Math.max(...allYears);
   import '../scripts/explore-app.ts';
 </script>
 
-
-
-<style>
-  /* ── 頁首 ── */
-  .page-header { margin-bottom: 1.25rem; }
-  .subtitle { color: #64748b; margin-top: 0.3rem; font-size: 0.9rem; }
-
-  /* ── 統計 mini bar ── */
-  .stats-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 10px;
-    padding: 0.6rem 1.2rem;
-    margin-bottom: 1rem;
-    font-size: 0.82rem;
-    flex-wrap: wrap;
-  }
-  .stat-item { color: #94a3b8; }
-  .stat-item strong { color: #e2e8f0; }
-  .dive-stat strong { color: #38bdf8; }
-  .ski-stat strong { color: #818cf8; }
-  .stat-sep { color: #1e2535; }
-
-  /* ── 控制列 ── */
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .toggle-group { display: flex; gap: 0.5rem; }
-
-  .toggle-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.9rem;
-    border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-  }
-  .toggle-btn.dive {
-    background: rgba(56,189,248,0.12);
-    border-color: #38bdf8;
-    color: #38bdf8;
-  }
-  .toggle-btn.ski {
-    background: rgba(129,140,248,0.12);
-    border-color: #818cf8;
-    color: #818cf8;
-  }
-  .toggle-btn.off {
-    background: transparent;
-    border-color: #1e2535;
-    color: #475569;
-  }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .dive-dot { background: #38bdf8; }
-  .ski-dot  { background: #818cf8; }
-  .toggle-btn.off .dot { background: #475569; }
-
-  .year-control {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-left: auto;
-  }
-  .year-label-text { font-size: 0.75rem; color: #475569; white-space: nowrap; }
-  .year-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 140px;
-    height: 4px;
-    background: #1e2535;
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
+<style is:global>
+  /* ── year slider thumb ── */
   .year-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px;
@@ -163,52 +75,37 @@ const yearMax = Math.max(...allYears);
     cursor: pointer;
     box-shadow: 0 0 6px #38bdf8aa;
   }
-  .year-badge {
-    font-size: 0.75rem;
-    color: #38bdf8;
-    background: rgba(56,189,248,0.1);
-    border: 1px solid rgba(56,189,248,0.2);
-    border-radius: 6px;
-    padding: 0.15rem 0.5rem;
-    white-space: nowrap;
+
+  /* ── toggle off state (JS-toggled) ── */
+  .toggle-btn.off {
+    background: transparent !important;
+    border-color: #1e2535 !important;
+    color: #475569 !important;
+  }
+  .toggle-btn.off .dot {
+    background: #475569 !important;
   }
 
-  /* ── 地圖區塊 ── */
-  .map-area {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #1e2535;
-    margin-bottom: 2rem;
-  }
-
-  .map-container {
-    height: 580px;
-    width: 100%;
-    background: #090d18;
-  }
-
-  /* ── 側邊資訊卡 ── */
-  .info-card {
-    position: absolute;
-    top: 0;
-    right: -360px;
-    width: 340px;
-    height: 100%;
-    background: #0d1220ee;
-    backdrop-filter: blur(12px);
-    border-left: 1px solid #1e2535;
-    overflow-y: auto;
-    transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 1000;
-    padding: 0;
-  }
+  /* ── info card open state (JS-toggled) ── */
   .info-card.open {
     right: 0;
   }
+  @media (max-width: 768px) {
+    .info-card.open {
+      bottom: 0;
+      right: 0;
+    }
+  }
 
-  /* card 內容 */
-  :global(.card-header) {
+  /* ── stats bar items (JS-injected via updateStats) ── */
+  .stat-item { color: #94a3b8; }
+  .stat-item strong { color: #e2e8f0; }
+  .dive-stat strong { color: #38bdf8; }
+  .ski-stat strong { color: #818cf8; }
+  .stat-sep { color: #1e2535; }
+
+  /* ── card content (JS-injected via openDiveCard / openSkiCard) ── */
+  .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -220,7 +117,7 @@ const yearMax = Math.max(...allYears);
     backdrop-filter: blur(8px);
     z-index: 10;
   }
-  :global(.card-type) {
+  .card-type {
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -228,9 +125,9 @@ const yearMax = Math.max(...allYears);
     padding: 0.2rem 0.6rem;
     border-radius: 99px;
   }
-  :global(.card-type.dive) { background: rgba(56,189,248,0.15); color: #38bdf8; }
-  :global(.card-type.ski)  { background: rgba(129,140,248,0.15); color: #818cf8; }
-  :global(.card-close) {
+  .card-type.dive { background: rgba(56,189,248,0.15); color: #38bdf8; }
+  .card-type.ski  { background: rgba(129,140,248,0.15); color: #818cf8; }
+  .card-close {
     background: transparent;
     border: none;
     color: #475569;
@@ -240,15 +137,15 @@ const yearMax = Math.max(...allYears);
     border-radius: 4px;
     transition: color 0.2s;
   }
-  :global(.card-close:hover) { color: #e2e8f0; }
-  :global(.card-title) {
+  .card-close:hover { color: #e2e8f0; }
+  .card-title {
     font-size: 1.1rem;
     font-weight: 800;
     color: #e2e8f0;
     padding: 0.9rem 1.2rem 0.2rem;
     line-height: 1.3;
   }
-  :global(.card-count) {
+  .card-count {
     font-size: 0.72rem;
     color: #475569;
     padding: 0 1.2rem 0.75rem;
@@ -257,14 +154,14 @@ const yearMax = Math.max(...allYears);
   }
 
   /* ski summary */
-  :global(.card-summary) {
+  .card-summary {
     display: flex;
     gap: 0;
     border-top: 1px solid #1e2535;
     border-bottom: 1px solid #1e2535;
     margin-bottom: 0.5rem;
   }
-  :global(.summary-item) {
+  .summary-item {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -272,40 +169,40 @@ const yearMax = Math.max(...allYears);
     padding: 0.75rem 0.5rem;
     border-right: 1px solid #1e2535;
   }
-  :global(.summary-item:last-child) { border-right: none; }
-  :global(.s-num) { font-size: 1.1rem; font-weight: 800; color: #818cf8; }
-  :global(.s-lbl) { font-size: 0.6rem; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .summary-item:last-child { border-right: none; }
+  .s-num { font-size: 1.1rem; font-weight: 800; color: #818cf8; }
+  .s-lbl { font-size: 0.6rem; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
   /* entries */
-  :global(.card-entries) { padding: 0 1.2rem 1.5rem; }
-  :global(.entry) { padding: 0.75rem 0; }
-  :global(.entry-border) { border-top: 1px solid #1e2535; }
-  :global(.entry-row) {
+  .card-entries { padding: 0 1.2rem 1.5rem; }
+  .entry { padding: 0.75rem 0; }
+  .entry-border { border-top: 1px solid #1e2535; }
+  .entry-row {
     display: flex;
     align-items: center;
     gap: 0.6rem;
     margin-bottom: 0.4rem;
   }
-  :global(.entry-num) { font-size: 0.72rem; color: #475569; font-weight: 700; }
-  :global(.entry-date) { font-size: 0.78rem; color: #64748b; }
-  :global(.entry-country) { font-size: 0.72rem; color: #475569; margin-left: auto; }
+  .entry-num { font-size: 0.72rem; color: #475569; font-weight: 700; }
+  .entry-date { font-size: 0.78rem; color: #64748b; }
+  .entry-country { font-size: 0.72rem; color: #475569; margin-left: auto; }
 
   /* pills */
-  :global(.entry-pills) { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-  :global(.pill) { padding: 0.18rem 0.5rem; border-radius: 99px; font-size: 0.7rem; font-weight: 600; }
-  :global(.pill.depth) { background: #0c2d48; color: #38bdf8; }
-  :global(.pill.time)  { background: #1a1a2e; color: #818cf8; }
-  :global(.pill.temp)  { background: #1a2e1a; color: #4ade80; }
-  :global(.pill.gas)   { background: #2e1a1a; color: #f87171; }
-  :global(.pill.hr)    { background: #2e1a1a; color: #fb7185; }
-  :global(.pill.runs)  { background: #1e1a2e; color: #818cf8; }
-  :global(.pill.speed) { background: #2e1a1a; color: #f87171; }
-  :global(.pill.vert)  { background: #0c2d48; color: #38bdf8; }
-  :global(.pill.alt)   { background: #1e1a10; color: #fbbf24; }
-  :global(.pill.dur)   { background: #1a2520; color: #34d399; }
+  .entry-pills { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .pill { padding: 0.18rem 0.5rem; border-radius: 99px; font-size: 0.7rem; font-weight: 600; }
+  .pill.depth { background: #0c2d48; color: #38bdf8; }
+  .pill.time  { background: #1a1a2e; color: #818cf8; }
+  .pill.temp  { background: #1a2e1a; color: #4ade80; }
+  .pill.gas   { background: #2e1a1a; color: #f87171; }
+  .pill.hr    { background: #2e1a1a; color: #fb7185; }
+  .pill.runs  { background: #1e1a2e; color: #818cf8; }
+  .pill.speed { background: #2e1a1a; color: #f87171; }
+  .pill.vert  { background: #0c2d48; color: #38bdf8; }
+  .pill.alt   { background: #1e1a10; color: #fbbf24; }
+  .pill.dur   { background: #1a2520; color: #34d399; }
 
   /* depth chart */
-  :global(.chart-btn) {
+  .chart-btn {
     margin-top: 0.5rem;
     padding: 0.3rem 0.75rem;
     background: transparent;
@@ -316,34 +213,6 @@ const yearMax = Math.max(...allYears);
     cursor: pointer;
     transition: border-color 0.2s;
   }
-  :global(.chart-btn:hover) { border-color: #38bdf8; }
-  :global(.chart-wrap) { margin-top: 0.6rem; height: 140px; position: relative; }
-
-  /* ── RWD ── */
-  @media (max-width: 768px) {
-    .map-container { height: 420px; }
-
-    .info-card {
-      top: auto;
-      bottom: -100%;
-      right: 0;
-      width: 100%;
-      height: 60%;
-      border-left: none;
-      border-top: 1px solid #1e2535;
-      border-radius: 16px 16px 0 0;
-      transition: bottom 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .info-card.open {
-      bottom: 0;
-      right: 0;
-    }
-    .year-control { margin-left: 0; }
-    .year-slider { width: 100px; }
-  }
-
-  @media (max-width: 480px) {
-    .controls { gap: 0.6rem; }
-    .toggle-btn { padding: 0.4rem 0.7rem; font-size: 0.75rem; }
-  }
+  .chart-btn:hover { border-color: #38bdf8; }
+  .chart-wrap { margin-top: 0.6rem; height: 140px; position: relative; }
 </style>

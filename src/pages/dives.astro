@@ -74,7 +74,7 @@ const diveYearData = {
   <PageHeader title="🤿 潛水紀錄" subtitle="從 2024 年開始的每一支" />
 
   <!-- 統計卡片 -->
-  <div class="stats-grid">
+  <div class="grid grid-cols-4 max-md:grid-cols-2 gap-4 mb-10">
     <StatCard value={totalDives} label="總潛水次數" target={totalDives} delay={1} />
     <StatCard value={`${maxDepth.toFixed(1)}m`} label="最大深度" sub={maxDepthDive?.location} target={maxDepth} decimals={1} suffix="m" delay={2} />
     <StatCard value={`${Math.floor(totalMinutes/60)}h ${Math.round(totalMinutes%60)}m`} label="總水下時間" target={Math.floor(totalMinutes/60)} suffix={`h ${Math.round(totalMinutes%60)}m`} delay={3} />
@@ -82,36 +82,36 @@ const diveYearData = {
   </div>
 
   <!-- PB 牆 -->
-  <div class="section pb-section">
-    <h2>🏆 個人紀錄 PB</h2>
-    <div class="pb-grid">
-      <div class="card pb-card anim-fade-up delay-1">
-        <div class="pb-badge">🏆</div>
-        <div class="pb-label">最大深度</div>
-        <div class="stat-num">33.9<span class="pb-unit">m</span></div>
-        <div class="pb-sub">Koror, Belau</div>
+  <div class="mb-12">
+    <h2 class="mb-4">🏆 個人紀錄 PB</h2>
+    <div class="grid grid-cols-3 max-md:grid-cols-1 gap-4">
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-1">
+        <div class="text-2xl mb-2">🏆</div>
+        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最大深度</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">33.9<span class="text-base font-semibold ml-[0.2rem]">m</span></div>
+        <div class="text-[0.8rem] text-[#475569] mt-2">Koror, Belau</div>
       </div>
-      <div class="card pb-card anim-fade-up delay-2">
-        <div class="pb-badge">🏆</div>
-        <div class="pb-label">最長底部時間</div>
-        <div class="stat-num">{maxBottomTime.toFixed(1)}<span class="pb-unit">min</span></div>
-        <div class="pb-sub">單次最長水下停留</div>
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-2">
+        <div class="text-2xl mb-2">🏆</div>
+        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最長底部時間</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">{maxBottomTime.toFixed(1)}<span class="text-base font-semibold ml-[0.2rem]">min</span></div>
+        <div class="text-[0.8rem] text-[#475569] mt-2">單次最長水下停留</div>
       </div>
-      <div class="card pb-card anim-fade-up delay-3">
-        <div class="pb-badge">🏆</div>
-        <div class="pb-label">最多潛水月份</div>
-        <div class="stat-num">{busiestMonthName}</div>
-        <div class="pb-sub">共 {busiestMonthCount} 支潛水</div>
+      <div class="bg-[linear-gradient(135deg,rgba(56,189,248,0.05)_0%,#111827_100%)] border border-[#1e2535] rounded-xl text-center relative py-8 px-6 anim-fade-up delay-3">
+        <div class="text-2xl mb-2">🏆</div>
+        <div class="text-xs text-[#64748b] uppercase tracking-[1px] mb-2">最多潛水月份</div>
+        <div class="text-[2.4rem] leading-none font-extrabold text-[#38bdf8]">{busiestMonthName}</div>
+        <div class="text-[0.8rem] text-[#475569] mt-2">共 {busiestMonthCount} 支潛水</div>
       </div>
     </div>
   </div>
 
   <!-- 年度比較 -->
-  <div class="section">
+  <div class="mb-12">
     <h2>📊 年度比較</h2>
-    <div class="card chart-card-stat">
-      <div class="chart-section-title">潛水次數 vs 總小時數</div>
-      <div style="position:relative;height:220px;">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
+      <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">潛水次數 vs 總小時數</div>
+      <div class="relative h-[220px]">
         <canvas id="year-compare-chart"></canvas>
       </div>
     </div>
@@ -121,18 +121,18 @@ const diveYearData = {
   <MapSection id="dive-map" title="潛點地圖" />
 
   <!-- 數據圖表 -->
-  <div class="section">
+  <div class="mb-12">
     <h2>數據圖表</h2>
-    <div class="charts-grid">
-      <div class="card chart-card-stat">
-        <div class="chart-section-title">深度分布</div>
-        <div class="chart-wrapper-stat">
+    <div class="grid grid-cols-2 max-md:grid-cols-1 gap-4">
+      <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
+        <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">深度分布</div>
+        <div class="relative h-[220px]">
           <canvas id="depth-dist-chart"></canvas>
         </div>
       </div>
-      <div class="card chart-card-stat">
-        <div class="chart-section-title">每月潛水次數</div>
-        <div class="chart-wrapper-stat">
+      <div class="bg-[#111827] border border-[#1e2535] rounded-xl pt-5 px-6 pb-6">
+        <div class="text-[0.8rem] text-[#64748b] uppercase tracking-[1px] mb-3">每月潛水次數</div>
+        <div class="relative h-[220px]">
           <canvas id="monthly-chart"></canvas>
         </div>
       </div>
@@ -140,50 +140,50 @@ const diveYearData = {
   </div>
 
   <!-- 潛水列表（含內嵌深度曲線） -->
-  <div class="section">
+  <div class="mb-12">
     <h2>所有紀錄</h2>
     <!-- 篩選列 -->
-    <div class="filter-bar">
+    <div class="flex items-center gap-3 max-md:gap-2 mb-4 flex-wrap">
       <input
         type="text"
         id="dive-search"
-        class="filter-input"
+        class="flex-1 min-w-[180px] py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm outline-none transition-[border-color] duration-200 focus:border-[#38bdf8] placeholder:text-[#475569]"
         placeholder="搜尋地點關鍵字..."
         autocomplete="off"
       />
-      <select id="year-filter" class="filter-select">
+      <select id="year-filter" class="py-2 px-[0.85rem] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] text-sm cursor-pointer outline-none transition-[border-color] duration-200 focus:border-[#38bdf8]">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
       </select>
-      <span id="filter-count" class="filter-count">顯示 {totalDives} / {totalDives} 筆</span>
+      <span id="filter-count" class="text-[0.8rem] text-[#475569] whitespace-nowrap ml-auto max-md:ml-0">顯示 {totalDives} / {totalDives} 筆</span>
     </div>
-    <div class="dive-list">
+    <div class="flex flex-col gap-[0.6rem]">
       {dives.slice().reverse().map(d => (
-        <div class="dive-row card reveal">
-          <div class="dive-main">
-            <div class="dive-num">#{d.num}</div>
-            <div class="dive-info">
-              <div class="dive-location">{d.location || 'Unknown'}</div>
-              <div class="dive-date">{d.date}</div>
+        <div class="dive-row bg-[#111827] border border-[#1e2535] rounded-xl p-0 overflow-hidden transition-[border-color,transform,box-shadow] duration-[250ms] hover:border-[#38bdf8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,189,248,0.1)] reveal">
+          <div class="dive-main flex items-center gap-4 max-md:gap-2 px-6 py-4 max-md:px-4 max-md:py-3 flex-wrap">
+            <div class="text-[0.8rem] text-[#475569] min-w-10 font-bold">#{d.num}</div>
+            <div class="flex-1 min-w-0">
+              <div class="dive-location font-semibold text-[0.95rem]">{d.location || 'Unknown'}</div>
+              <div class="dive-date text-[0.8rem] text-[#64748b] mt-[0.1rem]">{d.date}</div>
             </div>
-            <div class="dive-stats">
-              <span class="pill depth">▼ {d.max_depth}m</span>
-              <span class="pill time">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
-              {d.water_temp && <span class="pill temp">🌡 {d.water_temp}°C</span>}
-              {d.gas && d.gas !== 'Air' && <span class="pill gas">{d.gas}</span>}
+            <div class="flex gap-[0.4rem] flex-wrap max-md:w-full">
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#0c2d48] text-[#38bdf8]">▼ {d.max_depth}m</span>
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a1a2e] text-[#818cf8]">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
+              {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a2e1a] text-[#4ade80]">🌡 {d.water_temp}°C</span>}
+              {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#2e1a1a] text-[#f87171]">{d.gas}</span>}
             </div>
             {d.garmin_id && (
-              <button class="chart-toggle" data-dive={d.num} aria-expanded="false">
-                <span class="toggle-icon">▶</span>
-                <span class="toggle-label">深度曲線</span>
+              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-[#1e2535] rounded-md text-[#38bdf8] text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-[#38bdf8] hover:bg-[rgba(56,189,248,0.05)]" data-dive={d.num} aria-expanded="false">
+                <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
+                <span>深度曲線</span>
               </button>
             )}
           </div>
           {d.garmin_id && (
-            <div class="dive-chart-panel" id={`chart-panel-${d.num}`} hidden>
-              <div class="chart-wrapper">
+            <div class="border-t border-[#1e2535] pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`chart-panel-${d.num}`} hidden>
+              <div class="relative h-[200px] max-md:h-[180px]">
                 <canvas id={`chart-${d.num}`}></canvas>
               </div>
             </div>
@@ -212,223 +212,3 @@ const diveYearData = {
 
 <!-- Leaflet CSS -->
 
-
-<style>
-  .page-header { margin-bottom: 2rem; }
-  .subtitle { color: #64748b; margin-top: 0.3rem; }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-  .card {
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .stat-card { text-align: center; }
-  .stat-num { font-size: 2rem; font-weight: 800; color: #38bdf8; }
-  .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
-  .stat-sub { font-size: 0.75rem; color: #475569; margin-top: 0.2rem; }
-  .section { margin-bottom: 3rem; }
-  .map-container { height: 450px; border-radius: 12px; overflow: hidden; border: 1px solid #1e2535; }
-  .profile-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .tab-btn {
-    padding: 0.4rem 0.9rem;
-    background: #111827;
-    border: 1px solid #1e2535;
-    color: #94a3b8;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.82rem;
-    transition: all 0.2s;
-  }
-  .tab-btn.active, .tab-btn:hover { border-color: #38bdf8; color: #38bdf8; }
-  .chart-card { padding: 1.5rem; }
-  .chart-wrapper { position: relative; height: 320px; }
-  .dive-list { display: flex; flex-direction: column; gap: 0.6rem; }
-  .dive-row {
-    padding: 0;
-    overflow: hidden;
-    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-  }
-  .dive-row:hover {
-    border-color: #38bdf8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56,189,248,0.1);
-  }
-  .dive-main {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    flex-wrap: wrap;
-  }
-  .dive-num { font-size: 0.8rem; color: #475569; min-width: 2.5rem; font-weight: 700; }
-  .dive-info { flex: 1; min-width: 0; }
-  .dive-location { font-weight: 600; font-size: 0.95rem; }
-  .dive-date { font-size: 0.8rem; color: #64748b; margin-top: 0.1rem; }
-  .dive-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .chart-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.3rem 0.7rem;
-    background: transparent;
-    border: 1px solid #1e2535;
-    border-radius: 6px;
-    color: #38bdf8;
-    font-size: 0.78rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .chart-toggle:hover { border-color: #38bdf8; background: rgba(56,189,248,0.05); }
-  .chart-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(90deg); }
-  .toggle-icon { display: inline-block; transition: transform 0.2s; font-size: 0.6rem; }
-  .dive-chart-panel { border-top: 1px solid #1e2535; padding: 1rem 1.5rem 1.5rem; }
-  .dive-chart-panel .chart-wrapper { position: relative; height: 200px; }
-  .pill {
-    padding: 0.2rem 0.6rem;
-    border-radius: 99px;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-  .pill.depth { background: #0c2d48; color: #38bdf8; }
-  .pill.time { background: #1a1a2e; color: #818cf8; }
-  .pill.temp { background: #1a2e1a; color: #4ade80; }
-  .pill.gas { background: #2e1a1a; color: #f87171; }
-  .badge {
-    font-size: 0.7rem;
-    background: #0c2d48;
-    color: #38bdf8;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    vertical-align: middle;
-    margin-left: 0.5rem;
-  }
-  /* PB 牆 */
-  .pb-section h2 { margin-bottom: 1rem; }
-  .pb-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  .pb-card {
-    text-align: center;
-    background: linear-gradient(135deg, rgba(56,189,248,0.05) 0%, #111827 100%);
-    position: relative;
-    padding: 2rem 1.5rem;
-  }
-  .pb-badge {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .pb-label {
-    font-size: 0.75rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
-  }
-  .pb-card .stat-num {
-    font-size: 2.4rem;
-    line-height: 1;
-  }
-  .pb-unit {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-left: 0.2rem;
-  }
-  .pb-sub {
-    font-size: 0.8rem;
-    color: #475569;
-    margin-top: 0.5rem;
-  }
-
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .chart-card-stat { padding: 1.25rem 1.5rem 1.5rem; }
-  .chart-section-title {
-    font-size: 0.8rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.75rem;
-  }
-  .chart-wrapper-stat { position: relative; height: 220px; }
-  .filter-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-  .filter-input {
-    flex: 1;
-    min-width: 180px;
-    padding: 0.5rem 0.85rem;
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .filter-input::placeholder { color: #475569; }
-  .filter-input:focus { border-color: #38bdf8; }
-  .filter-select {
-    padding: 0.5rem 0.85rem;
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .filter-select:focus { border-color: #38bdf8; }
-  .filter-count {
-    font-size: 0.8rem;
-    color: #475569;
-    white-space: nowrap;
-    margin-left: auto;
-  }
-  @media (max-width: 768px) {
-    .pb-grid { grid-template-columns: 1fr; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .map-container { height: 280px; }
-    .charts-grid { grid-template-columns: 1fr; }
-    .filter-bar { gap: 0.5rem; }
-    .filter-count { margin-left: 0; }
-
-    /* 深度曲線 tab 橫向捲動，不換行 */
-    .profile-tabs {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 4px;
-    }
-    .profile-tabs::-webkit-scrollbar { display: none; }
-    .tab-btn {
-      white-space: nowrap;
-      flex-shrink: 0;
-      font-size: 0.78rem;
-      padding: 0.35rem 0.75rem;
-    }
-
-    /* 潛水列表手機版 */
-    .dive-main { gap: 0.5rem; padding: 0.75rem 1rem; }
-    .dive-stats { width: 100%; }
-    .dive-chart-panel { padding: 0.75rem 0.75rem 1rem; }
-    .dive-chart-panel .chart-wrapper { height: 180px; }
-  }
-</style>

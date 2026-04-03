@@ -46,7 +46,7 @@ const skiYearData = {
   <PageHeader title="⛷️ 滑雪紀錄" subtitle="日本雪場巡禮" />
 
   <!-- 統計卡片 -->
-  <div class="stats-grid">
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
     <StatCard value={totalDays} label="滑雪天數" target={totalDays} delay={1} color="#818cf8" />
     <StatCard value={totalRuns} label="總滑行次數" target={totalRuns} delay={2} color="#818cf8" />
     <StatCard value={`${(totalVertical/1000).toFixed(1)}km`} label="累計垂直落差" target={totalVertical/1000} decimals={1} suffix="km" delay={3} color="#818cf8" />
@@ -62,82 +62,82 @@ const skiYearData = {
   <MapSection id="ski-map" title="雪場地圖" />
 
   <!-- 圖表區 -->
-  <div class="charts-grid section">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
     <!-- 速度分布 -->
-    <div class="card chart-card">
-      <h3>各天最高速度 <span class="badge">km/h</span></h3>
-      <div class="chart-wrapper">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
+      <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">各天最高速度 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">km/h</span></h3>
+      <div class="relative h-[180px] md:h-[220px]">
         <canvas id="speed-chart"></canvas>
       </div>
     </div>
     <!-- 月份分布 -->
-    <div class="card chart-card">
-      <h3>月份滑雪天數</h3>
-      <div class="chart-wrapper">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
+      <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">月份滑雪天數</h3>
+      <div class="relative h-[180px] md:h-[220px]">
         <canvas id="month-chart"></canvas>
       </div>
     </div>
     <!-- 速度 vs 垂直落差 散點圖 -->
-    <div class="card chart-card">
-      <h3>速度 vs 垂直落差 <span class="badge">scatter</span></h3>
-      <div class="chart-wrapper">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
+      <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">速度 vs 垂直落差 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">scatter</span></h3>
+      <div class="relative h-[180px] md:h-[220px]">
         <canvas id="scatter-chart"></canvas>
       </div>
     </div>
     <!-- 雪場比較橫條圖 -->
-    <div class="card chart-card">
-      <h3>雪場總滑行次數 <span class="badge">runs</span></h3>
-      <div class="chart-wrapper">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6">
+      <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">雪場總滑行次數 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">runs</span></h3>
+      <div class="relative h-[180px] md:h-[220px]">
         <canvas id="resort-chart"></canvas>
       </div>
     </div>
     <!-- 年度比較 grouped bar chart -->
-    <div class="card chart-card chart-card--full">
-      <h3>年度比較 <span class="badge">滑雪天數 vs 總 runs</span></h3>
-      <div class="chart-wrapper" style="height:200px;">
+    <div class="bg-[#111827] border border-[#1e2535] rounded-xl p-6 col-span-full">
+      <h3 class="text-[0.9rem] text-[#94a3b8] mt-0 mb-4 font-semibold">年度比較 <span class="text-[0.68rem] bg-[#1e1a2e] text-[#818cf8] px-[0.4rem] py-[0.15rem] rounded align-middle">滑雪天數 vs 總 runs</span></h3>
+      <div class="relative" style="height:200px;">
         <canvas id="year-compare-chart"></canvas>
       </div>
     </div>
   </div>
 
   <!-- 滑雪列表 -->
-  <div class="section">
+  <div class="mb-12">
     <h2>所有紀錄</h2>
 
     <!-- 篩選列 -->
-    <div class="filter-bar">
+    <div class="flex items-center gap-3 mb-4 flex-wrap">
       <input
         id="ski-search"
         type="search"
         placeholder="搜尋雪場名稱…"
-        class="filter-input"
+        class="flex-1 min-w-[180px] bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] px-[0.85rem] py-2 text-[0.88rem] outline-none transition-colors duration-200 placeholder:text-[#475569] focus:border-[#818cf8]"
         autocomplete="off"
       />
-      <select id="ski-year" class="filter-select">
+      <select id="ski-year" class="bg-[#111827] border border-[#1e2535] rounded-lg text-[#94a3b8] px-3 py-2 text-[0.88rem] outline-none cursor-pointer transition-colors duration-200 focus:border-[#818cf8]">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
       </select>
-      <span id="ski-count" class="filter-count">顯示 {ski.length} / {ski.length} 筆</span>
+      <span id="ski-count" class="text-[0.78rem] text-[#475569] whitespace-nowrap ml-auto">顯示 {ski.length} / {ski.length} 筆</span>
     </div>
 
-    <div class="ski-list">
+    <div class="flex flex-col gap-[0.6rem]">
       {ski.map(d => (
-        <div class="ski-row card reveal">
-          <div class="ski-date">{d.date}</div>
-          <div class="ski-info">
-            <div class="ski-resort">{d.resort}</div>
-            <div class="ski-country">{d.country}</div>
+        <div class="ski-row bg-[#111827] border border-[#1e2535] rounded-xl flex items-center flex-wrap gap-2 py-3 px-4 md:flex-nowrap md:gap-4 md:py-4 md:px-6 transition-all duration-[250ms] hover:border-[#818cf8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(129,140,248,0.1)] reveal">
+          <div class="ski-date text-[0.8rem] text-[#475569] md:min-w-[6rem] font-bold">{d.date}</div>
+          <div class="ski-info flex-1 min-w-0">
+            <div class="ski-resort font-semibold text-[0.95rem]">{d.resort}</div>
+            <div class="text-[0.78rem] text-[#64748b] mt-[0.1rem]">{d.country}</div>
           </div>
-          <div class="ski-stats">
-            <span class="pill runs">🎿 {d.runs} runs</span>
-            <span class="pill lifts">🚡 {d.lifts} lifts</span>
-            <span class="pill vert">↕ {(d.vertical_m / 1000).toFixed(2)}km</span>
-            <span class="pill dist">📏 {(d.distance_m / 1000).toFixed(1)}km</span>
-            <span class="pill speed">💨 {d.top_speed_kmh.toFixed(1)}km/h</span>
-            <span class="pill time">⏱ {Math.floor(d.duration_s/3600)}h{Math.floor((d.duration_s%3600)/60)}m</span>
-            <span class="pill alt">🏔 {d.peak_altitude_m.toFixed(0)}m</span>
+          <div class="ski-stats flex gap-[0.4rem] flex-wrap w-full md:w-auto">
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1e1a2e] text-[#818cf8]">🎿 {d.runs} runs</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a1e2e] text-[#a5b4fc]">🚡 {d.lifts} lifts</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#0c2d48] text-[#38bdf8]">↕ {(d.vertical_m / 1000).toFixed(2)}km</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a2e1a] text-[#4ade80]">📏 {(d.distance_m / 1000).toFixed(1)}km</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#2e1a1a] text-[#f87171]">💨 {d.top_speed_kmh.toFixed(1)}km/h</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a2520] text-[#34d399]">⏱ {Math.floor(d.duration_s/3600)}h{Math.floor((d.duration_s%3600)/60)}m</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1e1a10] text-[#fbbf24]">🏔 {d.peak_altitude_m.toFixed(0)}m</span>
           </div>
         </div>
       ))}
@@ -157,118 +157,3 @@ const skiYearData = {
   import '../scripts/ski-app.ts';
   import '../scripts/count-up.ts';
 </script>
-
-<style>
-  .page-header { margin-bottom: 2rem; }
-  .subtitle { color: #64748b; margin-top: 0.3rem; }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-  .card {
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .stat-card { text-align: center; }
-  .stat-num { font-size: 1.8rem; font-weight: 800; color: #818cf8; }
-  .stat-unit { font-size: 0.9rem; font-weight: 600; }
-  .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
-  .stat-sub { font-size: 0.72rem; color: #475569; margin-top: 0.2rem; }
-  .section { margin-bottom: 3rem; }
-  .map-container { height: 450px; border-radius: 12px; overflow: hidden; border: 1px solid #1e2535; }
-
-  /* 圖表區 */
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .chart-card h3 { font-size: 0.9rem; color: #94a3b8; margin: 0 0 1rem; font-weight: 600; }
-  .chart-card--full { grid-column: 1 / -1; }
-  .badge {
-    font-size: 0.68rem; background: #1e1a2e; color: #818cf8;
-    padding: 0.15rem 0.4rem; border-radius: 4px; vertical-align: middle;
-  }
-  .chart-wrapper { position: relative; height: 220px; }
-
-  /* 篩選列 */
-  .filter-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-  .filter-input {
-    flex: 1;
-    min-width: 180px;
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    color: #94a3b8;
-    padding: 0.5rem 0.85rem;
-    font-size: 0.88rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .filter-input::placeholder { color: #475569; }
-  .filter-input:focus { border-color: #818cf8; }
-  .filter-select {
-    background: #111827;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    color: #94a3b8;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.88rem;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-  .filter-select:focus { border-color: #818cf8; }
-  .filter-count {
-    font-size: 0.78rem;
-    color: #475569;
-    white-space: nowrap;
-    margin-left: auto;
-  }
-
-  /* 列表 */
-  .ski-list { display: flex; flex-direction: column; gap: 0.6rem; }
-  .ski-row {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 1.5rem;
-    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-  }
-  .ski-row:hover {
-    border-color: #818cf8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(129,140,248,0.1);
-  }
-  .ski-date { font-size: 0.8rem; color: #475569; min-width: 6rem; font-weight: 700; }
-  .ski-info { flex: 1; min-width: 0; }
-  .ski-resort { font-weight: 600; font-size: 0.95rem; }
-  .ski-country { font-size: 0.78rem; color: #64748b; margin-top: 0.1rem; }
-  .ski-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .pill { padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
-  .pill.runs  { background: #1e1a2e; color: #818cf8; }
-  .pill.vert  { background: #0c2d48; color: #38bdf8; }
-  .pill.dist  { background: #1a2e1a; color: #4ade80; }
-  .pill.speed { background: #2e1a1a; color: #f87171; }
-  .pill.time  { background: #1a2520; color: #34d399; }
-  .pill.alt   { background: #1e1a10; color: #fbbf24; }
-  .pill.lifts { background: #1a1e2e; color: #a5b4fc; }
-
-  @media (max-width: 768px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .map-container { height: 280px; }
-    .charts-grid { grid-template-columns: 1fr; }
-    .chart-wrapper { height: 180px; }
-    .ski-row { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
-    .ski-date { min-width: auto; }
-    .ski-stats { width: 100%; }
-  }
-</style>
