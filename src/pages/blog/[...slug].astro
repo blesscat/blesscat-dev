@@ -13,8 +13,13 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const displayTitle = post.data.title.replace(/^\d{4}-\d{2}-\d{2}\s+/, '');
+const wordCount = (post.body || '').replace(/\s+/g, '').length;
+const readMinutes = Math.max(1, Math.round(wordCount / 250));
 ---
 <Layout title={post.data.title}>
+  <!-- 閱讀進度條 -->
+  <div id="reading-progress-bar"></div>
+
   <article class="max-w-2xl mx-auto">
 
     <!-- Hero image: 桌面版縮小置中，手機版全寬 -->
@@ -31,7 +36,10 @@ const displayTitle = post.data.title.replace(/^\d{4}-\d{2}-\d{2}\s+/, '');
     <!-- Header -->
     <header class="mb-8 pb-6 border-b border-[#1e2535]">
       <div class="flex items-center justify-between mb-3">
-        <span class="text-xs text-[#475569]">📅 {post.data.date}</span>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-[#475569]">📅 {post.data.date}</span>
+          <span class="text-xs text-[#475569]">⏱ 約 {readMinutes} 分鐘</span>
+        </div>
         <a href="/blog" class="text-xs text-[#38bdf8] hover:underline">← 回到列表</a>
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-[#e2e8f0] leading-snug mb-4">
@@ -51,10 +59,76 @@ const displayTitle = post.data.title.replace(/^\d{4}-\d{2}-\d{2}\s+/, '');
       <Content />
     </div>
 
+    <!-- 分享按鈕 -->
+    <div class="share-section">
+      <button id="copy-link-btn" class="share-btn">🔗 複製連結</button>
+    </div>
+
   </article>
 </Layout>
 
+<script>
+  // 閱讀進度條
+  const bar = document.getElementById('reading-progress-bar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+    if (bar) bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 複製連結按鈕
+  const copyBtn = document.getElementById('copy-link-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.textContent = '✓ 已複製！';
+        setTimeout(() => { copyBtn.textContent = '🔗 複製連結'; }, 1500);
+      } catch {
+        copyBtn.textContent = '✓ 已複製！';
+        setTimeout(() => { copyBtn.textContent = '🔗 複製連結'; }, 1500);
+      }
+    });
+  }
+</script>
+
 <style>
+  #reading-progress-bar {
+    position: fixed;
+    top: 57px;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: #38bdf8;
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+
+  .share-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #1e2535;
+    display: flex;
+    justify-content: center;
+  }
+  .share-btn {
+    background: transparent;
+    border: 1px solid #1e2535;
+    color: #94a3b8;
+    padding: 0.5rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .share-btn:hover {
+    border-color: #38bdf8;
+    color: #38bdf8;
+  }
+
   /* Tailwind 沒有辦法輕易 scope markdown rendered output，用 style 補 */
   .prose-content :global(h2) {
     font-size: 1.35rem;

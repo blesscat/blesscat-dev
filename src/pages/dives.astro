@@ -11,6 +11,33 @@ const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
 const avgDepth = (dives.reduce((s,d) => s+(d.avg_depth||0),0)/totalDives).toFixed(1);
 const divesWithGPS = dives.filter(d => d.lat && d.lon);
 const divesWithProfile = dives.filter(d => d.garmin_id);
+
+// 深度分布資料（給圖表用）
+const depthBuckets = { '10-15m': 0, '15-20m': 0, '20-25m': 0, '25-30m': 0, '30m+': 0 };
+for (const d of dives) {
+  const depth = d.max_depth || 0;
+  if (depth < 15) depthBuckets['10-15m']++;
+  else if (depth < 20) depthBuckets['15-20m']++;
+  else if (depth < 25) depthBuckets['20-25m']++;
+  else if (depth < 30) depthBuckets['25-30m']++;
+  else depthBuckets['30m+']++;
+}
+const depthChartData = {
+  labels: Object.keys(depthBuckets),
+  values: Object.values(depthBuckets),
+};
+
+// 月份活動資料（給圖表用）
+const monthMap: Record<string, number> = {};
+for (const d of dives) {
+  const ym = d.date.slice(0, 7); // "2024-04"
+  monthMap[ym] = (monthMap[ym] || 0) + 1;
+}
+const sortedMonths = Object.keys(monthMap).sort();
+const monthChartData = {
+  labels: sortedMonths,
+  values: sortedMonths.map(m => monthMap[m]),
+};
 ---
 <Layout title="潛水紀錄">
   <div class="page-header">
@@ -45,9 +72,45 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
     <div id="dive-map" class="map-container"></div>
   </div>
 
+  <!-- 數據圖表 -->
+  <div class="section">
+    <h2>數據圖表</h2>
+    <div class="charts-grid">
+      <div class="card chart-card-stat">
+        <div class="chart-section-title">深度分布</div>
+        <div class="chart-wrapper-stat">
+          <canvas id="depth-dist-chart"></canvas>
+        </div>
+      </div>
+      <div class="card chart-card-stat">
+        <div class="chart-section-title">每月潛水次數</div>
+        <div class="chart-wrapper-stat">
+          <canvas id="monthly-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 潛水列表（含內嵌深度曲線） -->
   <div class="section">
     <h2>所有紀錄</h2>
+    <!-- 篩選列 -->
+    <div class="filter-bar">
+      <input
+        type="text"
+        id="dive-search"
+        class="filter-input"
+        placeholder="搜尋地點關鍵字..."
+        autocomplete="off"
+      />
+      <select id="year-filter" class="filter-select">
+        <option value="">全部年份</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+      <span id="filter-count" class="filter-count">顯示 {totalDives} / {totalDives} 筆</span>
+    </div>
     <div class="dive-list">
       {dives.slice().reverse().map(d => (
         <div class="dive-row card reveal">
@@ -84,12 +147,174 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
 </Layout>
 
 <!-- 傳資料給前端 JS -->
-<script define:vars={{ divesWithGPS, divesWithProfile }}>
+<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives }}>
   window.__DIVES_GPS__ = divesWithGPS;
   window.__DIVES_PROFILE__ = divesWithProfile;
+  window.__DEPTH_CHART_DATA__ = depthChartData;
+  window.__MONTH_CHART_DATA__ = monthChartData;
+  window.__TOTAL_DIVES__ = totalDives;
 </script>
 <script>
   import '../scripts/dive-app.ts';
+</script>
+<script>
+  // 數據圖表：深度分布 + 月份活動
+  (function initStatCharts() {
+    const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+
+    function loadChartJS(cb: () => void) {
+      if ((window as any).Chart) { cb(); return; }
+      const s = document.createElement('script');
+      s.src = CHART_CDN;
+      s.onload = cb;
+      document.head.appendChild(s);
+    }
+
+    function buildCharts() {
+      const depthData = (window as any).__DEPTH_CHART_DATA__;
+      const monthData = (window as any).__MONTH_CHART_DATA__;
+      const Chart = (window as any).Chart;
+      if (!depthData || !monthData || !Chart) return;
+
+      // 深度分布圖
+      const depthCanvas = document.getElementById('depth-dist-chart') as HTMLCanvasElement;
+      if (depthCanvas) {
+        const colors = depthData.labels.map((l: string) =>
+          l === '30m+' ? '#f87171' : '#38bdf8'
+        );
+        new Chart(depthCanvas.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: depthData.labels,
+            datasets: [{
+              data: depthData.values,
+              backgroundColor: colors,
+              borderRadius: 6,
+              borderSkipped: false,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx: any) => ` ${ctx.parsed.y} 次`
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: '#1e2535' },
+                ticks: { color: '#94a3b8', font: { size: 12 } }
+              },
+              y: {
+                grid: { color: '#1e2535' },
+                ticks: { color: '#94a3b8', stepSize: 1 },
+                beginAtZero: true,
+              }
+            }
+          }
+        });
+      }
+
+      // 月份活動圖
+      const monthCanvas = document.getElementById('monthly-chart') as HTMLCanvasElement;
+      if (monthCanvas) {
+        const yearColors: Record<string, string> = {
+          '2024': '#38bdf8',
+          '2025': '#818cf8',
+          '2026': '#4ade80',
+        };
+        const bgColors = monthData.labels.map((ym: string) => yearColors[ym.slice(0,4)] || '#38bdf8');
+        new Chart(monthCanvas.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: monthData.labels,
+            datasets: [{
+              data: monthData.values,
+              backgroundColor: bgColors,
+              borderRadius: 6,
+              borderSkipped: false,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx: any) => ` ${ctx.parsed.y} 次`
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: '#1e2535' },
+                ticks: { color: '#94a3b8', font: { size: 11 }, maxRotation: 45 }
+              },
+              y: {
+                grid: { color: '#1e2535' },
+                ticks: { color: '#94a3b8', stepSize: 1 },
+                beginAtZero: true,
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // 使用 IntersectionObserver 懶載入
+    const section = document.querySelector('#depth-dist-chart');
+    if (!section) return;
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        io.disconnect();
+        loadChartJS(buildCharts);
+      }
+    }, { rootMargin: '200px' });
+    io.observe(section);
+  })();
+
+  // 搜尋 + 篩選功能
+  (function initFilter() {
+    const searchInput = document.getElementById('dive-search') as HTMLInputElement;
+    const yearSelect = document.getElementById('year-filter') as HTMLSelectElement;
+    const countEl = document.getElementById('filter-count') as HTMLSpanElement;
+    const rows = document.querySelectorAll<HTMLElement>('.dive-row');
+    const total = (window as any).__TOTAL_DIVES__ || rows.length;
+
+    function applyFilter() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const year = yearSelect.value;
+      let shown = 0;
+
+      rows.forEach(row => {
+        const locationEl = row.querySelector('.dive-location');
+        const dateEl = row.querySelector('.dive-date');
+        const location = locationEl?.textContent?.toLowerCase() || '';
+        const date = dateEl?.textContent || '';
+        const rowYear = date.slice(0, 4);
+
+        const matchKeyword = !keyword || location.includes(keyword);
+        const matchYear = !year || rowYear === year;
+
+        if (matchKeyword && matchYear) {
+          row.style.display = '';
+          shown++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      countEl.textContent = `顯示 ${shown} / ${total} 筆`;
+    }
+
+    searchInput?.addEventListener('input', applyFilter);
+    yearSelect?.addEventListener('change', applyFilter);
+  })();
 </script>
 <script>
   // Count-up animation for stat cards
@@ -218,9 +443,65 @@ const divesWithProfile = dives.filter(d => d.garmin_id);
     vertical-align: middle;
     margin-left: 0.5rem;
   }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .chart-card-stat { padding: 1.25rem 1.5rem 1.5rem; }
+  .chart-section-title {
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+  }
+  .chart-wrapper-stat { position: relative; height: 220px; }
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.5rem 0.85rem;
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .filter-input::placeholder { color: #475569; }
+  .filter-input:focus { border-color: #38bdf8; }
+  .filter-select {
+    padding: 0.5rem 0.85rem;
+    background: #111827;
+    border: 1px solid #1e2535;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: #38bdf8; }
+  .filter-count {
+    font-size: 0.8rem;
+    color: #475569;
+    white-space: nowrap;
+    margin-left: auto;
+  }
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .map-container { height: 280px; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .filter-bar { gap: 0.5rem; }
+    .filter-count { margin-left: 0; }
 
     /* 深度曲線 tab 橫向捲動，不換行 */
     .profile-tabs {

@@ -97,6 +97,20 @@ const months = Object.keys(monthCount).sort();
         <canvas id="month-chart"></canvas>
       </div>
     </div>
+    <!-- 速度 vs 垂直落差 散點圖 -->
+    <div class="card chart-card">
+      <h3>速度 vs 垂直落差 <span class="badge">scatter</span></h3>
+      <div class="chart-wrapper">
+        <canvas id="scatter-chart"></canvas>
+      </div>
+    </div>
+    <!-- 雪場比較橫條圖 -->
+    <div class="card chart-card">
+      <h3>雪場總滑行次數 <span class="badge">runs</span></h3>
+      <div class="chart-wrapper">
+        <canvas id="resort-chart"></canvas>
+      </div>
+    </div>
   </div>
 
   <!-- 滑雪列表 -->
@@ -244,6 +258,94 @@ const months = Object.keys(monthCount).sort();
             },
             y: {
               ticks: { color: '#38bdf8', font: { size: isMobile ? 10 : 12 }, stepSize: 1 },
+              grid: { color: '#1e2535' },
+            },
+          },
+        },
+      });
+
+      // 速度 vs 垂直落差 散點圖
+      const scatterCtx = document.getElementById('scatter-chart').getContext('2d');
+      const scatterData = data
+        .filter(d => d.vertical_m != null && d.top_speed_kmh != null)
+        .map(d => ({
+          x: parseFloat((d.vertical_m / 1000).toFixed(2)),
+          y: parseFloat(d.top_speed_kmh.toFixed(1)),
+          resort: d.resort,
+          date: d.date,
+        }));
+      new window.Chart(scatterCtx, {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: '速度 vs 垂直落差',
+            data: scatterData,
+            backgroundColor: '#f87171',
+            pointRadius: 8,
+            pointHoverRadius: 10,
+          }],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: c => {
+                  const d = scatterData[c.dataIndex];
+                  return [`${d.resort}`, `${d.date}`, `垂直: ${c.parsed.x}km  速度: ${c.parsed.y}km/h`];
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              title: { display: true, text: '垂直落差 (km)', color: '#475569', font: { size: 11 } },
+              ticks: { color: '#475569', font: { size: isMobile ? 9 : 11 } },
+              grid: { color: '#1e2535' },
+            },
+            y: {
+              title: { display: true, text: '最高速 (km/h)', color: '#475569', font: { size: 11 } },
+              ticks: { color: '#f87171', font: { size: isMobile ? 10 : 12 }, callback: v => v + ' km/h' },
+              grid: { color: '#1e2535' },
+            },
+          },
+        },
+      });
+
+      // 雪場比較橫條圖
+      const resortRuns = {};
+      data.forEach(d => {
+        const name = d.resort.split('/')[0].trim();
+        resortRuns[name] = (resortRuns[name] || 0) + (d.runs || 0);
+      });
+      const resortsSorted = Object.entries(resortRuns).sort((a, b) => b[1] - a[1]);
+      const resortCtx = document.getElementById('resort-chart').getContext('2d');
+      new window.Chart(resortCtx, {
+        type: 'bar',
+        data: {
+          labels: resortsSorted.map(r => r[0]),
+          datasets: [{
+            label: '總 runs',
+            data: resortsSorted.map(r => r[1]),
+            backgroundColor: '#818cf8',
+            borderRadius: 4,
+          }],
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => `${c.raw} runs` } },
+          },
+          scales: {
+            x: {
+              ticks: { color: '#818cf8', font: { size: isMobile ? 9 : 11 }, callback: v => v + ' runs' },
+              grid: { color: '#1e2535' },
+            },
+            y: {
+              ticks: { color: '#94a3b8', font: { size: isMobile ? 9 : 11 } },
               grid: { color: '#1e2535' },
             },
           },

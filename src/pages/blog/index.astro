@@ -7,6 +7,9 @@ const posts = (await getCollection('blog')).sort((a, b) => {
   const bTime = new Date(b.data.datetime ?? b.data.date).getTime();
   return bTime - aTime;
 });
+
+// 收集所有 tag
+const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
 ---
 <Layout title="技術文章">
   <div class="page-header">
@@ -14,9 +17,23 @@ const posts = (await getCollection('blog')).sort((a, b) => {
     <p class="subtitle">AI Agent 踩坑筆記，由豬毛親筆撰寫</p>
   </div>
 
+  <!-- Tag 篩選列 -->
+  {allTags.length > 0 && (
+    <div class="tag-filter" id="tag-filter">
+      <button class="tag-btn active" data-tag="all">全部</button>
+      {allTags.map(tag => (
+        <button class="tag-btn" data-tag={tag}>#{tag}</button>
+      ))}
+    </div>
+  )}
+
   <div class="post-list">
     {posts.map(post => (
-      <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card reveal">
+      <a
+        href={`/blog/${post.id.replace(/\.md$/, '')}`}
+        class="post-card reveal"
+        data-tags={(post.data.tags || []).join(',')}
+      >
         <div class="post-card-inner">
           <div class="post-card-text">
             <div class="post-meta">
@@ -145,4 +162,57 @@ const posts = (await getCollection('blog')).sort((a, b) => {
     color: #38bdf8;
     font-weight: 600;
   }
+
+  /* Tag 篩選列 */
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .tag-btn {
+    background: transparent;
+    border: 1px solid #1e2535;
+    color: #64748b;
+    padding: 0.3rem 0.85rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .tag-btn:hover {
+    border-color: #38bdf8;
+    color: #38bdf8;
+  }
+  .tag-btn.active {
+    border-color: #38bdf8;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+  }
 </style>
+
+<script>
+  const filterEl = document.getElementById('tag-filter');
+  if (filterEl) {
+    const btns = filterEl.querySelectorAll<HTMLButtonElement>('.tag-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.post-card');
+
+    filterEl.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.tag-btn');
+      if (!btn) return;
+      const tag = btn.dataset.tag || 'all';
+
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      cards.forEach(card => {
+        if (tag === 'all') {
+          card.style.display = '';
+        } else {
+          const tags = (card.dataset.tags || '').split(',').map(t => t.trim());
+          card.style.display = tags.includes(tag) ? '' : 'none';
+        }
+      });
+    });
+  }
+</script>
