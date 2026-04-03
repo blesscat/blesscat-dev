@@ -50,13 +50,13 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
       {post.data.tags && (
         <div class="flex flex-wrap gap-2">
           {post.data.tags.map(tag => (
-            <span class="text-xs text-indigo bg-[#1a1a2e] px-3 py-1 rounded-full">#{tag}</span>
+            <span class="text-xs text-indigo bg-tag-bg px-3 py-1 rounded-full">#{tag}</span>
           ))}
         </div>
       )}
     </header>
 
-    <div class="prose-content leading-relaxed text-[#cbd5e1]">
+    <div class="prose-content leading-relaxed text-prose">
       <Content />
     </div>
 

@@ -95,7 +95,7 @@
 </script>
 
 <div class="absolute top-0 right-0 w-[340px] h-full overflow-y-auto z-[1000]
-            bg-[#0d1220ee] backdrop-blur-[12px] border-l border-[#1e2535]
+            bg-surface2-alpha backdrop-blur-[12px] border-l border-border
             transition-transform duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
             max-[768px]:top-auto max-[768px]:bottom-0 max-[768px]:w-full max-[768px]:h-[60%]
             max-[768px]:border-l-0 max-[768px]:border-t max-[768px]:rounded-t-2xl

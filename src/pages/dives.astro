@@ -169,13 +169,13 @@ const diveYearData = {
               <div class="dive-date text-[0.8rem] text-subtle mt-[0.1rem]">{d.date}</div>
             </div>
             <div class="flex gap-[0.4rem] flex-wrap max-md:w-full">
-              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#0c2d48] text-accent">▼ {d.max_depth}m</span>
-              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a1a2e] text-indigo">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
-              {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#1a2e1a] text-green">🌡 {d.water_temp}°C</span>}
-              {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-[#2e1a1a] text-red">{d.gas}</span>}
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-pill-cyan text-accent">▼ {d.max_depth}m</span>
+              <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-tag-bg text-indigo">⏱ {d.bottom_time ? Math.floor(d.bottom_time)+'m' : '-'}</span>
+              {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-pill-green text-green">🌡 {d.water_temp}°C</span>}
+              {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-pill-red text-red">{d.gas}</span>}
             </div>
             {d.garmin_id && (
-              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-accent text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-accent hover:bg-[rgba(56,189,248,0.05)]" data-dive={d.num} aria-expanded="false">
+              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-accent text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-accent hover:bg-accent/5" data-dive={d.num} aria-expanded="false">
                 <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
                 <span>深度曲線</span>
               </button>

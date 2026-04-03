@@ -51,7 +51,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
               {post.data.tags && (
                 <div class="flex gap-1 flex-wrap">
                   {post.data.tags.slice(0, 3).map(tag => (
-                    <span class="text-[0.72rem] text-indigo bg-[#1a1a2e] px-2 py-0.5 rounded-full">#{tag}</span>
+                    <span class="text-[0.72rem] text-indigo bg-tag-bg px-2 py-0.5 rounded-full">#{tag}</span>
                   ))}
                 </div>
               )}

@@ -17,6 +17,25 @@
   --color-tag-bg:   #1a1a2e;
   --color-tag-text: #818cf8;
 
+  /* ── Pill backgrounds ── */
+  --color-pill-cyan:   #0c2d48;
+  --color-pill-indigo: #1e1a2e;
+  --color-pill-green:  #1a2e1a;
+  --color-pill-teal:   #1a2520;
+  --color-pill-red:    #2e1a1a;
+  --color-pill-amber:  #1e1a10;
+
+  /* ── Accent variants ── */
+  --color-rose:         #fb7185;
+  --color-teal:         #34d399;
+  --color-amber:        #fbbf24;
+  --color-indigo-light: #a5b4fc;
+
+  /* ── Misc ── */
+  --color-prose:          #cbd5e1;
+  --color-map-bg:        #090d18;
+  --color-surface2-alpha: #0d1220ee;
+
   /* ── Custom animations ── */
   --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
   --animate-float:      floatY 3s ease-in-out infinite;

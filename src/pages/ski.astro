@@ -65,7 +65,7 @@ const skiYearData = {
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
     <!-- 速度分布 -->
     <div class="bg-surface border border-border rounded-xl p-6">
-      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">各天最高速度 <span class="text-[0.68rem] bg-[#1e1a2e] text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">km/h</span></h3>
+      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">各天最高速度 <span class="text-[0.68rem] bg-pill-indigo text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">km/h</span></h3>
       <div class="relative h-45 md:h-55">
         <canvas data-chart="speed"></canvas>
       </div>
@@ -79,21 +79,21 @@ const skiYearData = {
     </div>
     <!-- 速度 vs 垂直落差 散點圖 -->
     <div class="bg-surface border border-border rounded-xl p-6">
-      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">速度 vs 垂直落差 <span class="text-[0.68rem] bg-[#1e1a2e] text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">scatter</span></h3>
+      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">速度 vs 垂直落差 <span class="text-[0.68rem] bg-pill-indigo text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">scatter</span></h3>
       <div class="relative h-45 md:h-55">
         <canvas data-chart="scatter"></canvas>
       </div>
     </div>
     <!-- 雪場比較橫條圖 -->
     <div class="bg-surface border border-border rounded-xl p-6">
-      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">雪場總滑行次數 <span class="text-[0.68rem] bg-[#1e1a2e] text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">runs</span></h3>
+      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">雪場總滑行次數 <span class="text-[0.68rem] bg-pill-indigo text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">runs</span></h3>
       <div class="relative h-45 md:h-55">
         <canvas data-chart="resort"></canvas>
       </div>
     </div>
     <!-- 年度比較 grouped bar chart -->
     <div class="bg-surface border border-border rounded-xl p-6 col-span-full">
-      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">年度比較 <span class="text-[0.68rem] bg-[#1e1a2e] text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">滑雪天數 vs 總 runs</span></h3>
+      <h3 class="text-[0.9rem] text-muted mt-0 mb-4 font-semibold">年度比較 <span class="text-[0.68rem] bg-pill-indigo text-indigo px-[0.4rem] py-[0.15rem] rounded align-middle">滑雪天數 vs 總 runs</span></h3>
       <div class="relative" style="height:200px;">
         <canvas data-chart="year-compare"></canvas>
       </div>
@@ -131,13 +131,13 @@ const skiYearData = {
             <div class="text-[0.78rem] text-subtle mt-[0.1rem]">{d.country}</div>
           </div>
           <div class="ski-stats flex gap-[0.4rem] flex-wrap w-full md:w-auto">
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1e1a2e] text-indigo">🎿 {d.runs} runs</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a1e2e] text-[#a5b4fc]">🚡 {d.lifts} lifts</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#0c2d48] text-accent">↕ {(d.vertical_m / 1000).toFixed(2)}km</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a2e1a] text-green">📏 {(d.distance_m / 1000).toFixed(1)}km</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#2e1a1a] text-red">💨 {d.top_speed_kmh.toFixed(1)}km/h</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1a2520] text-[#34d399]">⏱ {Math.floor(d.duration_s/3600)}h{Math.floor((d.duration_s%3600)/60)}m</span>
-            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-[#1e1a10] text-[#fbbf24]">🏔 {d.peak_altitude_m.toFixed(0)}m</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-indigo text-indigo">🎿 {d.runs} runs</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-indigo text-indigo-light">🚡 {d.lifts} lifts</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-cyan text-accent">↕ {(d.vertical_m / 1000).toFixed(2)}km</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-green text-green">📏 {(d.distance_m / 1000).toFixed(1)}km</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-red text-red">💨 {d.top_speed_kmh.toFixed(1)}km/h</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-teal text-teal">⏱ {Math.floor(d.duration_s/3600)}h{Math.floor((d.duration_s%3600)/60)}m</span>
+            <span class="px-[0.6rem] py-[0.2rem] rounded-full text-[0.75rem] font-semibold whitespace-nowrap bg-pill-amber text-amber">🏔 {d.peak_altitude_m.toFixed(0)}m</span>
           </div>
         </div>
       ))}
