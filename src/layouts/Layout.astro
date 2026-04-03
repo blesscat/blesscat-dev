@@ -1,15 +1,15 @@
 ---
-import '../styles/global.css';
+import '../styles/global.css'
 
 export interface Props {
-  title: string;
-  description?: string;
-  ogImage?: string;
+  title: string
+  description?: string
+  ogImage?: string
 }
-const { title, description = 'Diver · Skier · Explorer · Tinkerer', ogImage } = Astro.props;
-const site = 'https://blesscat.dev';
-const pageTitle = title === 'Home' ? 'blesscat.dev' : `${title} · blesscat.dev`;
-const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
+const { title, description = 'Diver · Skier · Explorer · Tinkerer', ogImage } = Astro.props
+const site = 'https://blesscat.dev'
+const pageTitle = title === 'Home' ? 'blesscat.dev' : `${title} · blesscat.dev`
+const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 ---
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -237,84 +237,86 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`;
 
 <script>
   // Scroll-reveal for .reveal elements
-  const revealEls = document.querySelectorAll('.reveal');
+  const revealEls = document.querySelectorAll('.reveal')
   if (revealEls.length) {
     const rio = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
           // stagger siblings slightly
-          setTimeout(() => entry.target.classList.add('revealed'), i * 60);
-          rio.unobserve(entry.target);
+          setTimeout(() => entry.target.classList.add('revealed'), i * 60)
+          rio.unobserve(entry.target)
         }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    revealEls.forEach(el => rio.observe(el));
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+    revealEls.forEach(el => rio.observe(el))
   }
 
   // Bottom tab bar active state
-  const path = window.location.pathname;
-  const tabItems = document.querySelectorAll('.tab-item');
+  const path = window.location.pathname
+  const tabItems = document.querySelectorAll('.tab-item')
   tabItems.forEach(tab => {
-    const tabPath = tab.getAttribute('data-path');
+    const tabPath = tab.getAttribute('data-path')
     if (tabPath === '/') {
-      if (path === '/') tab.classList.add('active');
+      if (path === '/') tab.classList.add('active')
     } else if (tabPath && path.startsWith(tabPath)) {
-      tab.classList.add('active');
+      tab.classList.add('active')
     }
-  });
+  })
 
   // 手機版 header 捲動淡出
-  (function () {
-    const nav = document.getElementById('top-nav');
-    if (!nav || window.innerWidth > 768) return;
-    let lastY = 0;
-    let ticking = false;
+  function initNavHide() {
+    const nav = document.getElementById('top-nav')
+    if (!nav || window.innerWidth > 768) return
+    let lastY = 0
+    let ticking = false
     window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
+      if (ticking) return
+      ticking = true
       requestAnimationFrame(() => {
-        const y = window.scrollY;
+        const y = window.scrollY
         // 往下捲超過 60px 才隱藏，往上捲立即顯示
         if (y > lastY && y > 60) {
-          nav.classList.add('nav-hidden');
+          nav.classList.add('nav-hidden')
         } else {
-          nav.classList.remove('nav-hidden');
+          nav.classList.remove('nav-hidden')
         }
-        lastY = y;
-        ticking = false;
-      });
-    }, { passive: true });
-  })();
+        lastY = y
+        ticking = false
+      })
+    }, { passive: true })
+  }
+  initNavHide()
 
   // 豬毛探頭
-  (function () {
-    const cat = document.getElementById('zhumao-peek');
-    if (!cat) return;
-    const tabBar = document.querySelector('.bottom-tab-bar');
+  function initPeekCat() {
+    const cat = document.getElementById('zhumao-peek')
+    if (!cat) return
+    const tabBar = document.querySelector('.bottom-tab-bar')
 
     function onScroll() {
-      if (!cat) return;
-      const scrolled = window.scrollY + window.innerHeight;
-      const total = document.documentElement.scrollHeight;
-      const ratio = total > 0 ? scrolled / total : 0;
+      if (!cat) return
+      const scrolled = window.scrollY + window.innerHeight
+      const total = document.documentElement.scrollHeight
+      const ratio = total > 0 ? scrolled / total : 0
       if (ratio >= 0.7) {
-        cat.classList.add('peeking');
+        cat.classList.add('peeking')
         // 判斷 bottom-tab-bar 是否可見（手機）
         if (tabBar && window.getComputedStyle(tabBar).display !== 'none') {
-          cat.classList.add('has-tabbar');
+          cat.classList.add('has-tabbar')
         } else {
-          cat.classList.remove('has-tabbar');
+          cat.classList.remove('has-tabbar')
         }
       } else {
-        cat.classList.remove('peeking');
+        cat.classList.remove('peeking')
       }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
 
     cat.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  })();
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  }
+  initPeekCat()
 </script>

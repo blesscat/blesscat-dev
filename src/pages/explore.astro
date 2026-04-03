@@ -1,19 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import InfoCard from '../components/InfoCard.svelte';
-import divesRaw from '../data/dives.json';
-import skiRaw from '../data/ski.json';
+import Layout from '../layouts/Layout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import InfoCard from '../components/InfoCard.svelte'
+import divesRaw from '../data/dives.json'
+import skiRaw from '../data/ski.json'
 
-const dives = divesRaw as any[];
-const ski = skiRaw as any[];
+const dives = divesRaw as any[]
+const ski = skiRaw as any[]
 
 const allYears = [
   ...dives.map(d => parseInt(d.date.slice(0, 4))),
   ...ski.map(d => parseInt(d.date.slice(0, 4))),
-];
-const yearMin = Math.min(...allYears);
-const yearMax = Math.max(...allYears);
+]
+const yearMin = Math.min(...allYears)
+const yearMax = Math.max(...allYears)
 ---
 
 <Layout title="探索地圖" description="潛水潛點 × 滑雪雪場，橫跨多個國家的探索足跡" ogImage="/og/explore.png">
@@ -56,11 +56,11 @@ const yearMax = Math.max(...allYears);
 
 <!-- 傳資料給前端 -->
 <script define:vars={{ dives, ski }} is:inline>
-  window.__EXPLORE_DIVES__ = dives;
-  window.__EXPLORE_SKI__ = ski;
+  window.__EXPLORE_DIVES__ = dives
+  window.__EXPLORE_SKI__ = ski
 </script>
 <script>
-  import '../scripts/explore-app.ts';
+  import '../scripts/explore-app.ts'
 </script>
 
 <style is:global>

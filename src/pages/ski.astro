@@ -1,45 +1,45 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import StatCard from '../components/StatCard.astro';
-import MapSection from '../components/MapSection.astro';
-import skiRaw from '../data/ski.json';
+import Layout from '../layouts/Layout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import StatCard from '../components/StatCard.astro'
+import MapSection from '../components/MapSection.astro'
+import skiRaw from '../data/ski.json'
 
-const ski = skiRaw as any[];
+const ski = skiRaw as any[]
 
-const totalDays = ski.length;
-const totalRuns = ski.reduce((s, d) => s + (d.runs || 0), 0);
-const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0);
-const totalDistance = ski.reduce((s, d) => s + (d.distance_m || 0), 0);
-const totalDuration = ski.reduce((s, d) => s + (d.duration_s || 0), 0);
-const totalHours = Math.floor(totalDuration / 3600);
-const totalMins = Math.floor((totalDuration % 3600) / 60);
-const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
-const maxSpeedDay = ski.find(d => d.top_speed_kmh === maxSpeed);
-const maxAlt = Math.max(...ski.map(d => d.peak_altitude_m || 0));
-const maxAltDay = ski.find(d => d.peak_altitude_m === maxAlt);
-const totalLifts = ski.reduce((s, d) => s + (d.lifts || 0), 0);
-const resorts = [...new Set(ski.map(d => d.resort.split('/')[0].trim()))].length;
+const totalDays = ski.length
+const totalRuns = ski.reduce((s, d) => s + (d.runs || 0), 0)
+const totalVertical = ski.reduce((s, d) => s + (d.vertical_m || 0), 0)
+const totalDistance = ski.reduce((s, d) => s + (d.distance_m || 0), 0)
+const totalDuration = ski.reduce((s, d) => s + (d.duration_s || 0), 0)
+const totalHours = Math.floor(totalDuration / 3600)
+const totalMins = Math.floor((totalDuration % 3600) / 60)
+const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0))
+const maxSpeedDay = ski.find(d => d.top_speed_kmh === maxSpeed)
+const maxAlt = Math.max(...ski.map(d => d.peak_altitude_m || 0))
+const maxAltDay = ski.find(d => d.peak_altitude_m === maxAlt)
+const totalLifts = ski.reduce((s, d) => s + (d.lifts || 0), 0)
+const resorts = [...new Set(ski.map(d => d.resort.split('/')[0].trim()))].length
 
 // 月份分布
-const monthCount: Record<string, number> = {};
+const monthCount: Record<string, number> = {}
 ski.forEach(d => {
-  const m = d.date.slice(0, 7);
-  monthCount[m] = (monthCount[m] || 0) + 1;
-});
-const months = Object.keys(monthCount).sort();
+  const m = d.date.slice(0, 7)
+  monthCount[m] = (monthCount[m] || 0) + 1
+})
+const months = Object.keys(monthCount).sort()
 
 // 年度比較資料
-const yearMap: Record<string, number> = {};
+const yearMap: Record<string, number> = {}
 ski.forEach(d => {
-  const y = d.date.slice(0, 4);
-  yearMap[y] = (yearMap[y] || 0) + 1;
-});
-const yearLabels = Object.keys(yearMap).sort();
+  const y = d.date.slice(0, 4)
+  yearMap[y] = (yearMap[y] || 0) + 1
+})
+const yearLabels = Object.keys(yearMap).sort()
 const skiYearData = {
   labels: yearLabels,
   days: yearLabels.map(y => yearMap[y]),
-};
+}
 ---
 
 <Layout title="滑雪紀錄" description={`${totalDays} 天滑雪 · 最高速 ${maxSpeed.toFixed(1)}km/h · 累計落差 ${(totalVertical/1000).toFixed(1)}km`} ogImage="/og/ski.png">
@@ -146,14 +146,14 @@ const skiYearData = {
 </Layout>
 
 <script define:vars={{ ski, months, monthCount, totalCount: ski.length, skiYearData }} is:inline>
-  window.__SKI_DATA__ = ski;
-  window.__SKI_MONTHS__ = months;
-  window.__SKI_MONTH_COUNT__ = monthCount;
-  window.__SKI_TOTAL__ = totalCount;
-  window.__SKI_YEAR_DATA__ = skiYearData;
+  window.__SKI_DATA__ = ski
+  window.__SKI_MONTHS__ = months
+  window.__SKI_MONTH_COUNT__ = monthCount
+  window.__SKI_TOTAL__ = totalCount
+  window.__SKI_YEAR_DATA__ = skiYearData
 </script>
 
 <script>
-  import '../scripts/ski-app.ts';
-  import '../scripts/count-up.ts';
+  import '../scripts/ski-app.ts'
+  import '../scripts/count-up.ts'
 </script>

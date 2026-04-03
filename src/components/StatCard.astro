@@ -1,13 +1,13 @@
 ---
 interface Props {
-  value: string | number;
-  label: string;
-  sub?: string;
-  target?: number;
-  decimals?: number;
-  suffix?: string;
-  delay?: number;
-  color?: string;
+  value: string | number
+  label: string
+  sub?: string
+  target?: number
+  decimals?: number
+  suffix?: string
+  delay?: number
+  color?: string
 }
 const {
   value,
@@ -18,7 +18,7 @@ const {
   suffix = '',
   delay = 1,
   color = '#38bdf8',
-} = Astro.props;
+} = Astro.props
 ---
 
 <div class={`bg-surface2 border border-border rounded-xl p-5 text-center anim-fade-up delay-${delay}`}>

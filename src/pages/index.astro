@@ -1,16 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import type { Dive } from '../types/dive';
-import divesRaw from '../data/dives.json';
-import skiRaw from '../data/ski.json';
+import Layout from '../layouts/Layout.astro'
+import type { Dive } from '../types/dive'
+import divesRaw from '../data/dives.json'
+import skiRaw from '../data/ski.json'
 
-const dives = divesRaw as Dive[];
-const ski = skiRaw as any[];
+const dives = divesRaw as Dive[]
+const ski = skiRaw as any[]
 
-const totalDives = dives.length;
-const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
-const totalSkiDays = ski.length;
-const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
+const totalDives = dives.length
+const maxDepth = Math.max(...dives.map(d => d.max_depth || 0))
+const totalSkiDays = ski.length
+const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0))
 ---
 <Layout title="Home" description="潛水、滑雪、探索、搗鼓 AI — Blesscat 的個人紀錄網站" ogImage="/og/index.png">
   <div class="grid grid-cols-[1.1fr_1fr] gap-16 items-center min-h-[80vh] relative max-md:grid-cols-1 max-md:gap-10 max-md:min-h-0 max-md:py-8"
@@ -90,7 +90,7 @@ const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0));
 </Layout>
 
 <script>
-  import '../scripts/count-up.ts';
+  import '../scripts/count-up.ts'
 </script>
 
 <!-- ripple 動畫用了 SVG r attribute keyframe，Tailwind 無法處理，只保留這部分 -->

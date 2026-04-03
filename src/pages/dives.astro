@@ -1,74 +1,74 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import StatCard from '../components/StatCard.astro';
-import MapSection from '../components/MapSection.astro';
-import type { Dive } from '../types/dive';
-import divesRaw from '../data/dives.json';
+import Layout from '../layouts/Layout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import StatCard from '../components/StatCard.astro'
+import MapSection from '../components/MapSection.astro'
+import type { Dive } from '../types/dive'
+import divesRaw from '../data/dives.json'
 
-const dives = divesRaw as Dive[];
-const totalDives = dives.length;
-const maxDepth = Math.max(...dives.map(d => d.max_depth || 0));
-const maxDepthDive = dives.find(d => d.max_depth === maxDepth);
-const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0);
-const avgDepth = (dives.reduce((s,d) => s+(d.avg_depth||0),0)/totalDives).toFixed(1);
-const divesWithGPS = dives.filter(d => d.lat && d.lon);
-const divesWithProfile = dives.filter(d => d.garmin_id);
+const dives = divesRaw as Dive[]
+const totalDives = dives.length
+const maxDepth = Math.max(...dives.map(d => d.max_depth || 0))
+const maxDepthDive = dives.find(d => d.max_depth === maxDepth)
+const totalMinutes = dives.reduce((s, d) => s + (d.bottom_time || 0), 0)
+const avgDepth = (dives.reduce((s,d) => s+(d.avg_depth||0),0)/totalDives).toFixed(1)
+const divesWithGPS = dives.filter(d => d.lat && d.lon)
+const divesWithProfile = dives.filter(d => d.garmin_id)
 
 // 深度分布資料（給圖表用）
-const depthBuckets = { '10-15m': 0, '15-20m': 0, '20-25m': 0, '25-30m': 0, '30m+': 0 };
+const depthBuckets = { '10-15m': 0, '15-20m': 0, '20-25m': 0, '25-30m': 0, '30m+': 0 }
 for (const d of dives) {
-  const depth = d.max_depth || 0;
-  if (depth < 15) depthBuckets['10-15m']++;
-  else if (depth < 20) depthBuckets['15-20m']++;
-  else if (depth < 25) depthBuckets['20-25m']++;
-  else if (depth < 30) depthBuckets['25-30m']++;
-  else depthBuckets['30m+']++;
+  const depth = d.max_depth || 0
+  if (depth < 15) depthBuckets['10-15m']++
+  else if (depth < 20) depthBuckets['15-20m']++
+  else if (depth < 25) depthBuckets['20-25m']++
+  else if (depth < 30) depthBuckets['25-30m']++
+  else depthBuckets['30m+']++
 }
 const depthChartData = {
   labels: Object.keys(depthBuckets),
   values: Object.values(depthBuckets),
-};
+}
 
 // 月份活動資料（給圖表用）
-const monthMap: Record<string, number> = {};
+const monthMap: Record<string, number> = {}
 for (const d of dives) {
   const ym = d.date.slice(0, 7); // "2024-04"
-  monthMap[ym] = (monthMap[ym] || 0) + 1;
+  monthMap[ym] = (monthMap[ym] || 0) + 1
 }
-const sortedMonths = Object.keys(monthMap).sort();
+const sortedMonths = Object.keys(monthMap).sort()
 const monthChartData = {
   labels: sortedMonths,
   values: sortedMonths.map(m => monthMap[m]),
-};
+}
 
 // PB 牆資料
-const maxBottomTime = Math.max(...dives.map(d => d.bottom_time || 0));
+const maxBottomTime = Math.max(...dives.map(d => d.bottom_time || 0))
 
 // 最多潛水月份（按月份數字，不分年）
-const calMonthCount: Record<string, number> = {};
+const calMonthCount: Record<string, number> = {}
 for (const d of dives) {
   const m = d.date.slice(5, 7); // "04"
-  calMonthCount[m] = (calMonthCount[m] || 0) + 1;
+  calMonthCount[m] = (calMonthCount[m] || 0) + 1
 }
-const busiestMonthEntry = Object.entries(calMonthCount).sort((a, b) => b[1] - a[1])[0];
-const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-const busiestMonthName = monthNames[parseInt(busiestMonthEntry[0]) - 1];
-const busiestMonthCount = busiestMonthEntry[1];
+const busiestMonthEntry = Object.entries(calMonthCount).sort((a, b) => b[1] - a[1])[0]
+const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+const busiestMonthName = monthNames[parseInt(busiestMonthEntry[0]) - 1]
+const busiestMonthCount = busiestMonthEntry[1]
 
 // 年度比較資料
-const yearStatsMap: Record<string, { count: number, minutes: number }> = {};
+const yearStatsMap: Record<string, { count: number, minutes: number }> = {}
 for (const d of dives) {
-  const year = d.date.slice(0, 4);
-  if (!yearStatsMap[year]) yearStatsMap[year] = { count: 0, minutes: 0 };
-  yearStatsMap[year].count++;
-  yearStatsMap[year].minutes += d.bottom_time || 0;
+  const year = d.date.slice(0, 4)
+  if (!yearStatsMap[year]) yearStatsMap[year] = { count: 0, minutes: 0 }
+  yearStatsMap[year].count++
+  yearStatsMap[year].minutes += d.bottom_time || 0
 }
 const diveYearData = {
   labels: ['2024', '2025', '2026'],
   counts: ['2024', '2025', '2026'].map(y => yearStatsMap[y]?.count || 0),
   hours: ['2024', '2025', '2026'].map(y => parseFloat(((yearStatsMap[y]?.minutes || 0) / 60).toFixed(1))),
-};
+}
 ---
 <Layout title="潛水紀錄" description={`${totalDives} 次潛水 · 最深 ${maxDepth.toFixed(1)}m · 水下 ${Math.floor(totalMinutes/60)} 小時`} ogImage="/og/dives.png">
   <PageHeader title="🤿 潛水紀錄" subtitle="從 2024 年開始的每一支" />
@@ -196,17 +196,17 @@ const diveYearData = {
 
 <!-- 傳資料給前端 JS（is:inline 確保同步執行，define:vars 之後立刻可取得） -->
 <script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }} is:inline>
-  window.__DIVES_GPS__ = divesWithGPS;
-  window.__DIVES_PROFILE__ = divesWithProfile;
-  window.__DEPTH_CHART_DATA__ = depthChartData;
-  window.__MONTH_CHART_DATA__ = monthChartData;
-  window.__TOTAL_DIVES__ = totalDives;
-  window.__DIVE_YEAR_DATA__ = diveYearData;
+  window.__DIVES_GPS__ = divesWithGPS
+  window.__DIVES_PROFILE__ = divesWithProfile
+  window.__DEPTH_CHART_DATA__ = depthChartData
+  window.__MONTH_CHART_DATA__ = monthChartData
+  window.__TOTAL_DIVES__ = totalDives
+  window.__DIVE_YEAR_DATA__ = diveYearData
 </script>
 <script>
-  import '../scripts/dive-app.ts';
-  import '../scripts/dives-ui.ts';
-  import '../scripts/count-up.ts';
+  import '../scripts/dive-app.ts'
+  import '../scripts/dives-ui.ts'
+  import '../scripts/count-up.ts'
 </script>
 
 

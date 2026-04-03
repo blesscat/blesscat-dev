@@ -1,15 +1,15 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import { getCollection } from 'astro:content'
 
 const posts = (await getCollection('blog')).sort((a, b) => {
-  const aTime = new Date(a.data.datetime ?? a.data.date).getTime();
-  const bTime = new Date(b.data.datetime ?? b.data.date).getTime();
-  return bTime - aTime;
-});
+  const aTime = new Date(a.data.datetime ?? a.data.date).getTime()
+  const bTime = new Date(b.data.datetime ?? b.data.date).getTime()
+  return bTime - aTime
+})
 
-const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
+const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
 ---
 <Layout title="技術文章">
   <PageHeader title="📝 豬毛日記" subtitle="AI Agent 踩坑筆記，由豬毛親筆撰寫" />
@@ -71,41 +71,41 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort();
 </Layout>
 
 <script>
-  const filterEl = document.getElementById('tag-filter');
+  const filterEl = document.getElementById('tag-filter')
   if (filterEl) {
-    const btns = filterEl.querySelectorAll<HTMLButtonElement>('.tag-btn');
-    const cards = document.querySelectorAll<HTMLElement>('.post-card');
+    const btns = filterEl.querySelectorAll<HTMLButtonElement>('.tag-btn')
+    const cards = document.querySelectorAll<HTMLElement>('.post-card')
 
     function setActive(btn: HTMLButtonElement) {
       btns.forEach(b => {
-        b.removeAttribute('data-active');
-        b.style.borderColor = '';
-        b.style.color = '';
-        b.style.background = '';
-      });
-      btn.dataset.active = 'true';
-      btn.style.borderColor = '#38bdf8';
-      btn.style.color = '#38bdf8';
-      btn.style.background = 'rgba(56,189,248,0.1)';
+        b.removeAttribute('data-active')
+        b.style.borderColor = ''
+        b.style.color = ''
+        b.style.background = ''
+      })
+      btn.dataset.active = 'true'
+      btn.style.borderColor = '#38bdf8'
+      btn.style.color = '#38bdf8'
+      btn.style.background = 'rgba(56,189,248,0.1)'
     }
 
     // 初始化：第一個 btn active
-    const first = filterEl.querySelector<HTMLButtonElement>('.tag-btn');
-    if (first) setActive(first);
+    const first = filterEl.querySelector<HTMLButtonElement>('.tag-btn')
+    if (first) setActive(first)
 
     filterEl.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.tag-btn');
-      if (!btn) return;
-      const tag = btn.dataset.tag || 'all';
-      setActive(btn);
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.tag-btn')
+      if (!btn) return
+      const tag = btn.dataset.tag || 'all'
+      setActive(btn)
       cards.forEach(card => {
         if (tag === 'all') {
-          card.style.display = '';
+          card.style.display = ''
         } else {
-          const tags = (card.dataset.tags || '').split(',').map(t => t.trim());
-          card.style.display = tags.includes(tag) ? '' : 'none';
+          const tags = (card.dataset.tags || '').split(',').map(t => t.trim())
+          card.style.display = tags.includes(tag) ? '' : 'none'
         }
-      });
-    });
+      })
+    })
   }
 </script>
