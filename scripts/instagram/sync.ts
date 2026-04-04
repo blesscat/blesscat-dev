@@ -1,12 +1,14 @@
 import { resolve } from 'node:path'
 import { buildCaptionPreview } from '../../src/lib/instagram/caption.ts'
 import { buildInstagramPayload, loadInstagramCandidates } from '../../src/lib/instagram/blog-to-instagram.ts'
+import { loadProjectEnv } from '../../src/lib/instagram/env.ts'
 import { publishInstagramPost, readInstagramEnv } from '../../src/lib/instagram/graph-api.ts'
 import { getInstagramRecord, loadInstagramState, saveInstagramState, upsertInstagramRecord } from '../../src/lib/instagram/state.ts'
 import type { InstagramSyncRecord } from '../../src/lib/instagram/types.ts'
 
 async function main(): Promise<void> {
   const projectRoot = process.cwd()
+  loadProjectEnv(projectRoot)
   const statePath = resolve(projectRoot, 'src/data/instagram-posts.json')
   const config = readInstagramEnv()
   const candidates = await loadInstagramCandidates(projectRoot)

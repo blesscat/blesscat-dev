@@ -1,7 +1,9 @@
 import { buildInstagramPayload, loadInstagramCandidates } from '../../src/lib/instagram/blog-to-instagram.ts'
+import { loadProjectEnv } from '../../src/lib/instagram/env.ts'
 
 async function main(): Promise<void> {
   const projectRoot = process.cwd()
+  loadProjectEnv(projectRoot)
   const siteUrl = process.env.SITE_URL ?? 'https://blog.blesscat.dev'
   const candidates = await loadInstagramCandidates(projectRoot)
 

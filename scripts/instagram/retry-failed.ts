@@ -1,9 +1,11 @@
 import { resolve } from 'node:path'
 import { loadInstagramCandidates } from '../../src/lib/instagram/blog-to-instagram.ts'
+import { loadProjectEnv } from '../../src/lib/instagram/env.ts'
 import { loadInstagramState } from '../../src/lib/instagram/state.ts'
 
 async function main(): Promise<void> {
   const projectRoot = process.cwd()
+  loadProjectEnv(projectRoot)
   const statePath = resolve(projectRoot, 'src/data/instagram-posts.json')
   const state = await loadInstagramState(statePath)
   const candidates = await loadInstagramCandidates(projectRoot)

@@ -73,8 +73,7 @@ function dedupeSummaryParts(parts: string[], title: string): string[] {
   const seen = new Set<string>()
 
   return parts
-    .map(part => stripMarkdown(part))
-    .map(part => part.replace(/^\d{4}[\-/\s]\d{2}[\-/\s]\d{2}\s*/u, '').trim())
+    .map(part => stripMarkdown(part).replace(/^\d{4}[\-/\s]\d{2}[\-/\s]\d{2}\s*/u, '').trim())
     .filter(Boolean)
     .filter(part => !looksLikeSubtitle(part))
     .filter(part => {
@@ -110,13 +109,11 @@ function toTitleHook(title: string): string {
 }
 
 function looksLikeSubtitle(chunk: string): boolean {
-  const normalized = stripMarkdown(chunk)
-
-  if (/^豬毛的.*(報告|日報|巡邏報告)$/u.test(normalized)) {
+  if (/^豬毛的.*(報告|日報|巡邏報告)$/u.test(chunk)) {
     return true
   }
 
-  if (/^[\p{L}\p{N}\s]+的(每日|本日)?\s*AI\s*世界?巡邏報告$/u.test(normalized)) {
+  if (/^[\p{L}\p{N}\s]+的(每日|本日)?\s*AI\s*世界?巡邏報告$/u.test(chunk)) {
     return true
   }
 
@@ -135,6 +132,14 @@ function looksLikeSectionHeading(chunk: string): boolean {
   }
 
   if (/^[\p{L}\p{N}\s🐾🐱😺😸😹✨⭐️🔥💡📝]+$/u.test(normalized) && normalized.length <= 24) {
+    return true
+  }
+
+  if (/^[^\p{L}\p{N}]*[\p{L}\p{N}\sAIaiLLMllm]+$/u.test(normalized) && normalized.length <= 30 && !/[。！？.!?：:]/u.test(normalized)) {
+    return true
+  }
+
+  if (/^[📛🔓🚨🔥✨⭐️💡📝🐾🐱😺😸😹]/u.test(normalized) && normalized.length <= 36 && !/[。！？.!?：:]/u.test(normalized)) {
     return true
   }
 
