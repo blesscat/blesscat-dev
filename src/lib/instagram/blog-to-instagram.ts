@@ -76,8 +76,10 @@ async function collectMarkdownFiles(dir: string): Promise<string[]> {
 
 function parseFrontmatter(source: string): BlogInstagramFrontmatter {
   const data: BlogInstagramFrontmatter = { title: '', date: '' }
+  const lines = source.split('\n')
 
-  for (const rawLine of source.split('\n')) {
+  for (let i = 0; i < lines.length; i += 1) {
+    const rawLine = lines[i]
     const line = rawLine.trim()
     if (!line || line.startsWith('#')) {
       continue
@@ -89,7 +91,15 @@ function parseFrontmatter(source: string): BlogInstagramFrontmatter {
     }
 
     const key = line.slice(0, index).trim()
-    const rawValue = line.slice(index + 1).trim()
+    let rawValue = line.slice(index + 1).trim()
+
+    if (startsMultilineQuotedValue(rawValue)) {
+      const quote = rawValue[0]
+      while (!endsMultilineQuotedValue(rawValue, quote) && i + 1 < lines.length) {
+        i += 1
+        rawValue += `\n${lines[i]}`
+      }
+    }
 
     switch (key) {
       case 'title':
@@ -126,6 +136,23 @@ function parseStringValue(rawValue: string): string {
     return trimmed.slice(1, -1)
   }
   return trimmed
+}
+
+function startsMultilineQuotedValue(value: string): boolean {
+  return (value.startsWith('"') || value.startsWith("'")) && !endsMultilineQuotedValue(value, value[0])
+}
+
+function endsMultilineQuotedValue(value: string, quote: string): boolean {
+  if (!value.endsWith(quote)) {
+    return false
+  }
+
+  let backslashCount = 0
+  for (let i = value.length - 2; i >= 0 && value[i] === '\\'; i -= 1) {
+    backslashCount += 1
+  }
+
+  return backslashCount % 2 === 0
 }
 
 function parseStringArray(rawValue: string): string[] {

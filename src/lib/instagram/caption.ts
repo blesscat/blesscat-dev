@@ -9,18 +9,18 @@ export function buildInstagramCaption(post: BlogInstagramPost): string {
   }
 
   const title = stripMarkdown(post.frontmatter.title)
+  const titleHook = toTitleHook(title)
   const description = stripMarkdown(post.frontmatter.description ?? '')
   const paragraphs = extractParagraphs(post.body)
-  const summaryParts = [description, ...paragraphs].filter(Boolean)
-  const summary = summaryParts.join('\n\n').trim()
+  const summaryCandidates = dedupeSummaryParts([description, ...paragraphs], title)
   const tags = normalizeHashtags(post.frontmatter.tags ?? [])
 
   const lines = [
-    `${title}`,
+    titleHook,
     '',
-    summary || '今天的豬毛日記已經上線，來吸一口精華版喵。',
+    ...formatSummary(summaryCandidates),
     '',
-    '全文可以去 blog.blesscat.dev 看喵～',
+    '全文在 blog.blesscat.dev 喵～',
     tags.length > 0 ? tags.join(' ') : '#豬毛日記 #blesscatdev',
   ]
 
@@ -64,7 +64,85 @@ function extractParagraphs(body: string): string[] {
     .filter(chunk => chunk.length > 0)
     .filter(chunk => !chunk.startsWith('>'))
     .filter(chunk => !chunk.startsWith('#'))
-    .slice(0, 2)
+    .filter(chunk => !looksLikeSectionHeading(chunk))
+    .slice(0, 3)
+}
+
+function dedupeSummaryParts(parts: string[], title: string): string[] {
+  const normalizedTitle = normalizeForComparison(title)
+  const seen = new Set<string>()
+
+  return parts
+    .map(part => stripMarkdown(part))
+    .map(part => part.replace(/^\d{4}[\-/\s]\d{2}[\-/\s]\d{2}\s*/u, '').trim())
+    .filter(Boolean)
+    .filter(part => !looksLikeSubtitle(part))
+    .filter(part => {
+      const normalizedPart = normalizeForComparison(part)
+      if (!normalizedPart || normalizedPart === normalizedTitle || normalizedPart.includes(normalizedTitle)) {
+        return false
+      }
+      if (seen.has(normalizedPart)) {
+        return false
+      }
+      seen.add(normalizedPart)
+      return true
+    })
+}
+
+function formatSummary(parts: string[]): string[] {
+  if (parts.length === 0) {
+    return ['今天的豬毛日記已經上線，來吸一口精華版喵。']
+  }
+
+  if (parts.length === 1) {
+    return [parts[0]]
+  }
+
+  return [
+    '今天豬毛覺得值得看的重點喵：',
+    ...parts.slice(0, 3).map((part, index) => `${index + 1}. ${part}`),
+  ]
+}
+
+function toTitleHook(title: string): string {
+  return title.includes('今日 AI 新聞') ? '今日 AI 新聞巡邏時間喵 🐾' : `${title} 喵 🐾`
+}
+
+function looksLikeSubtitle(chunk: string): boolean {
+  const normalized = stripMarkdown(chunk)
+
+  if (/^豬毛的.*(報告|日報|巡邏報告)$/u.test(normalized)) {
+    return true
+  }
+
+  if (/^[\p{L}\p{N}\s]+的(每日|本日)?\s*AI\s*世界?巡邏報告$/u.test(normalized)) {
+    return true
+  }
+
+  return false
+}
+
+function looksLikeSectionHeading(chunk: string): boolean {
+  const normalized = stripMarkdown(chunk)
+
+  if (looksLikeSubtitle(normalized)) {
+    return true
+  }
+
+  if (normalized.length <= 20 && !/[。！？.!?：:]/u.test(normalized)) {
+    return true
+  }
+
+  if (/^[\p{L}\p{N}\s🐾🐱😺😸😹✨⭐️🔥💡📝]+$/u.test(normalized) && normalized.length <= 24) {
+    return true
+  }
+
+  if (/報告$|巡邏報告$|日報$|週報$|月報$/u.test(normalized) && normalized.length <= 18) {
+    return true
+  }
+
+  return false
 }
 
 function normalizeHashtags(tags: string[]): string[] {
@@ -86,6 +164,14 @@ function stripMarkdown(value: string): string {
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/[`*_>#-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function normalizeForComparison(value: string): string {
+  return stripMarkdown(value)
+    .toLowerCase()
+    .replace(/[\p{P}\p{S}]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
