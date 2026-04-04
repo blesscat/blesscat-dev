@@ -1,6 +1,8 @@
 import type { InstagramEnv, InstagramPublishPayload, InstagramPublishResult } from './types.ts'
 
 const GRAPH_API_BASE = 'https://graph.facebook.com/v23.0'
+const TRANSIENT_RETRY_DELAYS_MS = [1500, 4000]
+const CONTAINER_STATUS_POLL_DELAYS_MS = [1500, 2500, 4000, 6000]
 
 export function readInstagramEnv(env: NodeJS.ProcessEnv = process.env): InstagramEnv {
   const accessToken = env.INSTAGRAM_ACCESS_TOKEN
@@ -31,6 +33,25 @@ export async function createMediaContainer(
   return readId(response, '建立 media container 失敗')
 }
 
+export async function getMediaContainerStatus(
+  config: InstagramEnv,
+  creationId: string,
+): Promise<string | null> {
+  const url = new URL(`${GRAPH_API_BASE}/${creationId}`)
+  url.searchParams.set('fields', 'status_code')
+  url.searchParams.set('access_token', config.accessToken)
+
+  const response = await fetch(url, { method: 'GET' })
+  const data = (await response.json()) as Record<string, unknown>
+
+  if (!response.ok) {
+    const message = typeof data.error === 'object' ? JSON.stringify(data.error) : JSON.stringify(data)
+    throw new Error(message)
+  }
+
+  return typeof data.status_code === 'string' ? data.status_code : null
+}
+
 export async function publishMediaContainer(
   config: InstagramEnv,
   creationId: string,
@@ -47,10 +68,51 @@ export async function publishInstagramPost(
   config: InstagramEnv,
   payload: InstagramPublishPayload,
 ): Promise<InstagramPublishResult> {
-  const containerId = await createMediaContainer(config, payload)
-  const mediaId = await publishMediaContainer(config, containerId)
+  let lastError: unknown
 
-  return { containerId, mediaId }
+  for (let attempt = 0; attempt <= TRANSIENT_RETRY_DELAYS_MS.length; attempt += 1) {
+    try {
+      const containerId = await createMediaContainer(config, payload)
+      await waitForMediaContainerReady(config, containerId)
+      const mediaId = await publishMediaContainer(config, containerId)
+      return { containerId, mediaId }
+    } catch (error) {
+      lastError = error
+      if (!isTransientMetaError(error) || attempt === TRANSIENT_RETRY_DELAYS_MS.length) {
+        throw error
+      }
+
+      const delay = TRANSIENT_RETRY_DELAYS_MS[attempt]
+      await sleep(delay)
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error('Instagram 發文失敗')
+}
+
+async function waitForMediaContainerReady(
+  config: InstagramEnv,
+  creationId: string,
+): Promise<void> {
+  for (const delay of CONTAINER_STATUS_POLL_DELAYS_MS) {
+    const status = await getMediaContainerStatus(config, creationId)
+    if (status === 'FINISHED' || status === 'PUBLISHED') {
+      return
+    }
+
+    if (status === 'ERROR' || status === 'EXPIRED') {
+      throw new Error(`Media container 狀態異常：${status}`)
+    }
+
+    await sleep(delay)
+  }
+
+  const finalStatus = await getMediaContainerStatus(config, creationId)
+  if (finalStatus === 'FINISHED' || finalStatus === 'PUBLISHED') {
+    return
+  }
+
+  throw new Error(`Media container 尚未準備好發佈，最後狀態：${finalStatus ?? 'UNKNOWN'}`)
 }
 
 async function postForm(url: string, body: Record<string, string>): Promise<Record<string, unknown>> {
@@ -78,4 +140,26 @@ function readId(data: Record<string, unknown>, fallbackMessage: string): string 
     throw new Error(fallbackMessage)
   }
   return id
+}
+
+function isTransientMetaError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  try {
+    const parsed = JSON.parse(error.message) as {
+      is_transient?: boolean
+      code?: number
+      error_subcode?: number
+    }
+
+    return parsed.is_transient === true || parsed.code === 2
+  } catch {
+    return false
+  }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }

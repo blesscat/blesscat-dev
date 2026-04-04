@@ -45,6 +45,7 @@ export interface InstagramPublishPayload {
   caption: string
   captionHash: string
   imageUrl: string
+  postUrl: string
   heroImagePath: string
   tags: string[]
   datetime?: string

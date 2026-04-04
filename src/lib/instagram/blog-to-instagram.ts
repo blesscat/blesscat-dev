@@ -51,13 +51,19 @@ export async function readInstagramBlogPost(projectRoot: string, absolutePath: s
 
 export function buildInstagramPayload(post: BlogInstagramPost, siteUrl: string): InstagramPublishPayload {
   const imageUrl = toPublicImageUrl(siteUrl, post.frontmatter.heroImage!)
-  return toPreviewPayload(post, imageUrl)
+  const postUrl = toBlogPostUrl(siteUrl, post.slug)
+  return toPreviewPayload(post, imageUrl, postUrl)
 }
 
 export function toPublicImageUrl(siteUrl: string, heroImagePath: string): string {
   const normalizedSiteUrl = siteUrl.endsWith('/') ? siteUrl.slice(0, -1) : siteUrl
   const normalizedHeroPath = heroImagePath.startsWith('/') ? heroImagePath : `/${heroImagePath}`
   return `${normalizedSiteUrl}${normalizedHeroPath}`
+}
+
+export function toBlogPostUrl(siteUrl: string, slug: string): string {
+  const normalizedSiteUrl = siteUrl.endsWith('/') ? siteUrl.slice(0, -1) : siteUrl
+  return `${normalizedSiteUrl}/blog/${slug}`
 }
 
 async function collectMarkdownFiles(dir: string): Promise<string[]> {

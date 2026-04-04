@@ -42,6 +42,7 @@ async function main(): Promise<void> {
 
     try {
       const result = await publishInstagramPost(config, payload)
+      const now = new Date().toISOString()
       const record: InstagramSyncRecord = {
         slug: payload.slug,
         sourceFile: payload.sourceFile,
@@ -51,8 +52,8 @@ async function main(): Promise<void> {
         captionPreview: buildCaptionPreview(payload.caption),
         containerId: result.containerId,
         mediaId: result.mediaId,
-        publishedAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        publishedAt: now,
+        updatedAt: now,
       }
       nextState = upsertInstagramRecord(nextState, record)
       console.log(`已發佈 ${payload.slug} 到 Instagram 喵。`)

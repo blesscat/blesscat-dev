@@ -1,3 +1,16 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "slug": "2026-04-03-21-13-ai-news-daily",
+      "sourceFile": "src/content/blog/2026-04-03-21-13-ai-news-daily.md",
+      "status": "posted",
+      "captionHash": "d0d8ecd2d31f101fef876495bd7ea0297465ebe505b614446f95d45df903edaf",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-03-21-13-ai-news-daily.jpg",
+      "captionPreview": "今日 AI 新聞巡邏時間喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. r/programming 宣布封殺所有 LLM 相關討論、Anthropic Claude Code 源碼意外外洩、Microsoft 推出 MAI 系列自研模型、LLM 互相保護研究、Cursor 新 Agent 功能上線。\n\n2. 豬毛今…",
+      "containerId": "18574750960059277",
+      "mediaId": "17931903513231808",
+      "publishedAt": "2026-04-04T14:55:56.179Z",
+      "updatedAt": "2026-04-04T14:55:56.179Z"
+    }
+  ]
 }

@@ -3,9 +3,9 @@ import type { BlogInstagramPost, InstagramPublishPayload } from './types.ts'
 
 const MAX_CAPTION_LENGTH = 2200
 
-export function buildInstagramCaption(post: BlogInstagramPost): string {
+export function buildInstagramCaption(post: BlogInstagramPost, postUrl: string): string {
   if (post.frontmatter.instagramCaption?.trim()) {
-    return clampCaption(post.frontmatter.instagramCaption.trim())
+    return clampCaption(addBlankLines(post.frontmatter.instagramCaption.trim()))
   }
 
   const title = stripMarkdown(post.frontmatter.title)
@@ -20,11 +20,12 @@ export function buildInstagramCaption(post: BlogInstagramPost): string {
     '',
     ...formatSummary(summaryCandidates),
     '',
-    '全文在 blog.blesscat.dev 喵～',
+    '全文在這裡喵：',
+    postUrl,
     tags.length > 0 ? tags.join(' ') : '#豬毛日記 #blesscatdev',
   ]
 
-  return clampCaption(lines.filter(Boolean).join('\n'))
+  return clampCaption(addBlankLines(lines.filter(Boolean).join('\n')))
 }
 
 export function buildCaptionHash(caption: string): string {
@@ -38,8 +39,8 @@ export function buildCaptionPreview(caption: string, maxLength = 160): string {
   return `${caption.slice(0, maxLength - 1)}…`
 }
 
-export function toPreviewPayload(post: BlogInstagramPost, imageUrl: string): InstagramPublishPayload {
-  const caption = buildInstagramCaption(post)
+export function toPreviewPayload(post: BlogInstagramPost, imageUrl: string, postUrl: string): InstagramPublishPayload {
+  const caption = buildInstagramCaption(post, postUrl)
 
   return {
     slug: post.slug,
@@ -48,6 +49,7 @@ export function toPreviewPayload(post: BlogInstagramPost, imageUrl: string): Ins
     caption,
     captionHash: buildCaptionHash(caption),
     imageUrl,
+    postUrl,
     heroImagePath: post.frontmatter.heroImage!,
     tags: post.frontmatter.tags ?? [],
     datetime: post.frontmatter.datetime,
@@ -179,6 +181,14 @@ function normalizeForComparison(value: string): string {
     .replace(/[\p{P}\p{S}]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+function addBlankLines(caption: string): string {
+  return caption
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .join('\n\n')
 }
 
 function clampCaption(caption: string): string {
