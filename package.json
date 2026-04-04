@@ -8,7 +8,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "instagram:preview": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/preview.ts",
+    "instagram:sync": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/sync.ts",
+    "instagram:retry-failed": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/retry-failed.ts"
   },
   "keywords": [],
   "author": "",

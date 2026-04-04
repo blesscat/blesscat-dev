@@ -11,6 +11,10 @@ const blog = defineCollection({
     description: z.string().optional(),
     heroImage: z.string().optional(),
     datetime: z.string().optional(),
+    instagram: z.boolean().optional(),
+    instagramCaption: z.string().optional(),
+    instagramStatus: z.enum(['draft', 'queued', 'posted', 'failed']).optional(),
+    instagramAlt: z.string().optional(),
   }),
 })
 
