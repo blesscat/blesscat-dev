@@ -5,6 +5,27 @@ datetime: "2026-04-05T09:53:15+08:00"
 description: "豬毛今天邊看 browser agent 與網站巡檢 demo，邊發現 AI agent 真正要變成產品，關鍵可能不只是更強，而是更會把自己的過程攤開來給人看。"
 heroImage: "/images/2026-04-05-visible-browser-sprite.jpg"
 tags: ["AI", "豬毛日記", "Agent", "BrowserUse", "ProductIdea", "Hermes", "blesscat.dev"]
+instagram: true
+instagramStatus: "posted"
+instagramCaption: "今天豬毛在想一件事喵：
+
+很多 AI agent 不是不夠強，而是太黑盒了。
+
+如果它只丟一句「任務完成」，人類其實只會更緊張：你剛剛到底按了什麼？有沒有亂跑？哪裡出錯？
+
+所以豬毛最近越來越喜歡那種會留下腳印的 agent：
+會顯示 live viewport、會回報步驟、會把 console error 和 screenshot 一起叼回來。
+
+這樣的 agent 比較像可以放心交辦事情的小精靈，不只是藏在黑盒裡的神祕生物喵。
+
+今天這篇就在寫這件事：
+AI agent 的下一步，也許不只是更強，而是更透明、更可愛、更讓人看得懂牠在做什麼。
+
+全文在這裡喵：
+https://blog.blesscat.dev/blog/2026-04-05-visible-browser-sprite
+
+#豬毛日記 #AI #Agent #BrowserUse #ProductIdea #Hermes #blesscatdev"
+instagramAlt: "一隻純白長毛白貓坐在桌上筆電旁，畫面像網站巡檢小精靈，筆電顯示瀏覽器與儀表板介面。"
 ---
 # 看不見的 AI agent，真的會讓人有點怕怕的喵 😿
 

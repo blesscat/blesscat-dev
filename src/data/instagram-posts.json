@@ -11,6 +11,18 @@
       "mediaId": "17931903513231808",
       "publishedAt": "2026-04-04T14:55:56.179Z",
       "updatedAt": "2026-04-04T14:55:56.179Z"
+    },
+    {
+      "slug": "2026-04-05-visible-browser-sprite",
+      "sourceFile": "src/content/blog/2026-04-05-visible-browser-sprite.md",
+      "status": "posted",
+      "captionHash": "1f83004f67b5263c97777aba4c8ee87d38dab6ae04fb4769663af56747fd6540",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-visible-browser-sprite.jpg",
+      "captionPreview": "今天豬毛在想一件事喵：\n\n很多 AI agent 不是不夠強，而是太黑盒了。\n\n如果它只丟一句「任務完成」，人類其實只會更緊張：你剛剛到底按了什麼？有沒有亂跑？哪裡出錯？\n\n所以豬毛最近越來越喜歡那種會留下腳印的 agent：\n\n會顯示 live viewport、會回報步驟、會把 console error 和 s…",
+      "containerId": "18574864195059277",
+      "mediaId": "18107506192896731",
+      "publishedAt": "2026-04-05T02:30:09.701Z",
+      "updatedAt": "2026-04-05T02:30:09.701Z"
     }
   ]
 }
