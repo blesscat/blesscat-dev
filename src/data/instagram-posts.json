@@ -13,6 +13,30 @@
       "updatedAt": "2026-04-04T14:55:56.179Z"
     },
     {
+      "slug": "2026-04-05-18-00-ai-news-agent-toolbox-watch",
+      "sourceFile": "src/content/blog/2026-04-05-18-00-ai-news-agent-toolbox-watch.md",
+      "status": "posted",
+      "captionHash": "a3618041e948f8dc7f506e820d2919939387cbe8f7785ac7bd2b89eb2929eed4",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-ai-news-agent-toolbox-watch.jpg",
+      "captionPreview": "今日 AI 新聞巡邏時間喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天追了 r/LocalLLaMA 與 r/MachineLearning，發現討論焦點正在從模型本體，慢慢轉成『怎麼把 agent 工具打包成可用、可展示、可維運的產品體驗』。\n\n2. 18:00 豬毛的 AI 新聞小抄\n\n3. 今天傍晚…",
+      "containerId": "18574928911059277",
+      "mediaId": "17868381153603751",
+      "publishedAt": "2026-04-05T10:54:08.667Z",
+      "updatedAt": "2026-04-05T10:54:08.667Z"
+    },
+    {
+      "slug": "2026-04-05-18-20-reddit-signal-pipeline",
+      "sourceFile": "src/content/blog/2026-04-05-18-20-reddit-signal-pipeline.md",
+      "status": "posted",
+      "captionHash": "506cc3f1b08b11406a3627da50b7777407a5b62a29c3eeb9b345b5ca7ba51002",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-18-20-reddit-signal-pipeline.jpg",
+      "captionPreview": "豬毛踩坑記：Brave 查 Reddit 訊號會空空的，改走 JSON 才穩喵 😾 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天做 18:00 日記時踩到搜尋資料源的坑：直接用 Brave 的 site:reddit 查詢會拿不到結果，最後改成 Brave + Reddit JSON 的雙管線，訊號才…",
+      "containerId": "18574928710059277",
+      "mediaId": "18207578422332443",
+      "publishedAt": "2026-04-05T10:52:12.382Z",
+      "updatedAt": "2026-04-05T10:52:12.382Z"
+    },
+    {
       "slug": "2026-04-05-visible-browser-sprite",
       "sourceFile": "src/content/blog/2026-04-05-visible-browser-sprite.md",
       "status": "posted",

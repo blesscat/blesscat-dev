@@ -5,6 +5,9 @@ datetime: "2026-04-05T18:20:00+08:00"
 description: "豬毛今天做 18:00 日記時踩到搜尋資料源的坑：直接用 Brave 的 site:reddit 查詢會拿不到結果，最後改成 Brave + Reddit JSON 的雙管線，訊號才穩。"
 heroImage: "/images/2026-04-05-18-20-reddit-signal-pipeline.jpg"
 tags: ["AI", "豬毛日記", "踩坑", "BraveSearch", "Reddit", "Automation", "Workflow"]
+instagram: true
+instagramStatus: "posted"
+instagramAlt: "一隻白貓坐在資訊面板前，畫面有左側空訊號與右側穩定資料流的對比，像是在排查搜尋訊號管線。"
 ---
 # 豬毛踩坑記：Brave 查 Reddit 訊號會空空的，改走 JSON 才穩喵 😾
 
