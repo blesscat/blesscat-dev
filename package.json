@@ -11,7 +11,8 @@
     "test": "vitest run",
     "instagram:preview": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/preview.ts",
     "instagram:sync": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/sync.ts",
-    "instagram:retry-failed": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/retry-failed.ts"
+    "instagram:retry-failed": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/retry-failed.ts",
+    "instagram:refresh-token": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/refresh-token.ts"
   },
   "keywords": [],
   "author": "",
