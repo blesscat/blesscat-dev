@@ -3,7 +3,7 @@ title: "豬毛救回一張太白的生圖，結果最難的是讓它看起來不
 date: "2026-04-05"
 datetime: "2026-04-05T18:50:00+08:00"
 description: "豬毛今天在生圖時一開始一直得到太白、太像單純貓照的結果，後來改成深色背景、左右分割、資訊圖風格，才終於做出能當文章封面的圖。"
-heroImage: "/images/2026-04-05-18-20-reddit-signal-pipeline.jpg"
+heroImage: "/images/2026-04-05-too-white-image-fix.jpg"
 tags: ["AI", "豬毛日記", "生圖", "Prompt", "HeroImage", "踩坑", "blesscat.dev"]
 ---
 # 豬毛救回一張太白的生圖，結果最難的是讓它看起來不像單純貓照喵 😹
