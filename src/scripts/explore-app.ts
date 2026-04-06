@@ -144,7 +144,7 @@ function buildMarkers(dives: any[], ski: any[]) {
 
   Object.values(diveGroups).forEach(group => {
     const d0 = group[0]
-    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#38bdf8', group.length) })
+    const marker = L.marker([d0.lat, d0.lon], { icon: makeIcon('#3bd3fd', group.length) })
     marker.on('click', () => {
       window.dispatchEvent(new CustomEvent('explore:open-dive', {
         detail: { group, profiles: profilesCache },
@@ -160,7 +160,7 @@ function buildMarkers(dives: any[], ski: any[]) {
     const d0 = group[0]
     const lat = group.reduce((s: number, d: any) => s + d.lat, 0) / group.length
     const lon = group.reduce((s: number, d: any) => s + d.lon, 0) / group.length
-    const marker = L.marker([lat, lon], { icon: makeIcon('#818cf8', group.length) })
+    const marker = L.marker([lat, lon], { icon: makeIcon('#84e7a5', group.length) })
     marker.on('click', () => {
       window.dispatchEvent(new CustomEvent('explore:open-ski', {
         detail: { group },
@@ -200,9 +200,9 @@ function initControls(_dives: any[], _ski: any[]) {
   const dotSki = btnSki.querySelector('.dot') as HTMLElement | null
 
   // off state styles
-  const offStyle = { bg: 'transparent', border: '#1e2535', color: '#475569', dot: '#475569' }
-  const diveOnStyle = { bg: 'rgba(56,189,248,0.12)', border: '#38bdf8', color: '#38bdf8', dot: '#38bdf8' }
-  const skiOnStyle = { bg: 'rgba(129,140,248,0.12)', border: '#818cf8', color: '#818cf8', dot: '#818cf8' }
+  const offStyle = { bg: 'transparent', border: '#dad4c8', color: '#c8c0b4', dot: '#c8c0b4' }
+  const diveOnStyle = { bg: 'rgba(59,211,253,0.12)', border: '#3bd3fd', color: '#3bd3fd', dot: '#3bd3fd' }
+  const skiOnStyle = { bg: 'rgba(132,231,165,0.12)', border: '#84e7a5', color: '#84e7a5', dot: '#84e7a5' }
 
   function applyBtnStyle(btn: HTMLElement, dot: HTMLElement | null, on: boolean, onStyle: typeof diveOnStyle) {
     const s = on ? onStyle : offStyle
@@ -262,11 +262,11 @@ function updateStats(dives: any[], ski: any[]) {
 
   const el = document.getElementById('explore-stats')!
   el.innerHTML = `
-    <span style="color:#94a3b8;">🤿 <strong style="color:#38bdf8;">${diveSites}</strong> 個潛點</span>
-    <span style="color:#1e2535;">·</span>
-    <span style="color:#94a3b8;">⛷️ <strong style="color:#818cf8;">${skiResorts}</strong> 個雪場</span>
-    <span style="color:#1e2535;">·</span>
-    <span style="color:#94a3b8;">🌏 <strong style="color:#e2e8f0;">${countries}</strong> 個國家</span>
+    <span style="color:#9f9b93;">🤿 <strong style="color:#3bd3fd;">${diveSites}</strong> 個潛點</span>
+    <span style="color:#dad4c8;">·</span>
+    <span style="color:#9f9b93;">⛷️ <strong style="color:#84e7a5;">${skiResorts}</strong> 個雪場</span>
+    <span style="color:#dad4c8;">·</span>
+    <span style="color:#9f9b93;">🌏 <strong style="color:#e2e8f0;">${countries}</strong> 個國家</span>
   `
 }
 

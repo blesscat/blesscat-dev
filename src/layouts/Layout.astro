@@ -35,11 +35,14 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageUrl} />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#38bdf8" />
+  <meta name="theme-color" content="#faf9f7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
-<body class="bg-bg text-text min-h-screen font-sans">
+<body class="bg-bg text-text min-h-screen font-['Sora',sans-serif]">
   <nav id="top-nav" class="top-nav-bar z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-border bg-bg/95 backdrop-blur">
     <a href="/" class="nav-logo text-accent font-bold text-lg no-underline"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="豬毛" /> <span class="nav-brand-text">blesscat.dev</span></a>
     <ul class="flex gap-3 sm:gap-8 list-none">
@@ -82,18 +85,19 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 
 <style>
   .nav-logo {
-    animation: floatY 3.5s ease-in-out infinite;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     white-space: nowrap;
+    color: #000000;
+    font-weight: 600;
   }
   .nav-avatar {
     width: 28px;
     height: 28px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1.5px solid #38bdf8;
+    border: 2px solid #84e7a5;
     flex-shrink: 0;
   }
   .peek-avatar {
@@ -101,8 +105,8 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #38bdf8;
-    box-shadow: 0 0 12px rgba(56,189,248,0.4);
+    border: 2.5px solid #84e7a5;
+    box-shadow: -3px 4px 0px rgba(0,0,0,0.12);
     display: block;
   }
 
@@ -118,6 +122,9 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     position: sticky;
     top: 0;
     z-index: 1100;
+    background: rgba(250,249,247,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #dad4c8;
   }
 
   /* 手機版：fixed + transform，transform 才能正常作用 */
@@ -148,10 +155,10 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     font-size: 2rem;
     cursor: pointer;
     z-index: 999;
-    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: floatY 3s ease-in-out infinite;
+    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: swing 2.5s ease-in-out infinite;
     user-select: none;
-    filter: drop-shadow(0 2px 8px rgba(56,189,248,0.25));
   }
   #zhumao-peek.peeking {
     bottom: 16px;
@@ -160,24 +167,25 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     bottom: 80px;
   }
   #zhumao-peek:hover {
-    filter: drop-shadow(0 4px 16px rgba(56,189,248,0.5));
+    transform: rotateZ(-6deg) scale(1.05);
   }
   #zhumao-peek::after {
     content: '回到頂部 ↑';
     position: absolute;
     bottom: 110%;
     right: 0;
-    background: #111827;
-    border: 1px solid #1e2535;
-    color: #94a3b8;
+    background: #ffffff;
+    border: 1px solid #dad4c8;
+    color: #55534e;
     font-size: 0.75rem;
     padding: 0.3rem 0.6rem;
-    border-radius: 6px;
+    border-radius: 8px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
-    font-family: sans-serif;
+    font-family: 'Sora', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   #zhumao-peek:hover::after {
     opacity: 1;
@@ -196,10 +204,11 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
       left: 0;
       right: 0;
       z-index: 100;
-      background: #0d1220;
-      border-top: 1px solid #1e2535;
+      background: #ffffff;
+      border-top: 1px solid #dad4c8;
       height: 60px;
       align-items: stretch;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
     }
 
     main {
@@ -215,14 +224,15 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     justify-content: center;
     gap: 2px;
     text-decoration: none;
-    color: #94a3b8;
+    color: #9f9b93;
     font-size: 0.65rem;
-    transition: color 0.2s;
+    transition: color 0.2s, transform 0.2s;
   }
 
   .tab-item.active,
   .tab-item:hover {
-    color: #38bdf8;
+    color: #000000;
+    transform: translateY(-2px);
   }
 
   .tab-icon {
@@ -232,6 +242,12 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 
   .tab-label {
     line-height: 1;
+  }
+
+  @keyframes swing {
+    0%, 100% { transform: rotateZ(0deg); }
+    30%       { transform: rotateZ(-2deg); }
+    70%       { transform: rotateZ(2deg); }
   }
 </style>
 

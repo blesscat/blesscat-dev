@@ -23,11 +23,11 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
         style="-webkit-overflow-scrolling: touch;"
       >
         <button
-          class="tag-btn shrink-0 border border-border text-subtle px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-accent hover:text-accent"
+          class="tag-btn shrink-0 border border-[#dad4c8] text-muted px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-[#3bd3fd] hover:text-[#3bd3fd]"
           data-tag="all" data-active="true">全部</button>
         {allTags.map(tag => (
           <button
-            class="tag-btn shrink-0 border border-border text-subtle px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-accent hover:text-accent"
+            class="tag-btn shrink-0 border border-[#dad4c8] text-muted px-3 py-1 rounded-full text-[0.8rem] cursor-pointer transition-all bg-transparent hover:border-[#3bd3fd] hover:text-[#3bd3fd]"
             data-tag={tag}>#{tag}</button>
         ))}
       </div>
@@ -40,7 +40,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
     {posts.map(post => (
       <a
         href={`/blog/${post.id.replace(/\.md$/, '')}`}
-        class="post-card block bg-surface border border-border rounded-xl no-underline transition-all hover:border-accent hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(56,189,248,0.12)] reveal"
+        class="post-card block bg-white border border-[#dad4c8] rounded-xl no-underline transition-all hover:border-[#3bd3fd] hover:-translate-y-1 hover:shadow-[-4px_6px_0px_#3bd3fd] reveal"
         data-tags={(post.data.tags || []).join(',')}
       >
         <div class="flex items-center gap-6 p-6 max-[640px]:flex-col max-[640px]:gap-0 max-[640px]:p-0 max-[640px]:overflow-hidden">
@@ -92,9 +92,9 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
         b.style.background = ''
       })
       btn.dataset.active = 'true'
-      btn.style.borderColor = '#38bdf8'
-      btn.style.color = '#38bdf8'
-      btn.style.background = 'rgba(56,189,248,0.1)'
+      btn.style.borderColor = '#3bd3fd'
+      btn.style.color = '#3bd3fd'
+      btn.style.background = 'rgba(59,211,253,0.08)'
     }
 
     // 初始化：第一個 btn active

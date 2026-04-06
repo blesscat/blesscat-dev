@@ -59,8 +59,8 @@ function initMap() {
     const icon = L.divIcon({
       html: `<div style="
         width:12px; height:12px; border-radius:50%;
-        background:#38bdf8; border:2px solid #fff;
-        box-shadow: 0 0 8px #38bdf8;
+        background:#3bd3fd; border:2px solid #fff;
+        box-shadow: 0 0 8px #3bd3fd;
       "></div>`,
       className: '',
       iconSize: [12, 12],
@@ -127,8 +127,8 @@ function initChart() {
             {
               label: '深度 (m)',
               data: sampled.map((p) => -p.depth),
-              borderColor: '#38bdf8',
-              backgroundColor: 'rgba(56,189,248,0.08)',
+              borderColor: '#3bd3fd',
+              backgroundColor: 'rgba(59,211,253,0.08)',
               fill: true,
               tension: 0.4,
               pointRadius: 0,
@@ -159,7 +159,7 @@ function initChart() {
           interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: {
-              labels: { color: '#94a3b8', font: { size: isMobile ? 10 : 12 }, boxWidth: isMobile ? 12 : 40 },
+              labels: { color: '#9f9b93', font: { size: isMobile ? 10 : 12 }, boxWidth: isMobile ? 12 : 40 },
             },
             tooltip: {
               position: 'nearest',
@@ -176,15 +176,15 @@ function initChart() {
           },
           scales: {
             x: {
-              ticks: { color: '#475569', maxTicksLimit: isMobile ? 4 : 10, font: { size: isMobile ? 10 : 12 } },
-              grid: { color: '#1e2535' },
+              ticks: { color: '#c8c0b4', maxTicksLimit: isMobile ? 4 : 10, font: { size: isMobile ? 10 : 12 } },
+              grid: { color: '#dad4c8' },
               title: { display: !isMobile, text: '時間 (分鐘)', color: '#64748b' },
             },
             yDepth: {
               position: 'left',
-              ticks: { color: '#38bdf8', callback: (v: any) => Math.abs(v as number) + 'm', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
-              grid: { color: '#1e2535' },
-              title: { display: !isMobile, text: '深度', color: '#38bdf8' },
+              ticks: { color: '#3bd3fd', callback: (v: any) => Math.abs(v as number) + 'm', font: { size: isMobile ? 10 : 12 }, maxTicksLimit: isMobile ? 4 : 8 },
+              grid: { color: '#dad4c8' },
+              title: { display: !isMobile, text: '深度', color: '#3bd3fd' },
             },
             ...(hasHr ? {
               yHr: {

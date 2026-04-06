@@ -14,18 +14,18 @@ export function sampleProfile(profile: ProfilePoint[], maxPoints: number): Profi
 
 /** Returns the bar color for a depth-bucket label. */
 export function depthLabelColor(label: string): string {
-  return label === '30m+' ? '#f87171' : '#38bdf8'
+  return label === '30m+' ? '#f87171' : '#3bd3fd'
 }
 
 const YEAR_COLORS: Record<string, string> = {
-  '2024': '#38bdf8',
-  '2025': '#818cf8',
+  '2024': '#3bd3fd',
+  '2025': '#84e7a5',
   '2026': '#4ade80',
 }
 
 /** Maps an array of 'YYYY-MM' labels to their bar colors. */
 export function monthLabelColors(labels: string[]): string[] {
-  return labels.map(ym => YEAR_COLORS[ym.slice(0, 4)] ?? '#38bdf8')
+  return labels.map(ym => YEAR_COLORS[ym.slice(0, 4)] ?? '#3bd3fd')
 }
 
 /** Returns true when a dive row matches the given keyword and year filter. */

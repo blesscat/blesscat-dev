@@ -1,52 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Brand colors ── */
-  --color-bg:       #0a0e1a;
-  --color-surface:  #111827;
-  --color-surface2: #0d1220;
-  --color-border:   #1e2535;
-  --color-text:     #e2e8f0;
-  --color-muted:    #94a3b8;
-  --color-subtle:   #64748b;
-  --color-faint:    #475569;
-  --color-accent:   #38bdf8;
-  --color-indigo:   #818cf8;
-  --color-green:    #4ade80;
-  --color-red:      #f87171;
-  --color-tag-bg:   #1a1a2e;
-  --color-tag-text: #818cf8;
+  /* ── Clay Warm Palette ── */
+  /* Primary surfaces */
+  --color-bg:       #faf9f7;   /* Warm cream canvas */
+  --color-surface:  #ffffff;   /* Pure white cards */
+  --color-surface2:  #f5f3ef;   /* Warm tinted surface */
+  --color-border:    #dad4c8;   /* Oat-toned borders */
+  --color-border-dark: #c8c0b4; /* Darker oat for emphasis */
 
-  /* ── Pill backgrounds ── */
-  --color-pill-cyan:   #0c2d48;
-  --color-pill-indigo: #1e1a2e;
-  --color-pill-green:  #1a2e1a;
-  --color-pill-teal:   #1a2520;
-  --color-pill-red:    #2e1a1a;
-  --color-pill-amber:  #1e1a10;
+  /* Text */
+  --color-text:      #000000;   /* Clay black */
+  --color-muted:     #55534e;   /* Warm charcoal */
+  --color-subtle:    #9f9b93;   /* Warm silver */
+  --color-faint:     #d0ccc4;   /* Very subtle warm gray */
 
-  /* ── Accent variants ── */
-  --color-rose:         #fb7185;
-  --color-teal:         #34d399;
-  --color-amber:        #fbbf24;
-  --color-indigo-light: #a5b4fc;
+  /* Accent colors — Clay swatches */
+  --color-accent:    #3bd3fd;   /* Slushie cyan */
+  --color-matcha:    #84e7a5;   /* Matcha green */
+  --color-lemon:    #f8cc65;   /* Lemon gold */
+  --color-ube:      #c1b0ff;   /* Ube purple */
+  --color-pomegranate: #fc7981; /* Pomegranate pink */
+  --color-blueberry: #01418d;   /* Blueberry navy */
 
-  /* ── Misc ── */
-  --color-prose:          #cbd5e1;
-  --color-map-bg:        #090d18;
-  --color-surface2-alpha: #0d1220ee;
+  /* Semantic variants */
+  --color-green:     #27a644;   /* Success green */
+  --color-red:       #d45656;   /* Error red */
+  --color-amber:     #c37d0d;   /* Warning amber */
+
+  /* Map */
+  --color-map-bg:    #f0ede8;   /* Warm cream — Leaflet container bg */
+
+  /* Prose */
+  --color-prose:     #333333;   /* Body text in articles */
+
+  /* Clay button/badge pills */
+  --color-tag-bg:    #f0ede8;
+  --color-tag-text:  #55534e;
 
   /* ── Custom animations ── */
-  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
-  --animate-float:      floatY 3s ease-in-out infinite;
-  --animate-float-slow: floatY 3.5s ease-in-out infinite;
-  --animate-ripple-1:   ripple-expand 4s ease-out infinite;
-  --animate-ripple-2:   ripple-expand 4s ease-out 1.3s infinite;
-  --animate-ripple-3:   ripple-expand 4s ease-out 2.6s infinite;
-  --animate-swing:      swing 1.4s ease-in-out infinite;
+  --animate-swing:  swing 1.4s ease-in-out infinite;
+  --animate-rise:   rise 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* ── Micro-animation keyframes ── */
+/* ── Clay hover animation keyframes ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -57,14 +54,28 @@
   to   { opacity: 1; }
 }
 
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-5px); }
+@keyframes rise {
+  0%   { transform: translateY(0) rotateZ(0deg); }
+  30%  { transform: translateY(-4px) rotateZ(-2deg); }
+  60%  { transform: translateY(-8px) rotateZ(-4deg); }
+  100% { transform: translateY(-12px) rotateZ(-6deg); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { text-shadow: 0 0 0px transparent; }
-  50%       { text-shadow: 0 0 12px rgba(56,189,248,0.5); }
+@keyframes swing {
+  0%, 100% { transform: rotateZ(0deg); }
+  25%       { transform: rotateZ(-3deg); }
+  75%       { transform: rotateZ(3deg); }
+}
+
+/* ── Clay button: tilt on hover ── */
+.btn-clay {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              background-color 0.2s ease;
+}
+.btn-clay:hover {
+  transform: translateY(-4px) rotateZ(-3deg);
+  box-shadow: -4px 6px 0px #00000030;
 }
 
 /* ── Reusable animation utilities ── */
@@ -89,13 +100,12 @@
 .delay-8 { animation-delay: 0.64s; }
 
 /* scroll-reveal: hidden until JS adds .revealed */
-/* 隱藏 scrollbar 但保留滾動功能 */
 .overflow-x-auto {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .overflow-x-auto::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
 .reveal {
@@ -107,4 +117,28 @@
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── Card base — white on cream, oat border ── */
+.card-clay {
+  background: #ffffff;
+  border: 1.5px solid #dad4c8;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              border-color 0.2s ease;
+}
+.card-clay:hover {
+  transform: translateY(-6px);
+  box-shadow: -6px 10px 0px rgba(0,0,0,0.08);
+  border-color: #c8c0b4;
+}
+
+/* ── Bento grid card ── */
+.bento-clay {
+  background: #ffffff;
+  border: 1px solid #dad4c8;
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }

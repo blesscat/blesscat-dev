@@ -51,8 +51,8 @@ function initStatCharts() {
           responsive: true, maintainAspectRatio: false,
           plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx: any) => ` ${ctx.parsed.y} 次` } } },
           scales: {
-            x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 12 } } },
-            y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', stepSize: 1 }, beginAtZero: true },
+            x: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', font: { size: 12 } } },
+            y: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', stepSize: 1 }, beginAtZero: true },
           }
         }
       })
@@ -71,8 +71,8 @@ function initStatCharts() {
           responsive: true, maintainAspectRatio: false,
           plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx: any) => ` ${ctx.parsed.y} 次` } } },
           scales: {
-            x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 11 }, maxRotation: 45 } },
-            y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', stepSize: 1 }, beginAtZero: true },
+            x: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', font: { size: 11 }, maxRotation: 45 } },
+            y: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', stepSize: 1 }, beginAtZero: true },
           }
         }
       })
@@ -101,19 +101,19 @@ function initYearChart() {
       data: {
         labels: yearData.labels,
         datasets: [
-          { label: '潛水次數', data: yearData.counts, backgroundColor: ['#38bdf8', '#818cf8', '#4ade80'], borderRadius: 6, borderSkipped: false },
-          { label: '總小時數', data: yearData.hours, backgroundColor: ['rgba(56,189,248,0.4)', 'rgba(129,140,248,0.4)', 'rgba(74,222,128,0.4)'], borderRadius: 6, borderSkipped: false },
+          { label: '潛水次數', data: yearData.counts, backgroundColor: ['#3bd3fd', '#84e7a5', '#4ade80'], borderRadius: 6, borderSkipped: false },
+          { label: '總小時數', data: yearData.hours, backgroundColor: ['rgba(59,211,253,0.4)', 'rgba(132,231,165,0.4)', 'rgba(132,231,165,0.4)'], borderRadius: 6, borderSkipped: false },
         ]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: {
-          legend: { display: true, labels: { color: '#94a3b8', font: { size: 12 } } },
+          legend: { display: true, labels: { color: '#9f9b93', font: { size: 12 } } },
           tooltip: { callbacks: { label: (ctx: any) => ctx.datasetIndex === 0 ? ` ${ctx.parsed.y} 次` : ` ${ctx.parsed.y} 小時` } }
         },
         scales: {
-          x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 13 } } },
-          y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8' }, beginAtZero: true }
+          x: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', font: { size: 13 } } },
+          y: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93' }, beginAtZero: true }
         }
       }
     })

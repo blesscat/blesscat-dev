@@ -76,7 +76,7 @@
         datasets: [{
           label: '深度',
           data: sampled.map((p: any) => -p.depth),
-          borderColor: '#38bdf8',
+          borderColor: '#3bd3fd',
           backgroundColor: 'rgba(56,189,248,0.1)',
           fill: true,
           tension: 0.4,
@@ -93,8 +93,8 @@
           tooltip: { callbacks: { label: (c: any) => `深度: ${Math.abs(c.raw).toFixed(1)}m` } },
         },
         scales: {
-          x: { ticks: { color: '#475569', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1e2535' } },
-          y: { ticks: { color: '#38bdf8', callback: (v: any) => `${Math.abs(v)}m`, maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#1e2535' } },
+          x: { ticks: { color: '#9f9b93', maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#dad4c8' } },
+          y: { ticks: { color: '#3bd3fd', callback: (v: any) => `${Math.abs(v)}m`, maxTicksLimit: 5, font: { size: 10 } }, grid: { color: '#dad4c8' } },
         },
       },
     })

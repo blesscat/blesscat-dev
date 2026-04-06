@@ -54,7 +54,7 @@ function initMap() {
     }).addTo(map)
 
     const icon = L.divIcon({
-      html: `<div style="width:12px;height:12px;border-radius:50%;background:#818cf8;border:2px solid #fff;box-shadow:0 0 8px #818cf8;"></div>`,
+      html: `<div style="width:12px;height:12px;border-radius:50%;background:#84e7a5;border:2px solid #fff;box-shadow:0 0 8px #84e7a5;"></div>`,
       className: '', iconSize: [12, 12], iconAnchor: [6, 6],
     })
 
@@ -104,15 +104,15 @@ function initCharts() {
       data: {
         labels: sorted.map(d => isMobile ? d.date.slice(5) : d.date),
         datasets: [{ label: '最高速度 (km/h)', data: sorted.map(d => d.top_speed_kmh.toFixed(1)),
-          backgroundColor: sorted.map(d => d.top_speed_kmh === Math.max(...data.map((x: any) => x.top_speed_kmh)) ? '#f87171' : '#818cf8'),
+          backgroundColor: sorted.map(d => d.top_speed_kmh === Math.max(...data.map((x: any) => x.top_speed_kmh)) ? '#f87171' : '#84e7a5'),
           borderRadius: 4 }],
       },
       options: {
         responsive: true, maintainAspectRatio: false, animation: false,
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: any) => `${c.raw} km/h` } } },
         scales: {
-          x: { ticks: { color: '#475569', font: { size: isMobile ? 9 : 11 }, maxRotation: 45 }, grid: { color: '#1e2535' } },
-          y: { ticks: { color: '#818cf8', font: { size: isMobile ? 10 : 12 }, callback: (v: any) => v + ' km/h' }, grid: { color: '#1e2535' } },
+          x: { ticks: { color: '#c8c0b4', font: { size: isMobile ? 9 : 11 }, maxRotation: 45 }, grid: { color: '#dad4c8' } },
+          y: { ticks: { color: '#84e7a5', font: { size: isMobile ? 10 : 12 }, callback: (v: any) => v + ' km/h' }, grid: { color: '#dad4c8' } },
         },
       },
     })
@@ -121,13 +121,13 @@ function initCharts() {
     const monthCtx = getCtx('month')
     if (monthCtx) new C(monthCtx, {
       type: 'bar',
-      data: { labels: months, datasets: [{ label: '滑雪天數', data: months.map(m => monthCount[m]), backgroundColor: '#38bdf8', borderRadius: 4 }] },
+      data: { labels: months, datasets: [{ label: '滑雪天數', data: months.map(m => monthCount[m]), backgroundColor: '#3bd3fd', borderRadius: 4 }] },
       options: {
         responsive: true, maintainAspectRatio: false, animation: false,
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: any) => `${c.raw} 天` } } },
         scales: {
-          x: { ticks: { color: '#475569', font: { size: isMobile ? 10 : 12 } }, grid: { color: '#1e2535' } },
-          y: { ticks: { color: '#38bdf8', font: { size: isMobile ? 10 : 12 }, stepSize: 1 }, grid: { color: '#1e2535' } },
+          x: { ticks: { color: '#c8c0b4', font: { size: isMobile ? 10 : 12 } }, grid: { color: '#dad4c8' } },
+          y: { ticks: { color: '#3bd3fd', font: { size: isMobile ? 10 : 12 }, stepSize: 1 }, grid: { color: '#dad4c8' } },
         },
       },
     })
@@ -144,8 +144,8 @@ function initCharts() {
           const d = scatterData[c.dataIndex]; return [`${d.resort}`, `${d.date}`, `垂直: ${c.parsed.x}km  速度: ${c.parsed.y}km/h`]
         } } } },
         scales: {
-          x: { title: { display: true, text: '垂直落差 (km)', color: '#475569', font: { size: 11 } }, ticks: { color: '#475569', font: { size: isMobile ? 9 : 11 } }, grid: { color: '#1e2535' } },
-          y: { title: { display: true, text: '最高速 (km/h)', color: '#475569', font: { size: 11 } }, ticks: { color: '#f87171', font: { size: isMobile ? 10 : 12 }, callback: (v: any) => v + ' km/h' }, grid: { color: '#1e2535' } },
+          x: { title: { display: true, text: '垂直落差 (km)', color: '#c8c0b4', font: { size: 11 } }, ticks: { color: '#c8c0b4', font: { size: isMobile ? 9 : 11 } }, grid: { color: '#dad4c8' } },
+          y: { title: { display: true, text: '最高速 (km/h)', color: '#c8c0b4', font: { size: 11 } }, ticks: { color: '#f87171', font: { size: isMobile ? 10 : 12 }, callback: (v: any) => v + ' km/h' }, grid: { color: '#dad4c8' } },
         },
       },
     })
@@ -155,13 +155,13 @@ function initCharts() {
     const resortCtx = getCtx('resort')
     if (resortCtx) new C(resortCtx, {
       type: 'bar',
-      data: { labels: resortsSorted.map(r => r[0]), datasets: [{ label: '總 runs', data: resortsSorted.map(r => r[1]), backgroundColor: '#818cf8', borderRadius: 4 }] },
+      data: { labels: resortsSorted.map(r => r[0]), datasets: [{ label: '總 runs', data: resortsSorted.map(r => r[1]), backgroundColor: '#84e7a5', borderRadius: 4 }] },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: any) => `${c.raw} runs` } } },
         scales: {
-          x: { ticks: { color: '#818cf8', font: { size: isMobile ? 9 : 11 }, callback: (v: any) => v + ' runs' }, grid: { color: '#1e2535' } },
-          y: { ticks: { color: '#94a3b8', font: { size: isMobile ? 9 : 11 } }, grid: { color: '#1e2535' } },
+          x: { ticks: { color: '#84e7a5', font: { size: isMobile ? 9 : 11 }, callback: (v: any) => v + ' runs' }, grid: { color: '#dad4c8' } },
+          y: { ticks: { color: '#9f9b93', font: { size: isMobile ? 9 : 11 } }, grid: { color: '#dad4c8' } },
         },
       },
     })
@@ -174,15 +174,15 @@ function initCharts() {
       data: {
         labels: yearData.labels,
         datasets: [
-          { label: '滑雪天數', data: yearData.days, backgroundColor: ['#38bdf8', '#818cf8', '#4ade80'], borderRadius: 6, borderSkipped: false },
+          { label: '滑雪天數', data: yearData.days, backgroundColor: ['#3bd3fd', '#84e7a5', '#4ade80'], borderRadius: 6, borderSkipped: false },
         ]
       },
       options: {
         responsive: true, maintainAspectRatio: false, animation: false,
-        plugins: { legend: { display: true, labels: { color: '#94a3b8', font: { size: 12 } } }, tooltip: { callbacks: { label: (c: any) => ` ${c.raw} 天` } } },
+        plugins: { legend: { display: true, labels: { color: '#9f9b93', font: { size: 12 } } }, tooltip: { callbacks: { label: (c: any) => ` ${c.raw} 天` } } },
         scales: {
-          x: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8', font: { size: 13 } } },
-          y: { grid: { color: '#1e2535' }, ticks: { color: '#94a3b8' }, beginAtZero: true },
+          x: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93', font: { size: 13 } } },
+          y: { grid: { color: '#dad4c8' }, ticks: { color: '#9f9b93' }, beginAtZero: true },
         },
       },
     })

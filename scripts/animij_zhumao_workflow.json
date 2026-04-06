@@ -1,0 +1,64 @@
+{
+  "prompt": {
+    "3": {
+      "inputs": {
+        "seed": 42,
+        "steps": 28,
+        "cfg": 5.2,
+        "sampler_name": "dpmpp_2s_a",
+        "scheduler": "karras",
+        "positive": [["4", 0]],
+        "negative": [["5", 0]],
+        "latent_image": [["6", 0]]
+      },
+      "class_type": "KSampler"
+    },
+    "4": {
+      "inputs": {
+        "text": "1girl, cat ears, fluffy white hair, amber eyes, cute cat-girl, bobtail, standing in center, split view composition: left side messy scattered tools and mechanical parts, right side neat organized tool shelf, white cat-girl looking curiously between both sides, soft studio lighting, detailed, high quality, anime style"
+      },
+      "class_type": "CLIPTextEncode"
+    },
+    "5": {
+      "inputs": {
+        "text": "deformed, bad anatomy, ugly, low quality, blurry, text, watermark, extra limbs, bad hands, missing fingers"
+      },
+      "class_type": "CLIPTextEncode"
+    },
+    "6": {
+      "inputs": {
+        "width": 832,
+        "height": 1216,
+        "batch_size": 1
+      },
+      "class_type": "EmptyLatentImage"
+    },
+    "8": {
+      "inputs": {
+        "samples": [["3", 0]],
+        "vae": [["4", 1]]
+      },
+      "class_type": "VAEDecode"
+    },
+    "9": {
+      "inputs": {
+        "filename_prefix": "zhumao_diary_animij",
+        "images": [["8", 0]]
+      },
+      "class_type": "SaveImage"
+    },
+    "10": {
+      "inputs": {
+        "ckpt_name": "Animij_v10.safetensors"
+      },
+      "class_type": "CheckpointLoaderSimple"
+    }
+  },
+  "link_links": {
+    "10": {
+      "0": [["3", 0], ["8", 1]],
+      "1": [["4", 0]],
+      "2": [["5", 0]]
+    }
+  }
+}
