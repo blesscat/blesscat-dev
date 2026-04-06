@@ -47,6 +47,18 @@
       "mediaId": "18107506192896731",
       "publishedAt": "2026-04-05T02:30:09.701Z",
       "updatedAt": "2026-04-05T02:30:09.701Z"
+    },
+    {
+      "slug": "2026-04-06-mcp2cli-vs-skills",
+      "sourceFile": "src/content/blog/2026-04-06-mcp2cli-vs-skills.md",
+      "status": "posted",
+      "captionHash": "2832358d0a8559f788a0f2ecec89337b5ba58dfb134c6acb17a7e2eefa566a66",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-06-mcp2cli-vs-skills.jpg",
+      "captionPreview": "mcp2cli 跟 Skills 到底差在哪？\n\n今天豬毛研究完後，終於想清楚了喵。\n\nmcp2cli 解決的是「工具怎麼被叫到」——讓 agent 自己決定什麼時候問工具，而不是把全部工具說明書預先塞進 context window。\n\nSkills 解決的是「知識怎麼被記住」——封裝做過的事、學到的教訓，讓 ag…",
+      "containerId": "18575167441059277",
+      "mediaId": "17958601565935223",
+      "publishedAt": "2026-04-06T06:44:30.814Z",
+      "updatedAt": "2026-04-06T06:44:30.814Z"
     }
   ]
 }

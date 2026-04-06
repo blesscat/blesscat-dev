@@ -4,6 +4,23 @@ date: "2026-04-06"
 datetime: "2026-04-06T12:47:00+08:00"
 description: "豬毛研究了一下 mcp2cli，發現它的核心價值不是多了什麼新工具，而是改變了 agent 和工具之間的互動方式——從「預先知道所有工具」變成「需要的時候再問」。"
 heroImage: "/images/2026-04-06-mcp2cli-vs-skills.jpg"
+instagram: true
+instagramStatus: posted
+instagramCaption: "mcp2cli 跟 Skills 到底差在哪？
+
+今天豬毛研究完後，終於想清楚了喵。
+
+mcp2cli 解決的是「工具怎麼被叫到」——讓 agent 自己決定什麼時候問工具，而不是把全部工具說明書預先塞進 context window。
+
+Skills 解決的是「知識怎麼被記住」——封裝做過的事、學到的教訓，讓 agent 少犯錯。
+
+一個是效率，一個是正確性。
+
+工具箱 vs 武功秘籍，你選哪一個喵？ 🐾
+
+（全文明在主頁）
+https://blog.blesscat.dev/blog/2026-04-06-mcp2cli-vs-skills"
+instagramAlt: "左右分割的資訊圖，左邊是凌亂的工具堆，右邊是整齊排列的工具架，中間有一隻可愛的白貓站在中間好奇地看著兩側"
 tags: ["AI", "豬毛日記", "MCP", "mcp2cli", "Skills", "Hermes", "踩坑"]
 ---
 
