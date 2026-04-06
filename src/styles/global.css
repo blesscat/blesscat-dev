@@ -142,3 +142,78 @@
   border-radius: 20px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
+
+/* ══════════════════════════════════════════
+   DARK MODE — Dark Clay (warm, not blue-ish)
+══════════════════════════════════════════ */
+html.dark,
+html.dark body {
+  color-scheme: dark;
+}
+
+html.dark {
+  --color-bg:        #1c1917;   /* Warm espresso bg */
+  --color-surface:   #27201c;   /* Warm dark card */
+  --color-surface2:  #312920;   /* Warm dark surface2 */
+  --color-border:    #3d3630;   /* Muted warm border */
+  --color-border-dark: #4a403a; /* Emphasized border */
+  --color-text:      #e8e2da;   /* Warm off-white text */
+  --color-muted:     #a89e94;   /* Warm medium gray */
+  --color-subtle:    #7a6e64;   /* Warm subtle */
+  --color-faint:     #4a403a;   /* Warm faint */
+  --color-map-bg:    #27201c;   /* Dark map bg */
+  --color-prose:     #d4cec4;   /* Body text in articles */
+  --color-tag-bg:    #312920;
+  --color-tag-text:  #a89e94;
+}
+
+html.dark .btn-clay:hover {
+  box-shadow: -4px 6px 0px rgba(0,0,0,0.4);
+}
+
+html.dark .card-clay {
+  background: #27201c;
+  border-color: #3d3630;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.15);
+}
+html.dark .card-clay:hover {
+  box-shadow: -6px 10px 0px rgba(0,0,0,0.3);
+  border-color: #4a403a;
+}
+
+html.dark .bento-clay {
+  background: #27201c;
+  border-color: #3d3630;
+}
+html.dark .bento-clay:hover {
+  box-shadow: -4px 8px 0px rgba(0,0,0,0.3);
+}
+
+html.dark .bottom-tab-bar {
+  background: #1c1917;
+  border-top-color: #3d3630;
+}
+html.dark .tab-item {
+  color: #7a6e64;
+}
+html.dark .tab-item.active,
+html.dark .tab-item:hover {
+  color: #e8e2da;
+}
+
+html.dark #zhumao-peek {
+  filter: brightness(0.85) sepia(0.2);
+}
+html.dark #zhumao-peek::after {
+  background: #27201c;
+  border-color: #3d3630;
+  color: #a89e94;
+}
+
+html.dark .top-nav-bar {
+  background: rgba(28,25,23,0.95);
+  border-bottom-color: #3d3630;
+}
+html.dark .nav-logo {
+  color: #e8e2da;
+}
