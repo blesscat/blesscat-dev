@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import type { Dive } from '../types/dive'
+import type { Ski } from '../types/ski'
 import divesRaw from '../data/dives.json'
 import skiRaw from '../data/ski.json'
 
 const dives = divesRaw as Dive[]
-const ski = skiRaw as any[]
+const ski = skiRaw as Ski[]
 
 const totalDives = dives.length
 const maxDepth = Math.max(...dives.map(d => d.max_depth || 0))
