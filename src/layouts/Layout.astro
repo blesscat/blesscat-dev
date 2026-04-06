@@ -274,10 +274,10 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
       localStorage.setItem('theme', dark ? 'dark' : 'light')
     }
 
-    // Init from localStorage or system preference
+    // Init from localStorage or system preference; default to dark
     const saved = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    applyTheme(saved === 'dark' || (!saved && prefersDark))
+    // Dark unless user explicitly chose light
+    applyTheme(saved !== 'light')
 
     btn.addEventListener('click', () => {
       applyTheme(!html.classList.contains('dark'))
