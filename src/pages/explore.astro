@@ -20,7 +20,7 @@ const yearMax = Math.max(...allYears)
   <PageHeader title="🌏 探索地圖" subtitle="潛水潛點 × 滑雪雪場，點擊標記查看詳情" />
 
   <!-- 統計 mini bar -->
-  <div id="explore-stats" class="flex items-center gap-3 bg-white border border-[#dad4c8] rounded-[10px] px-[1.2rem] py-[0.6rem] mb-4 text-[0.82rem] flex-wrap anim-fade-up delay-2">
+  <div id="explore-stats" class="flex items-center gap-3 bg-white bg-surface border border-border rounded-[10px] px-[1.2rem] py-[0.6rem] mb-4 text-[0.82rem] flex-wrap anim-fade-up delay-2">
     <span class="stat-item">載入中⋯</span>
   </div>
 
@@ -39,7 +39,7 @@ const yearMax = Math.max(...allYears)
       <span class="text-[0.75rem] text-faint whitespace-nowrap">年份</span>
       <input id="year-slider" type="range"
         min={yearMin} max={yearMax} value={yearMax}
-        class="year-slider appearance-none w-35 h-1 bg-[#dad4c8] rounded-sm outline-none cursor-pointer max-[768px]:w-25"
+        class="year-slider appearance-none w-35 h-1 bg-[#dad4c8] dark:bg-[#3d3630] rounded-sm outline-none cursor-pointer max-[768px]:w-25"
       />
       <span id="year-label" class="text-[0.75rem] text-[#3bd3fd] bg-[rgba(59,211,253,0.1)] border border-[rgba(59,211,253,0.2)] rounded-[6px] px-2 py-[0.15rem] whitespace-nowrap">{yearMin} – {yearMax}</span>
     </div>

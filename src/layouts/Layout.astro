@@ -35,7 +35,15 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageUrl} />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#faf9f7" />
+  <meta name="theme-color" content="#1c1917" />
+  <!-- Prevent dark mode flash: apply theme before first paint -->
+  <script is:inline>
+    try {
+      if (localStorage.getItem('theme') !== 'light') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

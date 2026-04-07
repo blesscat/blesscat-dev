@@ -110,10 +110,10 @@ const skiYearData = {
         data-ref="search"
         type="search"
         placeholder="搜尋雪場名稱…"
-        class="flex-1 min-w-45 bg-white border border-[#dad4c8] rounded-lg text-muted px-[0.85rem] py-2 text-[0.88rem] outline-none transition-colors duration-200 placeholder:text-subtle focus:border-[#84e7a5]"
+        class="flex-1 min-w-45 bg-surface border-border rounded-lg text-muted px-[0.85rem] py-2 text-[0.88rem] outline-none transition-colors duration-200 placeholder:text-subtle focus:border-[#84e7a5]"
         autocomplete="off"
       />
-      <select data-ref="year-select" class="bg-white border border-[#dad4c8] rounded-lg text-muted px-3 py-2 text-[0.88rem] outline-none cursor-pointer transition-colors duration-200 focus:border-[#84e7a5]">
+      <select data-ref="year-select" class="bg-surface border-border rounded-lg text-muted px-3 py-2 text-[0.88rem] outline-none cursor-pointer transition-colors duration-200 focus:border-[#84e7a5]">
         <option value="">全部年份</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
@@ -124,7 +124,7 @@ const skiYearData = {
 
     <div class="flex flex-col gap-[0.6rem]">
       {ski.map(d => (
-        <div class="ski-row bg-white border border-[#dad4c8] rounded-xl flex items-center flex-wrap gap-2 py-3 px-4 md:flex-nowrap md:gap-4 md:py-4 md:px-6 transition-all duration-[250ms] hover:border-[#84e7a5] hover:-translate-y-0.5 hover:shadow-[-3px_5px_0px_#84e7a5] reveal">
+        <div class="ski-row bg-surface border-border rounded-xl flex items-center flex-wrap gap-2 py-3 px-4 md:flex-nowrap md:gap-4 md:py-4 md:px-6 transition-all duration-[250ms] hover:border-[#84e7a5] hover:-translate-y-0.5 hover:shadow-[-3px_5px_0px_#84e7a5] reveal">
           <div class="ski-date text-[0.8rem] text-faint md:min-w-[6rem] font-bold">{d.date}</div>
           <div class="ski-info flex-1 min-w-0">
             <div class="ski-resort font-semibold text-[0.95rem]">{d.resort}</div>

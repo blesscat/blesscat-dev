@@ -40,7 +40,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags || []))].sort()
     {posts.map(post => (
       <a
         href={`/blog/${post.id.replace(/\.md$/, '')}`}
-        class="post-card block bg-white border border-[#dad4c8] rounded-xl no-underline transition-all hover:border-[#3bd3fd] hover:-translate-y-1 hover:shadow-[-4px_6px_0px_#3bd3fd] reveal"
+        class="post-card block bg-surface border-border rounded-xl no-underline transition-all hover:border-[#3bd3fd] hover:-translate-y-1 hover:shadow-[-4px_6px_0px_#3bd3fd] reveal"
         data-tags={(post.data.tags || []).join(',')}
       >
         <div class="flex items-center gap-6 p-6 max-[640px]:flex-col max-[640px]:gap-0 max-[640px]:p-0 max-[640px]:overflow-hidden">
