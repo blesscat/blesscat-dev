@@ -119,12 +119,12 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
 <style>
   /* prose-content：markdown 渲染的 HTML 無法 inline，必須用 :global() */
   .prose-content :global(h2) {
-    font-size: 1.35rem; font-weight: 700; color: #e2e8f0;
+    font-size: 1.35rem; font-weight: 700; color: var(--color-text);
     margin: 2.5rem 0 1rem; padding-bottom: 0.5rem;
-    border-bottom: 1px solid #dad4c8;
+    border-bottom: 1px solid var(--color-border);
   }
   .prose-content :global(h3) {
-    font-size: 1.1rem; font-weight: 700; color: #94a3b8;
+    font-size: 1.1rem; font-weight: 700; color: var(--color-muted);
     margin: 1.5rem 0 0.75rem;
   }
   .prose-content :global(p) { margin-bottom: 1.2rem; }
@@ -132,34 +132,74 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
   .prose-content :global(ol) { padding-left: 1.5rem; margin-bottom: 1.2rem; }
   .prose-content :global(li) { margin-bottom: 0.4rem; }
   .prose-content :global(code) {
-    background: #dad4c8; color: #3bd3fd;
+    background: var(--color-surface2); color: var(--color-accent);
     padding: 0.15rem 0.4rem; border-radius: 4px;
     font-size: 0.88em;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
   .prose-content :global(pre) {
-    background: #f5f3ef; border: 1px solid #dad4c8;
+    background: var(--color-surface); border: 1px solid var(--color-border);
     border-radius: 10px; padding: 1.2rem 1.5rem;
     overflow-x: auto; margin-bottom: 1.5rem;
   }
   .prose-content :global(pre code) {
-    background: none; color: #e2e8f0; padding: 0; font-size: 0.85rem;
+    background: none; color: var(--color-prose); padding: 0; font-size: 0.85rem;
   }
   .prose-content :global(blockquote) {
-    border-left: 3px solid #3bd3fd; padding-left: 1rem;
-    color: #64748b; font-style: italic; margin: 1.2rem 0;
+    border-left: 3px solid var(--color-accent); padding-left: 1rem;
+    color: var(--color-muted); font-style: italic; margin: 1.2rem 0;
   }
   .prose-content :global(img) { max-width: 100%; border-radius: 10px; margin: 1rem 0; }
-  .prose-content :global(hr) { border: none; border-top: 1px solid #dad4c8; margin: 2rem 0; }
-  .prose-content :global(strong) { color: #e2e8f0; font-weight: 700; }
-  .prose-content :global(a) { color: #3bd3fd; text-decoration: none; }
+  .prose-content :global(hr) { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+  .prose-content :global(strong) { color: var(--color-text); font-weight: 700; }
+  .prose-content :global(a) { color: var(--color-accent); text-decoration: none; }
   .prose-content :global(a:hover) { text-decoration: underline; }
   .prose-content :global(table) {
     width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.9rem;
   }
   .prose-content :global(th) {
-    background: #dad4c8; padding: 0.6rem 1rem;
-    text-align: left; color: #94a3b8; font-weight: 600;
+    background: var(--color-surface2); padding: 0.6rem 1rem;
+    text-align: left; color: var(--color-muted); font-weight: 600;
   }
-  .prose-content :global(td) { padding: 0.6rem 1rem; border-bottom: 1px solid #dad4c8; }
+  .prose-content :global(td) { padding: 0.6rem 1rem; border-bottom: 1px solid var(--color-border); }
+
+  /* ── Dark mode overrides for prose ── */
+  html.dark .prose-content :global(h2) {
+    color: var(--color-text);
+    border-bottom-color: var(--color-border);
+  }
+  html.dark .prose-content :global(h3) {
+    color: var(--color-muted);
+  }
+  html.dark .prose-content :global(code) {
+    background: rgba(91,168,190,0.12);
+    color: var(--color-accent);
+  }
+  html.dark .prose-content :global(pre) {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+  }
+  html.dark .prose-content :global(pre code) {
+    color: var(--color-prose);
+  }
+  html.dark .prose-content :global(blockquote) {
+    border-left-color: var(--color-accent);
+    color: var(--color-muted);
+  }
+  html.dark .prose-content :global(hr) {
+    border-top-color: var(--color-border);
+  }
+  html.dark .prose-content :global(strong) {
+    color: var(--color-text);
+  }
+  html.dark .prose-content :global(a) {
+    color: var(--color-accent);
+  }
+  html.dark .prose-content :global(th) {
+    background: var(--color-surface2);
+    color: var(--color-muted);
+  }
+  html.dark .prose-content :global(td) {
+    border-bottom-color: var(--color-border);
+  }
 </style>

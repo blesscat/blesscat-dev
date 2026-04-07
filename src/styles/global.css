@@ -165,6 +165,24 @@ html.dark {
   --color-prose:     #d4cec4;   /* Body text in articles */
   --color-tag-bg:    #312920;
   --color-tag-text:  #a89e94;
+
+  /* ── Accent colors — muted in dark mode ── */
+  --color-accent:      #5ba8be;   /* Muted teal (was #3bd3fd — too bright) */
+  --color-matcha:      #5a9e72;   /* Muted matcha */
+  --color-lemon:       #b8923a;   /* Muted gold */
+  --color-ube:         #8a7db8;   /* Muted lavender */
+  --color-pomegranate: #b85a5a;   /* Muted rose */
+  --color-blueberry:   #1a4a7a;   /* Muted navy */
+}
+
+/* ── Pill badge: soft teal bg in dark mode ── */
+html.dark .bg-pill-cyan {
+  background-color: rgba(91, 168, 190, 0.18) !important;
+}
+
+/* ── Accent glow — soften the neon glow in dark mode ── */
+html.dark .shadow-glow-accent {
+  box-shadow: 0 0 16px rgba(91, 168, 190, 0.3), 0 0 32px rgba(91, 168, 190, 0.1) !important;
 }
 
 html.dark .btn-clay:hover {

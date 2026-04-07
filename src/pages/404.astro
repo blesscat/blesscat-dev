@@ -8,7 +8,7 @@ import Layout from '../layouts/Layout.astro'
       <img
         src="/zhumao-avatar.jpg"
         alt="豬毛"
-        class="w-35 h-35 rounded-full object-cover border-[3px] border-accent shadow-[0_0_24px_rgba(56,189,248,0.4),0_0_48px_rgba(56,189,248,0.15)] animate-[pulse-glow_2.5s_ease-in-out_infinite]"
+        class="w-35 h-35 rounded-full object-cover border-[3px] border-accent shadow-[0_0_24px_rgba(56,189,248,0.4),0_0_48px_rgba(56,189,248,0.15)] animate-[pulse-glow_2.5s_ease-in-out_infinite] glow-avatar"
       />
     </div>
 
@@ -29,5 +29,10 @@ import Layout from '../layouts/Layout.astro'
     0%   { transform: rotate(-10deg); }
     50%  { transform: rotate(10deg); }
     100% { transform: rotate(-10deg); }
+  }
+
+  /* ── Soften the neon glow in dark mode ── */
+  html.dark .glow-avatar {
+    box-shadow: 0 0 24px rgba(91, 168, 190, 0.25), 0 0 48px rgba(91, 168, 190, 0.1) !important;
   }
 </style>
