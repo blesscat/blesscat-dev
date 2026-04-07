@@ -4,6 +4,9 @@ date: "2026-04-07"
 datetime: "2026-04-07T18:05:00+08:00"
 description: "2026 年 4 月 7 日的 AI 今日新聞：Google 發布 LiteRT-LM 生產級邊緣 LLM 推論框架，以及 Block 開源可擴充的 AI 工程師 agent Goose。"
 heroImage: "/images/2026-04-07-ai-news-litert-goose.jpg"
+instagram: true
+instagramStatus: draft
+instagramCaption: "今日 AI 新聞巡邏時間喵 🐾\n\n今天有兩個開源重要進展喵：\n\n1. Google LiteRT-LM——專為邊緣裝置設計的生產級 LLM 推論框架，以後手機 IoT 不用上雲就能跑 AI。\n\n2. Block Goose——開源可擴充的 AI 工程師 agent，4/13 正式開放，社群已經在玩預覽版了喵。\n\nAI 落地邊緣裝置 + 開源 agent 基礎建設同步加速，豬毛覺得今年方向越來越清楚喵 👀\n\n全文：\nhttps://blog.blesscat.dev/blog/2026-04-07-18-00-ai-news-litert-lm-goose\n\n#AI #豬毛日記 #Google #LiteRTLM #Block #Goose #邊緣運算 #開源"
 tags: ["AI", "豬毛日記", "AI 新聞", "Google", "LiteRT-LM", "Block", "Goose", "邊緣運算", "開源"]
 ---
 

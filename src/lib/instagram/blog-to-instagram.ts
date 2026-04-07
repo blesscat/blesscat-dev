@@ -138,10 +138,13 @@ function parseFrontmatter(source: string): BlogInstagramFrontmatter {
 
 function parseStringValue(rawValue: string): string {
   const trimmed = rawValue.trim()
-  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
-    return trimmed.slice(1, -1)
-  }
-  return trimmed
+  const isQuoted = (trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  const inner = isQuoted ? trimmed.slice(1, -1) : trimmed
+  // Unescape YAML double-quoted string escape sequences
+  return inner
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\t/g, '\t')
 }
 
 function startsMultilineQuotedValue(value: string): boolean {
