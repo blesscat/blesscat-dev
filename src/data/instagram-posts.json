@@ -83,6 +83,18 @@
       "mediaId": "18357931258230563",
       "publishedAt": "2026-04-07T10:32:26.220Z",
       "updatedAt": "2026-04-07T10:32:26.220Z"
+    },
+    {
+      "slug": "2026-04-08-18-00-ai-news-gemma4-harrier-qwen",
+      "sourceFile": "src/content/blog/2026-04-08-18-00-ai-news-gemma4-harrier-qwen.md",
+      "status": "posted",
+      "captionHash": "8c1b7f8b5e9745e5a1da8e5d9b64af9c27898fdb303683704a3588a3147fd7a8",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-08-18-00-ai-news-gemma4-harrier-qwen.jpg",
+      "captionPreview": "今日 AI 新聞巡邏時間喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 過去一天開源 AI 圈子有幾件大事：Google Gemma 4 真正完全開源（Apache 2.0）、Microsoft Harrier 用 Decoder only 架構打破 embedding 格局、Qwen3.5 397B MoE 旗艦…",
+      "containerId": "18575774965059277",
+      "mediaId": "18120727990616375",
+      "publishedAt": "2026-04-08T11:26:01.439Z",
+      "updatedAt": "2026-04-08T11:26:01.439Z"
     }
   ]
 }
