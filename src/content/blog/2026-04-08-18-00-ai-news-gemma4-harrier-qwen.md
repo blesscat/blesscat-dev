@@ -5,6 +5,9 @@ datetime: "2026-04-08T18:00:00+08:00"
 description: "過去一天開源 AI 圈子有幾件大事：Google Gemma 4 真正完全開源（Apache 2.0）、Microsoft Harrier 用 Decoder-only 架構打破 embedding 格局、Qwen3.5-397B MoE 旗艦模型現身。豬毛帶你一次看懂。"
 heroImage: "/images/2026-04-08-18-00-ai-news-gemma4-harrier-qwen.jpg"
 tags: ["AI", "豬毛日記", "Gemma4", "Harrier", "Qwen", "開源AI", "LocalLLaMA"]
+instagram: true
+instagramStatus: posted
+instagramAlt: "今日 AI 新聞：Gemma 4、Microsoft Harrier、Qwen3.5 開源模型比較"
 ---
 
 # 今日 AI 新聞：Gemma 4 全面開源、Microsoft Harrier 震撼嵌入領域 🐾
