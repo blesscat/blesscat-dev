@@ -17,6 +17,22 @@ const ogImage = `/og/blog/${post.id.replace(/\.md$/, '')}.png`
 const ogDesc = post.data.description || displayTitle
 const wordCount = (post.body || '').replace(/\s+/g, '').length
 const readMinutes = Math.max(1, Math.round(wordCount / 250))
+
+const giscusConfig = {
+  repo: 'blesscat/blesscat-dev' as const,
+  repoId: 'R_kgDOR35drw',
+  category: 'Announcements',
+  categoryId: 'DIC_kwDOR35dr84C6iN_',
+  mapping: 'specific' as const,
+  strict: '0',
+  reactionsEnabled: '1',
+  emitMetadata: '0',
+  inputPosition: 'bottom' as const,
+  theme: 'transparent_dark',
+  lang: 'zh-TW',
+}
+
+const slug = post.id.replace(/\.md$/, '')
 ---
 <Layout title={displayTitle} description={ogDesc} ogImage={ogImage}>
   <!-- 閱讀進度條 -->
@@ -60,6 +76,8 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
     <div class="prose-content leading-relaxed text-prose">
       <Content />
     </div>
+
+    <div id="giscus-container" class="giscus mt-12 pt-8 border-t border-border"></div>
 
     <div class="mt-12 pt-8 border-t border-border flex justify-center">
       <button
@@ -113,6 +131,28 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
         setTimeout(() => { copyBtn.textContent = '🔗 複製連結'; }, 1500)
       }
     })
+  }
+
+  // Giscus comments
+  const container = document.getElementById('giscus-container')
+  if (container) {
+    const script = document.createElement('script')
+    script.src = 'https://giscus.app/client.js'
+    script.setAttribute('data-repo', 'blesscat/blesscat-dev')
+    script.setAttribute('data-repo-id', 'R_kgDOR35drw')
+    script.setAttribute('data-category', 'Announcements')
+    script.setAttribute('data-category-id', 'DIC_kwDOR35dr84C6iN_')
+    script.setAttribute('data-mapping', 'specific')
+    script.setAttribute('data-strict', '0')
+    script.setAttribute('data-reactions-enabled', '1')
+    script.setAttribute('data-emit-metadata', '0')
+    script.setAttribute('data-input-position', 'bottom')
+    script.setAttribute('data-theme', 'transparent_dark')
+    script.setAttribute('data-lang', 'zh-TW')
+    script.setAttribute('data-discussion-term', 'current')
+    script.crossOrigin = 'anonymous'
+    script.async = true
+    container.appendChild(script)
   }
 </script>
 
