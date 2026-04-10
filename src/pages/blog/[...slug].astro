@@ -117,15 +117,17 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
     })
   }
 
-  // CommentBox.io comments
+  // CommentBox.io comments — match blog's Clay Warm palette
   const commentContainer = document.getElementById('commentbox-container')
   if (commentContainer) {
-    // Detect dark mode from blog's color scheme
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const palette = isDark
+      ? { bg: '#27201c', text: '#e8e2da', subtext: '#a89e94', accent: '#5ba8be' }
+      : { bg: '#ffffff', text: '#000000', subtext: '#55534e', accent: '#3bd3fd' }
     commentBox('5665528664293376-proj', {
-      backgroundColor: isDark ? '#000' : '#fff',
-      textColor: isDark ? '#fff' : '#000',
-      subtextColor: isDark ? '#aaa' : '#777',
+      backgroundColor: palette.bg,
+      textColor: palette.text,
+      subtextColor: palette.subtext,
     })
   }
 </script>
@@ -216,5 +218,14 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
   }
   html.dark .prose-content :global(td) {
     border-bottom-color: var(--color-border);
+  }
+
+  /* ── CommentBox container — blend into Clay Warm palette ── */
+  #commentbox-container {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  html.dark #commentbox-container iframe {
+    border-color: #3d3630 !important;
   }
 </style>
