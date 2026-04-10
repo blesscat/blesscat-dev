@@ -120,13 +120,10 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
   // CommentBox.io comments
   const commentContainer = document.getElementById('commentbox-container')
   if (commentContainer) {
-    const script = document.createElement('script')
-    script.src = 'https://unpkg.com/commentbox.io/dist/commentBox.min.js'
-    script.async = true
-    commentContainer.appendChild(script)
-    window.commentBox('5665528664293376-proj')
+    commentBox('5665528664293376-proj')
   }
 </script>
+<script is:inline src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
 
 <style>
   /* prose-content：markdown 渲染的 HTML 無法 inline，必須用 :global() */
