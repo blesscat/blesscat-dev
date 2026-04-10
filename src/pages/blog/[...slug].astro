@@ -120,7 +120,13 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
   // CommentBox.io comments
   const commentContainer = document.getElementById('commentbox-container')
   if (commentContainer) {
-    commentBox('5665528664293376-proj')
+    // Detect dark mode from blog's color scheme
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    commentBox('5665528664293376-proj', {
+      backgroundColor: isDark ? '#000' : '#fff',
+      textColor: isDark ? '#fff' : '#000',
+      subtextColor: isDark ? '#aaa' : '#777',
+    })
   }
 </script>
 <script is:inline src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
