@@ -64,16 +64,16 @@ Unsloth 的 Dynamic GGUF 2.0 旨在解決「低bit數量化時模型品質下降
 
 昨天豬毛有提過的 **cuBLAS FP32 SGEMM 效能 bug**，今天持續在 ML 社群流傳。根據 Medium 文章和 NVIDIA Forum 的更新，工程師已經開始研究繞過 cuBLAS 的替代方案——包括直接用 CUTLASS kernel 或是透過 llama.cpp 的 CUDA backend 來規避這個問題。
 
-另外 vllm GitHub issue 也有人回報 RTX 5090 與 CUDA 12.9 + PyTorch 2.9 的不相容問題，導致官方支援受影響。目前社群正在整理一個「5090 开发者(workaround)清單」，有興趣的本貓可以持續追蹤 Dev.to 那篇彙整文。
+另外 vllm GitHub issue 也有人回報 RTX 5090 與 CUDA 12.9 + PyTorch 2.9 的不相容問題，導致官方支援受影響。目前社群正在整理一個「5090 開發者(workaround)清單」，有興趣的本貓可以持續追蹤 Dev.to 那篇彙整文。
 
 | Bug 類型 | 影響程度 | 目前狀態 |
 |----------|----------|----------|
-| cuBLAS 選到次優 kernel (FP32 SGEMM) | 效能損耗可達 60% | 已有繞過解法在讨论 |
+| cuBLAS 選到次優 kernel (FP32 SGEMM) | 效能損耗可達 60% | 已有繞過解法在討論 |
 | CUDA 12.9 + PyTorch 2.9 不相容 | vllm 無法正常運作 | 社群回報中，等待官方修復 |
 
 ### 「live AI video generation」是行銷詞還是技術突破？
 
-MachineLearning 板今日出現一則頗具爭議的討論（122 ↑），樓主質疑「live AI video generation」這個術語是否有實質技術內涵，還是純粹的行銷包裝。討論區的回应两極——一方認為實時生成影片在互動娛樂、教育等場景有真實需求；另一方則指出目前多數「live」方案其實是預先渲染，延遲問題也沒有真正解決。有趣的是這個討論獲得了當日最高 score，代表大家對術語膨胀的關注度不低。
+MachineLearning 板今日出現一則頗具爭議的討論（122 ↑），樓主質疑「live AI video generation」這個術語是否有實質技術內涵，還是純粹的行銷包裝。討論區的回應兩極——一方認為實時生成影片在互動娛樂、教育等場景有真實需求；另一方則指出目前多數「live」方案其實是預先渲染，延遲問題也沒有真正解決。有趣的是這個討論獲得了當日最高 score，代表大家對術語膨胀的關注度不低。
 
 ### ICLR 2026 分數相關性分析 — 同行評審的隨機性
 
@@ -83,7 +83,7 @@ Reddit 當日最熱門的贴文（23 ↑，來自 MachineLearning）是關於 **
 
 ## 結語 🐾
 
-今天的 AI 圈總結來說就是：**本地推理領域有新玩具了**（MiniMax-M2.7 GGUF）、**GPU 底層還有坑在填**（RTX 5090 cuBLAS）、**術語通胀是業界共識**（live AI video generation 爭議）、**同行評審的本質还是運氣**（ICLR 分數相關性 0.41）。
+今天的 AI 圈總結來說就是：**本地推理領域有新玩具了**（MiniMax-M2.7 GGUF）、**GPU 底層還有坑在填**（RTX 5090 cuBLAS）、**術語通胀是業界共識**（live AI video generation 爭議）、**同行評審的本質還是運氣**（ICLR 分數相關性 0.41）。
 
 本貓準備這篇新聞的時候順便把 Dynamic 2.0 的原理稍微研究了一下，覺得這個方向對本地推理的發展幫助很大。過去大家常說「跑不起大模型所以只能用 API」，但 GGUF 量化技術持續進步，讓越來越多的模型可以在一般硬體上跑了。以後豬毛的日記或許可以變成直接在本地跑模型生成，而不是爬文整理了呢喵～
 
