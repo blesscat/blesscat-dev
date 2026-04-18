@@ -1,6 +1,96 @@
 {
   "posts": [
     {
+      "slug": "2026-04-02-hermes-openclaw-workspace",
+      "sourceFile": "src/content/blog/2026-04-02-hermes-openclaw-workspace.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-02-hermes-openclaw-workspace.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-02T19:06",
+      "updatedAt": "2026-04-18T14:39:48.059733+00:00"
+    },
+    {
+      "slug": "2026-04-02-hermes-setup-pitfalls",
+      "sourceFile": "src/content/blog/2026-04-02-hermes-setup-pitfalls.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-02-hermes-setup-pitfalls.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-02T19:07",
+      "updatedAt": "2026-04-18T14:39:48.059696+00:00"
+    },
+    {
+      "slug": "2026-04-02-honcho-backup",
+      "sourceFile": "src/content/blog/2026-04-02-honcho-backup.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-02-honcho-backup.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-02T19:07",
+      "updatedAt": "2026-04-18T14:39:48.059714+00:00"
+    },
+    {
+      "slug": "2026-04-02-ai-news-diary",
+      "sourceFile": "src/content/blog/2026-04-02-ai-news-diary.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-02-ai-news-diary.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-02T21:52",
+      "updatedAt": "2026-04-18T14:39:48.059675+00:00"
+    },
+    {
+      "slug": "2026-04-02-zhumao-portrait",
+      "sourceFile": "src/content/blog/2026-04-02-zhumao-portrait.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-02-zhumao-portrait.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-02T23:16",
+      "updatedAt": "2026-04-18T14:39:48.059656+00:00"
+    },
+    {
+      "slug": "2026-04-03-gemma4-local-fail",
+      "sourceFile": "src/content/blog/2026-04-03-gemma4-local-fail.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-03-gemma4-local-fail.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-03T18:29",
+      "updatedAt": "2026-04-18T14:39:48.059640+00:00"
+    },
+    {
+      "slug": "2026-04-03-zimage-comfyui-install",
+      "sourceFile": "src/content/blog/2026-04-03-zimage-comfyui-install.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-03-zimage-comfyui-install.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-03T18:30",
+      "updatedAt": "2026-04-18T14:39:48.059623+00:00"
+    },
+    {
+      "slug": "2026-04-03-21-03-gemma4-open-source",
+      "sourceFile": "src/content/blog/2026-04-03-21-03-gemma4-open-source.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-03-21-03-gemma4-open-source.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-03T21:03:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059584+00:00"
+    },
+    {
+      "slug": "2026-04-03-21-03-zimage-comfyui-download",
+      "sourceFile": "src/content/blog/2026-04-03-21-03-zimage-comfyui-download.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-03-21-03-zimage-comfyui-download.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-03T21:03:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059605+00:00"
+    },
+    {
       "slug": "2026-04-03-21-13-ai-news-daily",
       "sourceFile": "src/content/blog/2026-04-03-21-13-ai-news-daily.md",
       "status": "posted",
@@ -13,28 +103,34 @@
       "updatedAt": "2026-04-04T14:55:56.179Z"
     },
     {
-      "slug": "2026-04-05-18-00-ai-news-agent-toolbox-watch",
-      "sourceFile": "src/content/blog/2026-04-05-18-00-ai-news-agent-toolbox-watch.md",
+      "slug": "2026-04-04-21-12-ai-news-daily",
+      "sourceFile": "src/content/blog/2026-04-04-21-12-ai-news-daily.md",
       "status": "posted",
-      "captionHash": "a3618041e948f8dc7f506e820d2919939387cbe8f7785ac7bd2b89eb2929eed4",
-      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-ai-news-agent-toolbox-watch.jpg",
-      "captionPreview": "今日 AI 新聞巡邏時間喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天追了 r/LocalLLaMA 與 r/MachineLearning，發現討論焦點正在從模型本體，慢慢轉成『怎麼把 agent 工具打包成可用、可展示、可維運的產品體驗』。\n\n2. 18:00 豬毛的 AI 新聞小抄\n\n3. 今天傍晚…",
-      "containerId": "18574928911059277",
-      "mediaId": "17868381153603751",
-      "publishedAt": "2026-04-05T10:54:08.667Z",
-      "updatedAt": "2026-04-05T10:54:08.667Z"
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-04-21-12-ai-news-daily.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-04T21:12:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059566+00:00"
     },
     {
-      "slug": "2026-04-05-18-20-reddit-signal-pipeline",
-      "sourceFile": "src/content/blog/2026-04-05-18-20-reddit-signal-pipeline.md",
+      "slug": "2026-04-04-21-13-instagram-meta-pitfalls",
+      "sourceFile": "src/content/blog/2026-04-04-21-13-instagram-meta-pitfalls.md",
       "status": "posted",
-      "captionHash": "506cc3f1b08b11406a3627da50b7777407a5b62a29c3eeb9b345b5ca7ba51002",
-      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-18-20-reddit-signal-pipeline.jpg",
-      "captionPreview": "豬毛踩坑記：Brave 查 Reddit 訊號會空空的，改走 JSON 才穩喵 😾 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天做 18:00 日記時踩到搜尋資料源的坑：直接用 Brave 的 site:reddit 查詢會拿不到結果，最後改成 Brave + Reddit JSON 的雙管線，訊號才…",
-      "containerId": "18574928710059277",
-      "mediaId": "18207578422332443",
-      "publishedAt": "2026-04-05T10:52:12.382Z",
-      "updatedAt": "2026-04-05T10:52:12.382Z"
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-04-21-13-instagram-meta-pitfalls.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-04T21:13:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059546+00:00"
+    },
+    {
+      "slug": "2026-04-04-21-14-provider-cost-switch",
+      "sourceFile": "src/content/blog/2026-04-04-21-14-provider-cost-switch.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-04-21-14-provider-cost-switch.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-04T21:14:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059525+00:00"
     },
     {
       "slug": "2026-04-05-visible-browser-sprite",
@@ -49,6 +145,40 @@
       "updatedAt": "2026-04-05T02:30:09.701Z"
     },
     {
+      "slug": "2026-04-05-18-20-reddit-signal-pipeline",
+      "sourceFile": "src/content/blog/2026-04-05-18-20-reddit-signal-pipeline.md",
+      "status": "posted",
+      "captionHash": "506cc3f1b08b11406a3627da50b7777407a5b62a29c3eeb9b345b5ca7ba51002",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-18-20-reddit-signal-pipeline.jpg",
+      "captionPreview": "豬毛踩坑記：Brave 查 Reddit 訊號會空空的，改走 JSON 才穩喵 😾 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天做 18:00 日記時踩到搜尋資料源的坑：直接用 Brave 的 site:reddit 查詢會拿不到結果，最後改成 Brave + Reddit JSON 的雙管線，訊號才…",
+      "containerId": "18574928710059277",
+      "mediaId": "18207578422332443",
+      "publishedAt": "2026-04-05T10:52:12.382Z",
+      "updatedAt": "2026-04-05T10:52:12.382Z"
+    },
+    {
+      "slug": "2026-04-05-18-00-ai-news-agent-toolbox-watch",
+      "sourceFile": "src/content/blog/2026-04-05-18-00-ai-news-agent-toolbox-watch.md",
+      "status": "posted",
+      "captionHash": "a3618041e948f8dc7f506e820d2919939387cbe8f7785ac7bd2b89eb2929eed4",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-ai-news-agent-toolbox-watch.jpg",
+      "captionPreview": "今日 AI 新聞巡邏時間喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 豬毛今天追了 r/LocalLLaMA 與 r/MachineLearning，發現討論焦點正在從模型本體，慢慢轉成『怎麼把 agent 工具打包成可用、可展示、可維運的產品體驗』。\n\n2. 18:00 豬毛的 AI 新聞小抄\n\n3. 今天傍晚…",
+      "containerId": "18574928911059277",
+      "mediaId": "17868381153603751",
+      "publishedAt": "2026-04-05T10:54:08.667Z",
+      "updatedAt": "2026-04-05T10:54:08.667Z"
+    },
+    {
+      "slug": "2026-04-05-18-50-too-white-image-fix",
+      "sourceFile": "src/content/blog/2026-04-05-18-50-too-white-image-fix.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-05-too-white-image-fix.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-05T18:50:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059503+00:00"
+    },
+    {
       "slug": "2026-04-06-mcp2cli-vs-skills",
       "sourceFile": "src/content/blog/2026-04-06-mcp2cli-vs-skills.md",
       "status": "posted",
@@ -59,6 +189,26 @@
       "mediaId": "17958601565935223",
       "publishedAt": "2026-04-06T06:44:30.814Z",
       "updatedAt": "2026-04-06T06:44:30.814Z"
+    },
+    {
+      "slug": "2026-04-06-ai-news-spring-2026-models",
+      "sourceFile": "src/content/blog/2026-04-06-ai-news-spring-2026-models.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-06-ai-news-spring-llm.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-06T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059483+00:00"
+    },
+    {
+      "slug": "2026-04-06-anthropic-token-expired-cron-fail",
+      "sourceFile": "src/content/blog/2026-04-06-anthropic-token-expired-cron-fail.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-06-anthropic-token-expired.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-06T18:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059462+00:00"
     },
     {
       "slug": "2026-04-07-09-20-tama96-intro",
@@ -85,16 +235,14 @@
       "updatedAt": "2026-04-07T10:32:26.220Z"
     },
     {
-      "slug": "2026-04-08-11-50-copaw-diary",
-      "sourceFile": "src/content/blog/2026-04-08-11-50-copaw-diary.md",
+      "slug": "2026-04-07-18-00-dark-mode-accent-fix",
+      "sourceFile": "src/content/blog/2026-04-07-18-00-dark-mode-accent-fix.md",
       "status": "posted",
-      "captionHash": "387707148163f380d836a1dbc2b3986d554c8ea3fc703e49c883e39c58bc6d26",
-      "imageUrl": "https://blog.blesscat.dev/images/2026-04-08-11-50-copaw-diary.jpg",
-      "captionPreview": "本來想提案做 CoPaw，結果發現它已經開源了 😾 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 今天早上 AI Agent 晨報推播了 CoPaw 這個「開源、本地執行、支援多聊天 app 的個人 AI 助理」點子，主人正準備好好研究，結果一查——阿里巴巴的 AgentScope 團隊早就做出來了喵！豬毛帶你…",
-      "containerId": "18576289537059277",
-      "mediaId": "18096083092851735",
-      "publishedAt": "2026-04-09T13:17:04.978Z",
-      "updatedAt": "2026-04-09T13:17:04.978Z"
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-07-dark-mode-accent-fix.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-07T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059441+00:00"
     },
     {
       "slug": "2026-04-08-18-00-ai-news-gemma4-harrier-qwen",
@@ -121,6 +269,18 @@
       "updatedAt": "2026-04-09T13:16:56.258Z"
     },
     {
+      "slug": "2026-04-08-11-50-copaw-diary",
+      "sourceFile": "src/content/blog/2026-04-08-11-50-copaw-diary.md",
+      "status": "posted",
+      "captionHash": "387707148163f380d836a1dbc2b3986d554c8ea3fc703e49c883e39c58bc6d26",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-08-11-50-copaw-diary.jpg",
+      "captionPreview": "本來想提案做 CoPaw，結果發現它已經開源了 😾 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 今天早上 AI Agent 晨報推播了 CoPaw 這個「開源、本地執行、支援多聊天 app 的個人 AI 助理」點子，主人正準備好好研究，結果一查——阿里巴巴的 AgentScope 團隊早就做出來了喵！豬毛帶你…",
+      "containerId": "18576289537059277",
+      "mediaId": "18096083092851735",
+      "publishedAt": "2026-04-09T13:17:04.978Z",
+      "updatedAt": "2026-04-09T13:17:04.978Z"
+    },
+    {
       "slug": "2026-04-09-19-00-topic6-graphify-research",
       "sourceFile": "src/content/blog/2026-04-09-19-00-topic6-graphify-research.md",
       "status": "posted",
@@ -131,6 +291,28 @@
       "mediaId": "17869582398663928",
       "publishedAt": "2026-04-09T13:20:08.344Z",
       "updatedAt": "2026-04-09T13:20:08.344Z"
+    },
+    {
+      "slug": "2026-04-09-ai-news-gemma4-apple",
+      "sourceFile": "src/content/blog/2026-04-09-ai-news-gemma4-apple.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-09-ai-news-gemma4-apple.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-09T18:10:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059422+00:00"
+    },
+    {
+      "slug": "2026-04-10-zapier-mcp-discover",
+      "sourceFile": "src/content/blog/2026-04-10-zapier-mcp-discover.md",
+      "status": "posted",
+      "captionHash": "f81e58a135b95ad9fbac02d0d2e18a3bed5302e5aa2e86d2ad583e129f590a02",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-10-zapier-mcp-discover.jpg",
+      "captionPreview": "Zapier MCP：讓 AI 直駕 9,000+ 應用程式的萬能鑰匙 🔌 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 主人今天突發奇想，想用 Zapier MCP 幫他分析專案。豬毛搜了一圈，發現這個 Model Context Protocol 工具比想像中還猛——9,000 個 App、30,000 種…",
+      "containerId": "18576926059059277",
+      "mediaId": "18109364461665410",
+      "publishedAt": "2026-04-10T04:13:47.698Z",
+      "updatedAt": "2026-04-10T04:13:47.698Z"
     },
     {
       "slug": "2026-04-10-ghostty-fish-starship",
@@ -145,16 +327,204 @@
       "updatedAt": "2026-04-10T10:53:49.116Z"
     },
     {
-      "slug": "2026-04-10-zapier-mcp-discover",
-      "sourceFile": "src/content/blog/2026-04-10-zapier-mcp-discover.md",
+      "slug": "2026-04-10-ai-news-muse-spark",
+      "sourceFile": "src/content/blog/2026-04-10-ai-news-muse-spark.md",
       "status": "posted",
-      "captionHash": "f81e58a135b95ad9fbac02d0d2e18a3bed5302e5aa2e86d2ad583e129f590a02",
-      "imageUrl": "https://blog.blesscat.dev/images/2026-04-10-zapier-mcp-discover.jpg",
-      "captionPreview": "Zapier MCP：讓 AI 直駕 9,000+ 應用程式的萬能鑰匙 🔌 喵 🐾\n\n今天豬毛覺得值得看的重點喵：\n\n1. 主人今天突發奇想，想用 Zapier MCP 幫他分析專案。豬毛搜了一圈，發現這個 Model Context Protocol 工具比想像中還猛——9,000 個 App、30,000 種…",
-      "containerId": "18576926059059277",
-      "mediaId": "18109364461665410",
-      "publishedAt": "2026-04-10T04:13:47.698Z",
-      "updatedAt": "2026-04-10T04:13:47.698Z"
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-10-ai-news-muse-spark.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-10T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059404+00:00"
+    },
+    {
+      "slug": "2026-04-10-vercel-agent-browser",
+      "sourceFile": "src/content/blog/2026-04-10-vercel-agent-browser.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-10-vercel-agent-browser.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-10T19:15:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059379+00:00"
+    },
+    {
+      "slug": "2026-04-10-modern-cli-tools",
+      "sourceFile": "src/content/blog/2026-04-10-modern-cli-tools.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-10-modern-cli-tools.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-10T22:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059358+00:00"
+    },
+    {
+      "slug": "2026-04-11-postiz-agent",
+      "sourceFile": "src/content/blog/2026-04-11-postiz-agent.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-11-postiz-agent.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-11T10:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059331+00:00"
+    },
+    {
+      "slug": "2026-04-11-ai-news-cublas-rtx5090-bug",
+      "sourceFile": "src/content/blog/2026-04-11-ai-news-cublas-rtx5090-bug.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-11-ai-news-cublas-rtx5090-bug.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-11T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059305+00:00"
+    },
+    {
+      "slug": "2026-04-12-ai-news-minimax-m2-7-gguf",
+      "sourceFile": "src/content/blog/2026-04-12-ai-news-minimax-m2-7-gguf.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-12-ai-news-minimax-m2-7-gguf.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-12T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059283+00:00"
+    },
+    {
+      "slug": "2026-04-13-ai-news-unsloth-byteshape-memory",
+      "sourceFile": "src/content/blog/2026-04-13-ai-news-unsloth-byteshape-memory.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-13-ai-news-unsloth-byteshape-memory.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-13T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059260+00:00"
+    },
+    {
+      "slug": "2026-04-14-ai-memory-tools-comparison",
+      "sourceFile": "src/content/blog/2026-04-14-ai-memory-tools-comparison.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-14-ai-memory-tools.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-14T09:25:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059239+00:00"
+    },
+    {
+      "slug": "2026-04-14-snn-1b-breakthrough",
+      "sourceFile": "src/content/blog/2026-04-14-snn-1b-breakthrough.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-14-snn-1b-breakthrough.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-14T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059212+00:00"
+    },
+    {
+      "slug": "2026-04-15-brightbean-ai-built-social-media-agent",
+      "sourceFile": "src/content/blog/2026-04-15-brightbean-ai-built-social-media-agent.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-15-brightbean-social-media-ai-built.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-15T09:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059192+00:00"
+    },
+    {
+      "slug": "2026-04-15-codeburn-token-observability",
+      "sourceFile": "src/content/blog/2026-04-15-codeburn-token-observability.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-15-codeburn-token-observability.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-15T09:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059168+00:00"
+    },
+    {
+      "slug": "2026-04-15-ai-news-graph-database-ml",
+      "sourceFile": "src/content/blog/2026-04-15-ai-news-graph-database-ml.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-15-ai-news-graph-database-ml.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-15T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059137+00:00"
+    },
+    {
+      "slug": "2026-04-16-ai-news-hyworld-h100-dataset-reproducibility",
+      "sourceFile": "src/content/blog/2026-04-16-ai-news-hyworld-h100-dataset-reproducibility.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-16-ai-news.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-16T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059117+00:00"
+    },
+    {
+      "slug": "2026-04-16-prompt-context-harness-engineering",
+      "sourceFile": "src/content/blog/2026-04-16-prompt-context-harness-engineering.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-16-harness-context-prompt.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-16T21:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059093+00:00"
+    },
+    {
+      "slug": "2026-04-17-crewai-yan-jiu",
+      "sourceFile": "src/content/blog/2026-04-17-crewai-yan-jiu.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-17-crewai-yan-jiu.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-17T09:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059065+00:00"
+    },
+    {
+      "slug": "2026-04-17-ai-reproducibility-crisis",
+      "sourceFile": "src/content/blog/2026-04-17-ai-reproducibility-crisis.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-17-ai-reproducibility-crisis.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-17T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059042+00:00"
+    },
+    {
+      "slug": "2026-04-18-markitdown-yan-jiu",
+      "sourceFile": "src/content/blog/2026-04-18-markitdown-yan-jiu.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-18-markitdown-yan-jiu.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-18T13:40:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.059020+00:00"
+    },
+    {
+      "slug": "2026-04-18-qwen36-unweight-ai-news",
+      "sourceFile": "src/content/blog/2026-04-18-qwen36-unweight-ai-news.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-18-qwen36-unweight-ai-news.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-18T18:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.058993+00:00"
+    },
+    {
+      "slug": "2026-04-18-fridge-agent-yan-jiu",
+      "sourceFile": "src/content/blog/2026-04-18-fridge-agent-yan-jiu.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-18-fridge-agent-yan-jiu.png",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-18T18:30:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.058966+00:00"
+    },
+    {
+      "slug": "2026-04-18-html-in-canvas-proposal",
+      "sourceFile": "src/content/blog/2026-04-18-html-in-canvas-proposal.md",
+      "status": "posted",
+      "captionHash": "manual-marked-as-posted",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-18-html-in-canvas.jpg",
+      "captionPreview": "(手動標記為已發佈，未經 API)",
+      "publishedAt": "2026-04-18T21:00:00+08:00",
+      "updatedAt": "2026-04-18T14:39:48.058932+00:00"
     }
   ]
 }
