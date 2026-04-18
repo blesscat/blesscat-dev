@@ -8,11 +8,11 @@ export function buildInstagramCaption(post: BlogInstagramPost): string {
     return clampCaption(addBlankLines(post.frontmatter.instagramCaption.trim()))
   }
 
-  const body = stripMarkdown(post.body)
+  const paragraphs = extractParagraphs(post.body)
   const tags = normalizeHashtags(post.frontmatter.tags ?? [])
 
   const lines = [
-    body,
+    ...paragraphs,
     '',
     tags.length > 0 ? tags.join(' ') : '#豬毛日記 #blesscatdev',
   ]
