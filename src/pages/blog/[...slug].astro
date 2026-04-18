@@ -61,7 +61,7 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
       <Content />
     </div>
 
-    <div id="commentbox-container" class="commentbox mt-12 pt-8 border-t border-border"></div>
+    <div id="remark42" class="remark42-container mt-12 pt-8 border-t border-border"></div>
 
     <div class="mt-12 pt-8 border-t border-border flex justify-center">
       <button
@@ -122,7 +122,9 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
 <script is:inline>
   window.remark_config = {
     host: "https://remark42.blesscat.dev",
-    site_id: "blog"
+    site_id: "blog",
+    page: window.location.pathname,
+    url: window.location.href,
   };
 </script>
 <script is:inline src="https://remark42.blesscat.dev/web/embed.js"></script>
@@ -214,12 +216,9 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
     border-bottom-color: var(--color-border);
   }
 
-  /* ── CommentBox container — blend into Clay Warm palette ── */
-  #commentbox-container {
+  /* ── Remark42 container — blend into Clay Warm palette ── */
+  .remark42-container {
     border-radius: 12px;
     overflow: hidden;
-  }
-  html.dark #commentbox-container iframe {
-    border-color: #3d3630 !important;
   }
 </style>
