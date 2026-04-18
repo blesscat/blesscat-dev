@@ -1,0 +1,118 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import PageHeader from '../../../components/PageHeader.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths({ paginate }) {
+  const allPosts = (await getCollection('blog')).sort((a, b) => {
+    const aTime = new Date(a.data.datetime ?? a.data.date).getTime()
+    const bTime = new Date(b.data.datetime ?? b.data.date).getTime()
+    return bTime - aTime
+  })
+  return paginate(allPosts, { pageSize: 20 })
+}
+
+const { page } = Astro.props
+const { data: posts, currentPage, lastPage } = page
+
+// SEO
+const canonicalBase = new URL('/blog', Astro.site)
+const pageURL = new URL(`/blog/page/${currentPage}`, Astro.site)
+const prevURL = currentPage > 1
+  ? (currentPage === 2 ? new URL('/blog', Astro.site) : new URL(`/blog/page/${currentPage - 1}`, Astro.site))
+  : null
+const nextURL = currentPage < lastPage ? new URL(`/blog/page/${currentPage + 1}`, Astro.site) : null
+---
+
+<Layout title="技術文章">
+  <PageHeader title="📝 豬毛日記" subtitle="AI Agent 踩坑筆記，由豬毛親筆撰寫" />
+
+  <!-- SEO pagination meta -->
+  <link rel="canonical" href={pageURL} />
+  {prevURL && <link rel="prev" href={prevURL} />}
+  {nextURL && <link rel="next" href={nextURL} />}
+
+  <div class="flex flex-col gap-5">
+    {posts.map(post => (
+      <a
+        href={`/blog/${post.id.replace(/\.md$/, '')}`}
+        class="post-card block bg-surface border-border rounded-xl no-underline transition-all hover:border-[#3bd3fd] hover:-translate-y-1 hover:shadow-[-4px_6px_0px_#3bd3fd] reveal"
+      >
+        <div class="flex items-center gap-6 p-6 max-[640px]:flex-col max-[640px]:gap-0 max-[640px]:p-0 max-[640px]:overflow-hidden">
+          {post.data.heroImage && (
+            <div class="shrink-0 w-24 h-24 max-[640px]:w-full max-[640px]:h-45 max-[640px]:order-first">
+              <img
+                src={post.data.heroImage}
+                alt={post.data.title}
+                class="w-full h-full object-cover rounded-[10px] max-[640px]:rounded-[12px_12px_0_0]"
+              />
+            </div>
+          )}
+          <div class="flex-1 min-w-0 max-[640px]:p-4">
+            <div class="flex items-center gap-4 mb-3">
+              <span class="text-[0.8rem] text-faint">{post.data.date}</span>
+              {post.data.tags && (
+                <div class="flex gap-1 flex-wrap">
+                  {post.data.tags.slice(0, 3).map(tag => (
+                    <span class="text-[0.72rem] text-indigo bg-tag-bg px-2 py-0.5 rounded-full">#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+            <h2 class="text-[1.2rem] font-bold text-text mb-2 leading-snug">
+              {post.data.title.replace(/^\d{4}-\d{2}-\d{2}\s+/, '')}
+            </h2>
+            {post.data.description && (
+              <p class="text-[0.88rem] text-subtle leading-relaxed mb-3">{post.data.description}</p>
+            )}
+            <span class="text-[0.82rem] text-accent font-semibold">閱讀全文 →</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <!-- 分頁導航 -->
+  {lastPage > 1 && (
+    <div class="flex justify-center items-center gap-3 mt-10 pt-8 border-t border-border">
+      {currentPage > 1 ? (
+        <a
+          href={currentPage === 2 ? '/blog' : `/blog/page/${currentPage - 1}`}
+          class="px-4 py-2 rounded-lg border border-border text-muted hover:border-[#3bd3fd] hover:text-[#3bd3fd] transition-all text-sm"
+        >← 上一頁</a>
+      ) : (
+        <span class="px-4 py-2 rounded-lg border border-border text-faint text-sm cursor-not-allowed">← 上一頁</span>
+      )}
+
+      <div class="flex gap-1">
+        <a
+          href="/blog"
+          class={`w-9 h-9 flex items-center justify-center rounded-lg text-sm transition-all ${
+            currentPage === 1
+              ? 'bg-[#3bd3fd] text-[#0a0a0a] font-semibold'
+              : 'border border-border text-muted hover:border-[#3bd3fd] hover:text-[#3bd3fd]'
+          }`}
+        >1</a>
+        {Array.from({ length: lastPage - 1 }, (_, i) => i + 2).map(p => (
+          <a
+            href={`/blog/page/${p}`}
+            class={`w-9 h-9 flex items-center justify-center rounded-lg text-sm transition-all ${
+              p === currentPage
+                ? 'bg-[#3bd3fd] text-[#0a0a0a] font-semibold'
+                : 'border border-border text-muted hover:border-[#3bd3fd] hover:text-[#3bd3fd]'
+            }`}
+          >{p}</a>
+        ))}
+      </div>
+
+      {currentPage < lastPage ? (
+        <a
+          href={`/blog/page/${currentPage + 1}`}
+          class="px-4 py-2 rounded-lg border border-border text-muted hover:border-[#3bd3fd] hover:text-[#3bd3fd] transition-all text-sm"
+        >下一頁 →</a>
+      ) : (
+        <span class="px-4 py-2 rounded-lg border border-border text-faint text-sm cursor-not-allowed">下一頁 →</span>
+      )}
+    </div>
+  )}
+</Layout>

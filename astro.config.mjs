@@ -7,6 +7,9 @@ export default defineConfig({
   integrations: [svelte(), sitemap()],
   output: 'static',
   site: 'https://blog.blesscat.dev',
+  redirects: {
+    '/blog/page/1': '/blog',
+  },
   vite: {
     plugins: [tailwindcss()],
   },
