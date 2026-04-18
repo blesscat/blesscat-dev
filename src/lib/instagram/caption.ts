@@ -59,7 +59,6 @@ function extractParagraphs(body: string): string[] {
     .filter(chunk => !chunk.startsWith('>'))
     .filter(chunk => !chunk.startsWith('#'))
     .filter(chunk => !looksLikeSectionHeading(chunk))
-    .slice(0, 3)
 }
 
 function dedupeSummaryParts(parts: string[], title: string): string[] {
@@ -187,5 +186,21 @@ function clampCaption(caption: string): string {
   if (caption.length <= MAX_CAPTION_LENGTH) {
     return caption
   }
-  return `${caption.slice(0, MAX_CAPTION_LENGTH - 1)}…`
+
+  // 不要從段落中間砍掉——找到最後一個完整段落的結尾
+  const truncated = caption.slice(0, MAX_CAPTION_LENGTH - 1)
+  const lastBreak = truncated.lastIndexOf('\n\n')
+
+  if (lastBreak > MAX_CAPTION_LENGTH * 0.6) {
+    // 至少保留 60% 的內容在段落邊界內
+    return truncated.slice(0, lastBreak).trimEnd() + '…'
+  }
+
+  // fallback：找最後一個換行
+  const lastNewline = truncated.lastIndexOf('\n')
+  if (lastNewline > MAX_CAPTION_LENGTH * 0.8) {
+    return truncated.slice(0, lastNewline).trimEnd() + '…'
+  }
+
+  return truncated + '…'
 }
