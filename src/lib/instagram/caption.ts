@@ -3,29 +3,21 @@ import type { BlogInstagramPost, InstagramPublishPayload } from './types.ts'
 
 const MAX_CAPTION_LENGTH = 2200
 
-export function buildInstagramCaption(post: BlogInstagramPost, postUrl: string): string {
+export function buildInstagramCaption(post: BlogInstagramPost): string {
   if (post.frontmatter.instagramCaption?.trim()) {
     return clampCaption(addBlankLines(post.frontmatter.instagramCaption.trim()))
   }
 
-  const title = stripMarkdown(post.frontmatter.title)
-  const titleHook = toTitleHook(title)
-  const description = stripMarkdown(post.frontmatter.description ?? '')
-  const paragraphs = extractParagraphs(post.body)
-  const summaryCandidates = dedupeSummaryParts([description, ...paragraphs], title)
+  const body = stripMarkdown(post.body)
   const tags = normalizeHashtags(post.frontmatter.tags ?? [])
 
   const lines = [
-    titleHook,
+    body,
     '',
-    ...formatSummary(summaryCandidates),
-    '',
-    '全文在這裡喵：',
-    postUrl,
     tags.length > 0 ? tags.join(' ') : '#豬毛日記 #blesscatdev',
   ]
 
-  return clampCaption(addBlankLines(lines.filter(Boolean).join('\n')))
+  return clampCaption(addBlankLines(lines.filter(Boolean).join('\n\n')))
 }
 
 export function buildCaptionHash(caption: string): string {
@@ -40,7 +32,7 @@ export function buildCaptionPreview(caption: string, maxLength = 160): string {
 }
 
 export function toPreviewPayload(post: BlogInstagramPost, imageUrl: string, postUrl: string): InstagramPublishPayload {
-  const caption = buildInstagramCaption(post, postUrl)
+  const caption = buildInstagramCaption(post)
 
   return {
     slug: post.slug,

@@ -12,7 +12,6 @@ export async function loadInstagramCandidates(projectRoot: string): Promise<Blog
 
   return posts
     .filter((post): post is BlogInstagramPost => post !== null)
-    .filter(post => post.frontmatter.instagram === true)
     .filter(post => Boolean(post.frontmatter.heroImage))
     .sort((a, b) => {
       const aTime = new Date(a.frontmatter.datetime ?? a.frontmatter.date).getTime()

@@ -75,6 +75,7 @@ export async function publishInstagramPost(
       const containerId = await createMediaContainer(config, payload)
       await waitForMediaContainerReady(config, containerId)
       const mediaId = await publishMediaContainer(config, containerId)
+      await postFirstComment(config, mediaId, payload.postUrl)
       return { containerId, mediaId }
     } catch (error) {
       lastError = error
@@ -88,6 +89,22 @@ export async function publishInstagramPost(
   }
 
   throw lastError instanceof Error ? lastError : new Error('Instagram 發文失敗')
+}
+
+async function postFirstComment(
+  config: InstagramEnv,
+  mediaId: string,
+  postUrl: string,
+): Promise<void> {
+  const url = `${GRAPH_API_BASE}/${mediaId}/comments`
+  const response = await postForm(url, {
+    message: postUrl,
+    access_token: config.accessToken,
+  })
+
+  if (!response.id) {
+    throw new Error('留言發佈失敗')
+  }
 }
 
 async function waitForMediaContainerReady(
