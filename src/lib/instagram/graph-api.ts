@@ -75,7 +75,15 @@ export async function publishInstagramPost(
       const containerId = await createMediaContainer(config, payload)
       await waitForMediaContainerReady(config, containerId)
       const mediaId = await publishMediaContainer(config, containerId)
-      await postFirstComment(config, mediaId, payload.postUrl)
+
+      // 留言失敗不阻擋主流程，只 log 警告
+      try {
+        await postFirstComment(config, mediaId, payload.postUrl)
+      } catch (commentError) {
+        const msg = commentError instanceof Error ? commentError.message : String(commentError)
+        console.warn(`⚠️ 留言失敗（不影響貼文發佈）：${msg}`)
+      }
+
       return { containerId, mediaId }
     } catch (error) {
       lastError = error
