@@ -117,21 +117,13 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
     })
   }
 
-  // CommentBox.io comments — match blog's Clay Warm palette
-  const commentContainer = document.getElementById('commentbox-container')
-  if (commentContainer) {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const palette = isDark
-      ? { bg: '#27201c', text: '#e8e2da', subtext: '#a89e94', accent: '#5ba8be' }
-      : { bg: '#ffffff', text: '#000000', subtext: '#55534e', accent: '#3bd3fd' }
-    commentBox('5665528664293376-proj', {
-      backgroundColor: palette.bg,
-      textColor: palette.text,
-      subtextColor: palette.subtext,
-    })
-  }
+  // Remark42 comments
+  var remark_config = {
+    host: "https://remark42.blesscat.dev",
+    site_id: "blog"
+  };
 </script>
-<script is:inline src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+<script is:inline src="https://remark42.blesscat.dev/web/embed.js"></script>
 
 <style>
   /* prose-content：markdown 渲染的 HTML 無法 inline，必須用 :global() */
