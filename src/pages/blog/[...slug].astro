@@ -17,8 +17,32 @@ const ogImage = `/og/blog/${post.id.replace(/\.md$/, '')}.png`
 const ogDesc = post.data.description || displayTitle
 const wordCount = (post.body || '').replace(/\s+/g, '').length
 const readMinutes = Math.max(1, Math.round(wordCount / 250))
+const site = 'https://blog.blesscat.dev'
+const canonicalUrl = `${site}/blog/${post.id.replace(/\.md$/, '')}`
+const publishDate = post.data.datetime ?? post.data.date
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: displayTitle,
+  description: ogDesc,
+  image: ogImage.startsWith('http') ? ogImage : `${site}${ogImage}`,
+  url: canonicalUrl,
+  datePublished: publishDate,
+  author: {
+    '@type': 'Person',
+    name: '豬毛',
+    url: site,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: '豬毛',
+    url: site,
+  },
+}
 ---
 <Layout title={displayTitle} description={ogDesc} ogImage={ogImage}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
   <!-- 閱讀進度條 -->
   <div id="reading-progress-bar"
        class="fixed top-[57px] left-0 w-0 h-[3px] bg-[#3bd3fd] z-[9999] transition-[width,top] duration-100 ease-linear"

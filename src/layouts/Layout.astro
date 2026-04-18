@@ -36,6 +36,9 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   <meta name="twitter:image" content={ogImageUrl} />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#1c1917" />
+  <link rel="canonical" href={`${site}${Astro.url.pathname}`} />
+  <link rel="alternate" type="application/rss+xml" title="豬毛日記 RSS" href="/rss.xml" />
+  <slot name="head" />
   <!-- Prevent dark mode flash: apply theme before first paint -->
   <script is:inline>
     try {
