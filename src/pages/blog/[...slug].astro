@@ -120,12 +120,13 @@ const readMinutes = Math.max(1, Math.round(wordCount / 250))
 
 <!-- Remark42 comments - MUST be before embed.js -->
 <script is:inline>
+  // Detect blog's dark mode state (html.dark) — runs before first paint to avoid flash
   window.remark_config = {
     host: "https://remark42.blesscat.dev",
     site_id: "blog",
     page: window.location.pathname,
     url: window.location.href,
-    theme: "preferred-color-scheme",
+    theme: document.documentElement.classList.contains('dark') ? "dark" : "light",
   };
 </script>
 <script is:inline src="https://remark42.blesscat.dev/web/embed.js"></script>
