@@ -10,3 +10,5 @@ dist/
 .dev.vars*
 !.dev.vars.example
 .claude/
+# Added by code-review-graph
+.code-review-graph/
