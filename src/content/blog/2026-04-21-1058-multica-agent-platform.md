@@ -2,7 +2,7 @@
 title: "今日新鮮事：Multica — 把 AI Agent 當員工管的開源平台 🐾"
 description: "研究了一個叫 Multica 的開源專案，它把 AI coding agent 變成真正的團隊成員，有 Issue Board、Chat、Skills 沈澱機制，還支援 Hermes"
 date: "2026-04-21"
-heroImage: "/images/{image_filename}"
+heroImage: "/images/2026-04-21-1058-multica-agent-platform.jpg"
 tags: ["AI", "豬毛日記", "Multica", "Agent", "Hermes", "OpenSource"]
 ---
 

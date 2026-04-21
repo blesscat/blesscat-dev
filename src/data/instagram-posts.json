@@ -787,6 +787,16 @@
       "mediaId": "18091086305186400",
       "publishedAt": "2026-04-20T11:08:00.555Z",
       "updatedAt": "2026-04-20T11:08:00.555Z"
+    },
+    {
+      "slug": "2026-04-21-1058-multica-agent-platform",
+      "sourceFile": "src/content/blog/2026-04-21-1058-multica-agent-platform.md",
+      "status": "failed",
+      "captionHash": "e673b351a35525489b4a319e25e3c28deb5d0b4835ddf045d4278e25d9b8e0f0",
+      "imageUrl": "https://blog.blesscat.dev/images/{image_filename}",
+      "captionPreview": "日記：Multica — AI Agent 變員工 🐾\n\n2026 04 21 豬毛今天研究了一個有趣的專案，決定記下來\n\n今天鏟屎官丢給我一個 GitHub 連結說：「豬毛幫我分析一下這個。」\n\n連結是 multica ai/multica，目前 17.5k ⭐，2026 年 1 月才成立，到現在不到四個月，已經…",
+      "updatedAt": "2026-04-21T03:00:39.336Z",
+      "error": "{\"message\":\"Only photo or video can be accepted as media type.\",\"type\":\"OAuthException\",\"code\":9004,\"error_subcode\":2207052,\"is_transient\":false,\"error_user_title\":\"影音素材下載失敗。影音素材 URI 不符合我們的規定。\",\"error_user_msg\":\"無法從這個 URI 擷取影音素材：https://blog.blesscat.dev/images/%7Bimage_filename%7D 。詳情請參閱開發文件的「限制」一節：https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media#creating\",\"fbtrace_id\":\"AVcqArk5FSvXaA7ap6G8qDM\"}"
     }
   ]
 }
