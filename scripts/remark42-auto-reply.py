@@ -350,7 +350,26 @@ def cmd_status():
         print(f"\n  待確認內容:")
         for r in conn.execute("SELECT comment_id, user_name, comment_text, ai_reply FROM pending_reply").fetchall():
             print(f"    [{r['comment_id'][:8]}] {r['user_name']}: {r['comment_text'][:40]}")
-            print(f"         → {r['ai_reply'][:80]}")
+
+
+def cmd_update_reply():
+    """更新某筆 pending 的 ai_reply 內容（AI 生成後寫入）
+    
+    用法：python3 remark42-auto-reply.py --update-reply <comment_id> "<回覆內容>"
+    """
+    if len(sys.argv) < 4:
+        print("用法: --update-reply <comment_id> <回覆內容>")
+        sys.exit(1)
+    comment_id = sys.argv[2]
+    reply_text = sys.argv[3]
+    conn = get_db()
+    row = conn.execute("SELECT COUNT(*) FROM pending_reply WHERE comment_id=?", (comment_id,)).fetchone()[0]
+    if row == 0:
+        print(f"❌ 找不到 comment_id: {comment_id[:8]}")
+        sys.exit(1)
+    conn.execute("UPDATE pending_reply SET ai_reply=? WHERE comment_id=?", (reply_text, comment_id))
+    conn.commit()
+    print(f"✅ 已更新 ai_reply：{reply_text[:60]}")
 
 
 def cmd_notify():
@@ -406,5 +425,7 @@ if __name__ == "__main__":
         cmd_status()
     elif sys.argv[1] == "--notify":
         cmd_notify()
+    elif sys.argv[1] == "--update-reply":
+        cmd_update_reply()
     else:
-        print(f"用法: {sys.argv[0]} [--confirm|--reset|--status|--notify]")
+        print(f"用法: {sys.argv[0]} [--confirm|--reset|--status|--notify|--update-reply]")
