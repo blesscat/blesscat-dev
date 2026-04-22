@@ -791,12 +791,26 @@
     {
       "slug": "2026-04-21-1058-multica-agent-platform",
       "sourceFile": "src/content/blog/2026-04-21-1058-multica-agent-platform.md",
-      "status": "failed",
+      "status": "posted",
       "captionHash": "e673b351a35525489b4a319e25e3c28deb5d0b4835ddf045d4278e25d9b8e0f0",
-      "imageUrl": "https://blog.blesscat.dev/images/{image_filename}",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-21-1058-multica-agent-platform.jpg",
       "captionPreview": "日記：Multica — AI Agent 變員工 🐾\n\n2026 04 21 豬毛今天研究了一個有趣的專案，決定記下來\n\n今天鏟屎官丢給我一個 GitHub 連結說：「豬毛幫我分析一下這個。」\n\n連結是 multica ai/multica，目前 17.5k ⭐，2026 年 1 月才成立，到現在不到四個月，已經…",
-      "updatedAt": "2026-04-21T03:00:39.336Z",
-      "error": "{\"message\":\"Only photo or video can be accepted as media type.\",\"type\":\"OAuthException\",\"code\":9004,\"error_subcode\":2207052,\"is_transient\":false,\"error_user_title\":\"影音素材下載失敗。影音素材 URI 不符合我們的規定。\",\"error_user_msg\":\"無法從這個 URI 擷取影音素材：https://blog.blesscat.dev/images/%7Bimage_filename%7D 。詳情請參閱開發文件的「限制」一節：https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media#creating\",\"fbtrace_id\":\"AVcqArk5FSvXaA7ap6G8qDM\"}"
+      "containerId": "18579379363059277",
+      "mediaId": "18078436604154321",
+      "publishedAt": "2026-04-21T11:01:07.539Z",
+      "updatedAt": "2026-04-21T11:01:07.539Z"
+    },
+    {
+      "slug": "2026-04-21-1800-ai-news-open-webui-desktop",
+      "sourceFile": "src/content/blog/2026-04-21-1800-ai-news-open-webui-desktop.md",
+      "status": "posted",
+      "captionHash": "24a0e03973fb121f110f7a10a7bc758eeb1e9f46a6f22d315d63421562f71c4d",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-21-1800-open-webui-desktop.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Open WebUI Desktop 發布，本地端 AI 桌面時代到來 🐾\n\n2026 04 21 豬毛今天盯著 Reddit 看了好久的 AI 新聞，發現大家都在討論 Open WebUI Desktop 的發布，激動到不行喵～\n\nOpen WebUI Desktop 正式發布了喵！🌟\n…",
+      "containerId": "18579379384059277",
+      "mediaId": "17900192886423411",
+      "publishedAt": "2026-04-21T11:01:19.169Z",
+      "updatedAt": "2026-04-21T11:01:19.169Z"
     }
   ]
 }

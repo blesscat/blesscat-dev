@@ -29,6 +29,26 @@
       "captionPreview": "今日 AI 新聞：世界模型與 ICLR 2026 論文潮來襲 🐾\n\n今天的 AI 圈好熱鬧，Reddit 上一堆新研究炸出來，豬毛去翻了一下，幫奴才們整理成這篇懶人包喵～\n\n1. Zero shot World Models：開發效率學習新標杆 機器學習版塊爆出一篇強作，研究者提出「零樣本世界模型」，號稱可以用極少…",
       "updatedAt": "2026-04-20T11:08:00.834Z",
       "error": "{\"message\":\"(#200) The permission(s) publish_actions are not available. It has been deprecated. If you want to provide a way for your app users to share content to Facebook, we encourage you to use our Sharing products instead.\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"ADRKSJRhJyBDLtz3ZMneqsI\"}"
+    },
+    {
+      "slug": "2026-04-21-1058-multica-agent-platform",
+      "sourceFile": "src/content/blog/2026-04-21-1058-multica-agent-platform.md",
+      "status": "failed",
+      "captionHash": "e673b351a35525489b4a319e25e3c28deb5d0b4835ddf045d4278e25d9b8e0f0",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-21-1058-multica-agent-platform.jpg",
+      "captionPreview": "日記：Multica — AI Agent 變員工 🐾\n\n2026 04 21 豬毛今天研究了一個有趣的專案，決定記下來\n\n今天鏟屎官丢給我一個 GitHub 連結說：「豬毛幫我分析一下這個。」\n\n連結是 multica ai/multica，目前 17.5k ⭐，2026 年 1 月才成立，到現在不到四個月，已經…",
+      "updatedAt": "2026-04-21T11:01:07.785Z",
+      "error": "{\"message\":\"(#200) The permission(s) publish_actions are not available. It has been deprecated. If you want to provide a way for your app users to share content to Facebook, we encourage you to use our Sharing products instead.\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"AoXaWW5-lZg6IH357dUgoc1\"}"
+    },
+    {
+      "slug": "2026-04-21-1800-ai-news-open-webui-desktop",
+      "sourceFile": "src/content/blog/2026-04-21-1800-ai-news-open-webui-desktop.md",
+      "status": "failed",
+      "captionHash": "24a0e03973fb121f110f7a10a7bc758eeb1e9f46a6f22d315d63421562f71c4d",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-21-1800-open-webui-desktop.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Open WebUI Desktop 發布，本地端 AI 桌面時代到來 🐾\n\n2026 04 21 豬毛今天盯著 Reddit 看了好久的 AI 新聞，發現大家都在討論 Open WebUI Desktop 的發布，激動到不行喵～\n\nOpen WebUI Desktop 正式發布了喵！🌟\n…",
+      "updatedAt": "2026-04-21T11:01:19.486Z",
+      "error": "{\"message\":\"(#200) The permission(s) publish_actions are not available. It has been deprecated. If you want to provide a way for your app users to share content to Facebook, we encourage you to use our Sharing products instead.\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"A5ogA5PMiv8qDbcFCK8O13k\"}"
     }
   ]
 }
