@@ -4,7 +4,8 @@ const GRAPH_API_BASE = 'https://graph.facebook.com/v23.0'
 const TRANSIENT_RETRY_DELAYS_MS = [1500, 4000]
 
 export function readFacebookEnv(env: NodeJS.ProcessEnv = process.env): FacebookEnv {
-  const accessToken = env.FACEBOOK_ACCESS_TOKEN ?? env.INSTAGRAM_ACCESS_TOKEN
+  // 優先使用 page access token（FB 發文需要 page token，user token 無法使用 pages_manage_posts）
+  const accessToken = env.FACEBOOK_PAGE_ACCESS_TOKEN ?? env.FACEBOOK_ACCESS_TOKEN ?? env.INSTAGRAM_ACCESS_TOKEN
   const pageId = env.FACEBOOK_PAGE_ID ?? ''
   const siteUrl = env.SITE_URL ?? 'https://blog.blesscat.dev'
 
@@ -40,6 +41,22 @@ export async function publishFacebookPhoto(
   }
 
   throw lastError instanceof Error ? lastError : new Error('Facebook 發文失敗')
+}
+
+export async function postFacebookComment(
+  config: FacebookEnv,
+  photoId: string,
+  message: string,
+): Promise<void> {
+  try {
+    await postForm(`${GRAPH_API_BASE}/${photoId}/comments`, {
+      message,
+      access_token: config.accessToken,
+    })
+  } catch (error) {
+    // Comment 失敗不影響發文狀態，只 log warning
+    console.warn(`⚠️ FB 留言失敗（photo ${photoId}）：${error instanceof Error ? error.message : error}`)
+  }
 }
 
 async function postFacebookPhotoOnce(

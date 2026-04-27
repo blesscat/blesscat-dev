@@ -5,7 +5,7 @@ import { loadProjectEnv } from '../../src/lib/instagram/env.ts'
 import { publishInstagramPost, readInstagramEnv } from '../../src/lib/instagram/graph-api.ts'
 import { getInstagramRecord, loadInstagramState, saveInstagramState, upsertInstagramRecord } from '../../src/lib/instagram/state.ts'
 import type { InstagramSyncRecord } from '../../src/lib/instagram/types.ts'
-import { readFacebookEnv, publishFacebookPhoto } from '../../src/lib/facebook/graph-api.ts'
+import { readFacebookEnv, publishFacebookPhoto, postFacebookComment } from '../../src/lib/facebook/graph-api.ts'
 import { getFacebookRecord, loadFacebookState, saveFacebookState, upsertFacebookRecord } from '../../src/lib/facebook/state.ts'
 import type { FacebookSyncRecord } from '../../src/lib/facebook/types.ts'
 
@@ -117,8 +117,8 @@ async function publishToFacebook(
   igPayload: ReturnType<typeof buildInstagramPayload>,
   igPublishedAt: string,
 ): Promise<{ record: FacebookSyncRecord }> {
-  // FB caption = IG caption + 文章連結當第一行
-  const fbCaption = `${igPayload.caption}\n\n🔗 ${igPayload.postUrl}`
+  // FB caption = IG caption（URL 改放留言，保持和 IG 一樣的格式）
+  const fbCaption = igPayload.caption
 
   const fbGraphPayload = {
     imageUrl: igPayload.imageUrl,
@@ -128,6 +128,8 @@ async function publishToFacebook(
 
   try {
     const postId = await publishFacebookPhoto(fbConfig, fbGraphPayload)
+    // FB 留言（文章連結），失敗不影響發文狀態
+    await postFacebookComment(fbConfig, postId, `🔗 ${igPayload.postUrl}`)
     const now = new Date().toISOString()
     const record: FacebookSyncRecord = {
       slug: igPayload.slug,

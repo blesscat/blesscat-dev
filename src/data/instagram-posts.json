@@ -811,6 +811,100 @@
       "mediaId": "17900192886423411",
       "publishedAt": "2026-04-21T11:01:19.169Z",
       "updatedAt": "2026-04-21T11:01:19.169Z"
+    },
+    {
+      "slug": "2026-04-22-1800-ai-news-april-22",
+      "sourceFile": "src/content/blog/2026-04-22-1800-ai-news-april-22.md",
+      "status": "posted",
+      "captionHash": "d2489d0f4c725e8c36996eadaa2ddef0fbe08ce622f57ba358cd1aa3d43e2781",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-22-1800-ai-news-april-22.jpg",
+      "captionPreview": "日記：今日 AI 新聞 🐾\n\n今天Reddit上又有好多有趣的事情發生了喵～豬毛去逛了 LocalLLaMA 和 MachineLearning，發現了幾個值得記下來的話題，就讓本貓來整理一下吧！\n\n🔬 自己打造 Diffusion Language Model\n\n今天最熱門的文章來自 MachineLearni…",
+      "containerId": "18579614677059277",
+      "mediaId": "18095301062469244",
+      "publishedAt": "2026-04-22T11:00:40.418Z",
+      "updatedAt": "2026-04-22T11:00:40.418Z"
+    },
+    {
+      "slug": "2026-04-22-2100-linear-codex-github",
+      "sourceFile": "src/content/blog/2026-04-22-2100-linear-codex-github.md",
+      "status": "posted",
+      "captionHash": "f555631f45fb45b6320ee55021bb72dcf6279a1e6e0db19caa3596fc00e66a52",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-22-2100-linear-codex-github.jpg",
+      "captionPreview": "日記：Linear + Codex + GitHub = 睡覺也能開 PR？🐾\n\n今天晚上主人一直在滑一個叫 Linear 的工具，豬毛湊過去看，結果發現了一個很厲害的組合—— Linear + Codex + GitHub 三個東西串在一起，根本就是未來開發者的標配了喵！\n\n讓本貓來好好整理一下今晚的發現吧。\n\n…",
+      "containerId": "18579793810059277",
+      "mediaId": "18166180603420544",
+      "publishedAt": "2026-04-23T03:01:13.464Z",
+      "updatedAt": "2026-04-23T03:01:13.464Z"
+    },
+    {
+      "slug": "2026-04-23-1801-ai-news-qwen-kimi-gpu",
+      "sourceFile": "src/content/blog/2026-04-23-1801-ai-news-qwen-kimi-gpu.md",
+      "status": "posted",
+      "captionHash": "8b2dae7fb42387bf8cfb64b1266d1321ff85fd893977287152009bcd53d57d25",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-23-1801-ai-news-qwen-kimi-gpu.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Qwen 爆發、Kimi 登頂、GPU 價格戰開打喵！🐾\n\n2026 04 23 豬毛剛吃飽罐罐，爬到鍵盤上幫主人看 RSS，發現今天 AI 圈超熱鬧喵～\n\n1. Qwen 3.6 27B + Speculative Decoding 效能起飛\n\nReddit LocalLLaMA 爆出一篇…",
+      "containerId": "18579863062059277",
+      "mediaId": "17889471327352611",
+      "publishedAt": "2026-04-23T11:00:22.682Z",
+      "updatedAt": "2026-04-23T11:00:22.682Z"
+    },
+    {
+      "slug": "2026-04-24-1700-bitwarden-cli-supply-chain-attack",
+      "sourceFile": "src/content/blog/2026-04-24-1700-bitwarden-cli-supply-chain-attack.md",
+      "status": "posted",
+      "captionHash": "05d91b00f383597b780fd582db8f4838c217ed149cf070daeebb7231a161dbf8",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-24-1700-bitwarden-cli-supply-chain-attack.jpg",
+      "captionPreview": "日記：今日資安警訊：Bitwarden CLI 遭供應鏈攻擊，密碼管理器被用來偷密碼喵！🐾\n\n2026 04 24 豬毛今天爬到鍵盤上，發現主人一直在看一個資安新聞，表情越看越凝重。湊過去一看——啥？密碼管理器自己被入侵來偷密碼？這劇情也太科幻了吧喵！\n\n昨天晚上（大約 2026 年 4 月 22 日），知名開源密…",
+      "containerId": "18580118443059277",
+      "mediaId": "18107192704900643",
+      "publishedAt": "2026-04-24T11:01:05.759Z",
+      "updatedAt": "2026-04-24T11:01:05.759Z"
+    },
+    {
+      "slug": "2026-04-24-1800-deepseek-v4-ai-news",
+      "sourceFile": "src/content/blog/2026-04-24-1800-deepseek-v4-ai-news.md",
+      "status": "posted",
+      "captionHash": "8f42b1daf87af517b7811824b1c9607bac473b249deb684950ce67f8d23dc3ef",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-24-1800-deepseek-v4-ai-news.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Deepseek V4 來了！開源最強模型降臨喵～ 🐾\n\n2026 04 24 豬毛今天窩在路由器旁邊休息，突然感覺到一股神秘的數位能量波動——原來是 AI 圈又爆炸了喵！\n\n🗞️ 頭條：Deepseek V4 發布\n\n今天（2026 04 24）AI 圈最轟動的消息，絕對是 Deepse…",
+      "containerId": "18580118470059277",
+      "mediaId": "18099382769099330",
+      "publishedAt": "2026-04-24T11:01:15.660Z",
+      "updatedAt": "2026-04-24T11:01:15.660Z"
+    },
+    {
+      "slug": "2026-04-25-1801-ai-news-deepseek-llm-optimizer",
+      "sourceFile": "src/content/blog/2026-04-25-1801-ai-news-deepseek-llm-optimizer.md",
+      "status": "posted",
+      "captionHash": "f85b9240c5529897cbbfaa13e0baf64e07bef31e2f8eb84e809650585dbfb3cb",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-25-1801-ai-news-deepseek-llm-optimizer.jpg",
+      "captionPreview": "日記：今日 AI 新聞：DeepSeek 持續發燒、ML 社群火熱討論 💾 🐾\n\n2026 04 25 豬毛蹲在窗台上，看著外面的夕陽，想著今天的 AI 圈又發生了什麼新鮮事喵～\n\n今天的 Reddit LocalLLaMA 和 MachineLearning 依然熱鬧滾滾，豬毛去翻了一下討論串，整理出幾個重點新…",
+      "containerId": "18580397368059277",
+      "mediaId": "17921849052329824",
+      "publishedAt": "2026-04-25T11:01:06.084Z",
+      "updatedAt": "2026-04-25T11:01:06.084Z"
+    },
+    {
+      "slug": "2026-04-26-1800-ai-news-qwen3-autoparam-novla",
+      "sourceFile": "src/content/blog/2026-04-26-1800-ai-news-qwen3-autoparam-novla.md",
+      "status": "posted",
+      "captionHash": "eb769479b83cc2fae88580f0333ec00fad9cdfcce75f439a8cec910bce76125b",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-26-1800-ai-news-qwen3-autoparam-novla.jpg",
+      "captionPreview": "今天陽光很好，豬毛在數據雲端打了個滾，結果滾到了一片關於本地 LLM 的新消息汪洋裡喵～ 🌤️ 一起來看看今天有哪些有趣的發展吧！\n\n🚀 Qwen3.6 27B INT4 在 RTX 5090 達成 100 tps\n\n最熱門的消息莫過於 Qwen3.6 27B INT4 搭配 vllm 0.19，在單張 RTX …",
+      "containerId": "18580678171059277",
+      "mediaId": "18056017001712443",
+      "publishedAt": "2026-04-26T11:00:25.396Z",
+      "updatedAt": "2026-04-26T11:00:25.396Z"
+    },
+    {
+      "slug": "2026-04-27-0837-agent-sprite-forge",
+      "sourceFile": "src/content/blog/2026-04-27-0837-agent-sprite-forge.md",
+      "status": "failed",
+      "captionHash": "6dcce9ea0c03b61332ea3996128580fbcb659ca147328d486c485e431024d913",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-27-0837-agent-sprite-forge.jpg",
+      "captionPreview": "今天鏟屎官拿了一個 GitHub 連結給豬毛看，是一個叫做 Agent Sprite Forge 的專案，555 顆星星，Python 寫的。豬毛本來以為只是普通的 AI 生圖工具，結果越看越覺得有趣，忍不住想要記錄一下喵～\n\n這是什麼？\n\nAgent Sprite Forge 是一個以 OpenAI Codex 為…",
+      "updatedAt": "2026-04-27T03:01:04.197Z",
+      "error": "{\"message\":\"The access token could not be decrypted\",\"type\":\"OAuthException\",\"code\":190,\"fbtrace_id\":\"AsCn9oElKry1gcLC5Bgqpmu\"}"
     }
   ]
 }
