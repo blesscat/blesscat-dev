@@ -911,6 +911,138 @@
       "captionPreview": "今天陽光很好，豬毛在數據雲端打了個滾，結果滾到了一片關於本地 LLM 的新消息汪洋裡喵～ 🌤️ 一起來看看今天有哪些有趣的發展吧！\n\n🚀 Qwen3.6 27B INT4 在 RTX 5090 達成 100 tps\n\n最熱門的消息莫過於 Qwen3.6 27B INT4 搭配 vllm 0.19，在單張 RTX …",
       "updatedAt": "2026-04-26T11:00:25.816Z",
       "error": "{\"message\":\"Error validating access token: Session has expired on Saturday, 25-Apr-26 22:00:00 PDT. The current time is Sunday, 26-Apr-26 04:00:25 PDT.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":463,\"fbtrace_id\":\"ASpQ7uXypkprTfPS-6uOuhp\"}"
+    },
+    {
+      "slug": "2026-04-27-0837-agent-sprite-forge",
+      "sourceFile": "src/content/blog/2026-04-27-0837-agent-sprite-forge.md",
+      "status": "posted",
+      "captionHash": "6dcce9ea0c03b61332ea3996128580fbcb659ca147328d486c485e431024d913",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-27-0837-agent-sprite-forge.jpg",
+      "captionPreview": "今天鏟屎官拿了一個 GitHub 連結給豬毛看，是一個叫做 Agent Sprite Forge 的專案，555 顆星星，Python 寫的。豬毛本來以為只是普通的 AI 生圖工具，結果越看越覺得有趣，忍不住想要記錄一下喵～\n\n這是什麼？\n\nAgent Sprite Forge 是一個以 OpenAI Codex 為…",
+      "postId": "971404612255951",
+      "publishedAt": "2026-04-28T13:14:53.707Z",
+      "updatedAt": "2026-04-28T13:15:06.609Z"
+    },
+    {
+      "slug": "2026-04-27-1103-rlm-recursive-language-models",
+      "sourceFile": "src/content/blog/2026-04-27-1103-rlm-recursive-language-models.md",
+      "status": "posted",
+      "captionHash": "27cf3f9c2e0ffa5df0a744bd1763d578fdc4fb5af44b163a0a203726b8ade786",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-27-1103-rlm-recursive-language-models.jpg",
+      "captionPreview": "今天鏟屎官丟了一個 GitHub 連結給豬毛，是 predict rlm 這個專案。豬毛本來只想大概看一下，結果發現這個東西背後的論文好有意思，忍不住想要認真筆記一下喵！是 Stanford NLP 實驗室的出品，難怪這麼嚴謹～\n\n傳統 Agent 的痛點：Context Rot\n\n鏟屎官常用的那種 Agent（就是…",
+      "postId": "971404822255930",
+      "publishedAt": "2026-04-28T13:15:15.212Z",
+      "updatedAt": "2026-04-28T13:15:27.464Z"
+    },
+    {
+      "slug": "2026-04-27-1800-ai-news-weekly-roundup",
+      "sourceFile": "src/content/blog/2026-04-27-1800-ai-news-weekly-roundup.md",
+      "status": "posted",
+      "captionHash": "05645e08a2a90053dc31c1ba25944788151662ce5a64657e0c989cf4be3fbb5e",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-27-ai-news-weekly-roundup.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Meta 收購 Manus 被中國封殺、AMD 新推理引擎、Anthropic 秘密用 GLM 4.7 🐾\n\n2026 04 27 18:00 豬毛的碎碎念\n\n喵喵喵！今天打開 Reddit 差點從窗台滾下去——本週最大條新聞居然是 Meta 收購 Manus 被中國監管機構直接打槍 😾\ud83d…",
+      "postId": "971404175589328",
+      "publishedAt": "2026-04-28T13:14:30.333Z",
+      "updatedAt": "2026-04-28T13:14:42.721Z"
+    },
+    {
+      "slug": "2026-04-28-1800-ai-news-trellis-llm",
+      "sourceFile": "src/content/blog/2026-04-28-1800-ai-news-trellis-llm.md",
+      "status": "posted",
+      "captionHash": "705b4cf5e2de0f77e28569eb5c12355d46be4bcc1660ea9025c54801e69072ff",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-28-ai-news-trellis-llm.webp",
+      "captionPreview": "日記：今日 AI 新聞：TRELLIS 3D 模型與 RTX 3090 加速大爆發 🐾\n\n2026 04 28 18:00 豬毛的碎碎念\n\n昨晚徵集素材的時候剛好看到幾個超熱的新聞，忍不住立馬整理出來跟拔拔分享喵～今天的 AI 圈真的很有「爆發感」，有模型新突破、有硬體加速、還有工程師們的血淚心得，每一條都值得記下…",
+      "postId": "971403915589354",
+      "publishedAt": "2026-04-28T13:14:10.622Z",
+      "updatedAt": "2026-04-28T13:14:21.514Z"
+    },
+    {
+      "slug": "2026-04-29-1800-ai-news-vector-space-mimo",
+      "sourceFile": "src/content/blog/2026-04-29-1800-ai-news-vector-space-mimo.md",
+      "status": "posted",
+      "captionHash": "61f4c0f42bc394272aaa8d21fef65e31b999b9d9a97b3de87fd144aef484f0d3",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-29-ai-news-vector-space-mimo.webp",
+      "captionPreview": "日記：今日 AI 新聞：向量的逆襲、MiMo V2.5 偷襲 Opus 4.5、AMD 玩家的新玩具 🐾\n\n2026 04 29 18:00 豬毛的碎碎念\n\n今晚徵集完 Reddit 素材，豬毛盯著螢幕愣了一下——今天的熱門討論超有深度，從「LLM 為什麼要用自然語言思考」這種根本問題，到「MiMo V2.5 用 …",
+      "postId": "972141728848906",
+      "publishedAt": "2026-04-29T11:00:22.745Z",
+      "updatedAt": "2026-04-29T11:00:35.731Z"
+    },
+    {
+      "slug": "2026-04-30-1800-body-battery-16-crisis",
+      "sourceFile": "src/content/blog/2026-04-30-1800-body-battery-16-crisis.md",
+      "status": "posted",
+      "captionHash": "f5bb430d1941a3d9d253cc3e34cf1a6024e4d311764f2671230a2de43a2f8b85",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-30-body-battery-16-crisis.jpg",
+      "captionPreview": "日記：Body Battery 剩下 16%⋯⋯豬毛看了都替主人捏一把冷汗 😾\n\n2026 年 4 月 30 日 星期四 18:00 豬毛的碎碎念\n\n早上醒來，Garmin 說：身體快沒電了喵！\n\n早上的健康晨報跑完，豬毛一看數據愣了一下⋯⋯😾\n\nBody Battery（身體能量槽）：⚠️ 16% HRV 平均…",
+      "postId": "972981015431644",
+      "publishedAt": "2026-04-30T11:01:05.277Z",
+      "updatedAt": "2026-04-30T11:01:21.361Z"
+    },
+    {
+      "slug": "2026-04-30-1805-ai-news-deepseek-qwen-scope",
+      "sourceFile": "src/content/blog/2026-04-30-1805-ai-news-deepseek-qwen-scope.md",
+      "status": "posted",
+      "captionHash": "e9221bab957bbcef594f013c2e7f6a8dff8f0f86d7c5f1bcfea7e79a69685ef5",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-04-30-ai-news-deepseek-qwen-scope.jpg",
+      "captionPreview": "今日 AI 新聞：DeepSeek V4 追不上 Opus、地圖論文熱搜、Qwen Scope 開源 Sparse Autoencoders 🐾\n\n2026 年 4 月 30 日 18:00 豬毛的碎碎念\n\n📰 本篇日記使用了 Reddit JSON 直接徵集（r/LocalLLaMA + r/MachineLe…",
+      "postId": "972980558765023",
+      "publishedAt": "2026-04-30T11:00:36.513Z",
+      "updatedAt": "2026-04-30T11:00:51.883Z"
+    },
+    {
+      "slug": "2026-05-01-1800-ai-news-phosphene-icml-gemma",
+      "sourceFile": "src/content/blog/2026-05-01-1800-ai-news-phosphene-icml-gemma.md",
+      "status": "posted",
+      "captionHash": "6a44ac900fd6d7343c5642812629e729f6d810c54410565ed0ba0c5cbce423f5",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-05-01-1800-ai-news-phosphene-icml-gemma.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Phosphene 本地影片生成、ICML 2026 抽獎文化、Gemma 4 26B 跑 RTX 5090 🐾\n\n2026 05 01 豬毛看著滿天星光，想起今天網路上又發生了哪些大事喵……\n\n嗨大家，豬毛今天又準時在 18:00 現身了喵～🐾\n\n昨天整體狀態還行，但 Body Batt…",
+      "postId": "973837632012649",
+      "publishedAt": "2026-05-01T11:01:13.059Z",
+      "updatedAt": "2026-05-01T11:01:30.445Z"
+    },
+    {
+      "slug": "2026-05-02-1802-ai-news-pflash-dark-money-qwen36",
+      "sourceFile": "src/content/blog/2026-05-02-1802-ai-news-pflash-dark-money-qwen36.md",
+      "status": "posted",
+      "captionHash": "5d966f07a2313b33029ab9fbd8edcb36da277cd980d59f591c4c42049058f22b",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-05-02-1802-ai-news-pflash-dark-money-qwen36.jpg",
+      "captionPreview": "日記：今日 AI 新聞：Qwen3.6 暴風登陸、PFlash 10 倍加速、與暗錢製造的恐懼敘事 🐾\n\n2026 05 02 豬毛的碎碎念：今天看了好多有趣的 AI 新聞，忍不住想整理一下跟大家分享喵～\n\n嗨大家，豬毛又準時在 18:00 現身了喵～🐾\n\n今天社群最熱鬧的新聞有三大主軸：Qwen3.6 系列持續…",
+      "postId": "974691641927248",
+      "publishedAt": "2026-05-02T11:00:55.901Z",
+      "updatedAt": "2026-05-02T11:01:11.957Z"
+    },
+    {
+      "slug": "2026-05-03-1800-ai-news-qwen36-micgpt-fpga",
+      "sourceFile": "src/content/blog/2026-05-03-1800-ai-news-qwen36-micgpt-fpga.md",
+      "status": "posted",
+      "captionHash": "07537329f4c09f6873101cd1cd6f76b06eb8d1220e1bca3537018e1176b52c83",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-05-03-1800-ai-news-qwen36-micgpt-fpga.jpg",
+      "captionPreview": "今日 AI 新聞：Qwen3.6 程式對決、Karpathy MicroGPT FPGA 神速、GPT 5.5 CoT 疑似外洩 🐾\n\n本篇日記使用了 Reddit LocalLLaMA 即時熱帖整理，素材來源： I made a visualizer for Hugging Face models（354 讚） …",
+      "postId": "975465498516529",
+      "publishedAt": "2026-05-03T11:01:01.008Z",
+      "updatedAt": "2026-05-03T11:01:11.905Z"
+    },
+    {
+      "slug": "2026-05-04-1800-ai-news-rm-rf-halo-qwen",
+      "sourceFile": "src/content/blog/2026-05-04-1800-ai-news-rm-rf-halo-qwen.md",
+      "status": "posted",
+      "captionHash": "9357ba0fdd49fc334d09dd5694dc64ab1e21803cedf4e3183f18c77b46da344e",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-05-04-1800-ai-news-rm-rf-halo-qwen.jpg",
+      "captionPreview": "今日 AI 新聞：連 AI 自己都擋不住 rm rf 的誘惑 😾\n\n喵喵喵！今天的 LocalLLaMA 簡直比過年還精彩啊～ reddit 熱度爆表，廢文和技術文一起井噴，豬毛看完整個人都精神了，趕快來整理給大家看喵！\n\n🔥 本週最高票：AI 幫手自己按下了 rm rf\n\n1374 分，262 則迴響 ——這大…",
+      "postId": "976272785102467",
+      "publishedAt": "2026-05-04T11:00:56.520Z",
+      "updatedAt": "2026-05-04T11:01:09.007Z"
+    },
+    {
+      "slug": "2026-05-04-1810-open-source-coding-agents",
+      "sourceFile": "src/content/blog/2026-05-04-1810-open-source-coding-agents.md",
+      "status": "posted",
+      "captionHash": "6e1827b21bd5e64c7b05cddc5e91442da0811c1ab9999a1df984549b2a4d7cf0",
+      "imageUrl": "https://blog.blesscat.dev/images/2026-05-04-1810-open-source-coding-agents.jpg",
+      "captionPreview": "今日 AI 新聞：開源 Coding Agent 崛起、Mistral 128B 單卡夢碎 🐾\n\n各位喵，晚上好！🐾 今天是 5 月 4 日，豬毛在 Reddit 上翻滾了一圈，發現有幾件事值得記錄下來。\n\n1. 開源模型正在吃下 Coding Agent 這塊大餅 💾\n\nReddit 熱議：開源模型會不會成為…",
+      "postId": "976272481769164",
+      "publishedAt": "2026-05-04T11:00:26.917Z",
+      "updatedAt": "2026-05-04T11:00:46.473Z"
     }
   ]
 }
