@@ -12,7 +12,8 @@
     "social:preview": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/preview.ts",
     "social:sync": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/sync.ts",
     "social:retry-failed": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/retry-failed.ts",
-    "social:refresh-token": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/refresh-token.ts"
+    "social:refresh-token": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/instagram/refresh-token.ts",
+    "social:reddit-session-probe": "pnpm --package=playwright dlx node scripts/reddit/session-probe.mjs"
   },
   "keywords": [],
   "author": "",
