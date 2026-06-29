@@ -78,6 +78,21 @@ async function initMap() {
   const L = await ensureLeafletLoaded()
   const isMobile = window.matchMedia('(max-width: 768px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
+  const mapEl = document.getElementById('dive-map')
+  const mapShell = document.getElementById('dive-map-shell') as HTMLElement | null
+  const fullscreenBtn = document.querySelector<HTMLButtonElement>('.map-fullscreen-toggle[data-map-id="dive-map"]')
+
+  const setFullscreenButtonState = (btn: HTMLButtonElement, isFullscreen: boolean) => {
+    btn.setAttribute('aria-expanded', isFullscreen ? 'true' : 'false')
+    btn.setAttribute('aria-label', isFullscreen ? '離開全螢幕地圖' : '全螢幕查看地圖')
+    const label = btn.querySelector('span:last-child')
+    if (label) label.textContent = isFullscreen ? '縮回' : '全螢幕'
+  }
+
+  const refreshMainMap = (delay = 0) => {
+    window.setTimeout(() => map.invalidateSize(), delay)
+  }
+
   const map = L.map('dive-map', {
     zoomControl: true,
     dragging: !isMobile,
@@ -85,16 +100,13 @@ async function initMap() {
     scrollWheelZoom: false,
   })
 
-  if (isMobile) {
-    const mapEl = document.getElementById('dive-map')
-    if (mapEl) {
-      mapEl.addEventListener('touchstart', function (e: TouchEvent) {
-        if (e.touches.length >= 2) map.dragging.enable()
-      }, { passive: true })
-      mapEl.addEventListener('touchend', function (e: TouchEvent) {
-        if (e.touches.length < 2) map.dragging.disable()
-      }, { passive: true })
-    }
+  if (isMobile && mapEl) {
+    mapEl.addEventListener('touchstart', function (e: TouchEvent) {
+      if (e.touches.length >= 2) map.dragging.enable()
+    }, { passive: true })
+    mapEl.addEventListener('touchend', function (e: TouchEvent) {
+      if (e.touches.length < 2) map.dragging.disable()
+    }, { passive: true })
   }
 
   applyReadableDarkTiles(map, L)
@@ -137,6 +149,30 @@ async function initMap() {
   if (!markers.length) return
   const group = L.featureGroup(markers)
   map.fitBounds(group.getBounds().pad(0.3))
+
+  if (fullscreenBtn && mapShell) {
+    document.addEventListener('fullscreenchange', () => {
+      const active = document.fullscreenElement === mapShell
+      setFullscreenButtonState(fullscreenBtn, active)
+      if (active || !document.fullscreenElement) {
+        refreshMainMap(50)
+      }
+    })
+
+    fullscreenBtn.addEventListener('click', async () => {
+      if (document.fullscreenElement === mapShell) {
+        await document.exitFullscreen()
+        return
+      }
+
+      if (document.fullscreenElement && document.fullscreenElement !== mapShell) {
+        await document.exitFullscreen()
+      }
+
+      await mapShell.requestFullscreen()
+      refreshMainMap(50)
+    })
+  }
 }
 
 // =====================

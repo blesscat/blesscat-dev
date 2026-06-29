@@ -15,16 +15,62 @@ const {
 
 <div class="mt-10">
   {title && <h2 class="text-sm font-bold text-muted uppercase tracking-widest mb-4">{title}</h2>}
-  <div
-    id={id}
-    class="map-el rounded-xl overflow-hidden border border-border"
-    style={`height: ${height}`}
-  ></div>
+  <div class="map-shell bg-[#0b1220] rounded-xl border border-border p-3 max-md:p-2" id={`${id}-shell`}>
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <div class="text-[0.78rem] text-subtle">拖曳或縮放查看潛點分布</div>
+      <button
+        type="button"
+        class="map-fullscreen-toggle inline-flex items-center gap-1 py-[0.28rem] px-[0.65rem] bg-white/5 border border-white/10 rounded-md text-[0.74rem] text-white/85 cursor-pointer transition-all duration-200 hover:bg-white/10 hover:border-white/20"
+        data-map-shell={`${id}-shell`}
+        data-map-id={id}
+        aria-expanded="false"
+        aria-label="全螢幕查看地圖"
+      >
+        <span class="text-[0.82rem] leading-none">⛶</span>
+        <span>全螢幕</span>
+      </button>
+    </div>
+    <div
+      id={id}
+      class="map-el rounded-xl overflow-hidden border border-border"
+      style={`height: ${height}`}
+    ></div>
+  </div>
 </div>
 
 <style define:vars={{ heightMobile }}>
   @media (max-width: 768px) {
     .map-el { height: var(--heightMobile) !important; }
+  }
+
+  .map-shell:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    padding: 1rem;
+    border-radius: 0;
+    border: 0;
+    background: #020617;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  .map-shell:fullscreen .text-subtle {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .map-shell:fullscreen .map-el {
+    flex: 1;
+    min-height: 0;
+    height: auto !important;
+  }
+
+  @media (max-width: 768px) {
+    .map-shell:fullscreen {
+      padding: 0.75rem;
+    }
   }
 </style>
 
