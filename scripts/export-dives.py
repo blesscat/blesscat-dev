@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sqlite3
+from collections.abc import Iterable
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -15,12 +18,221 @@ TOKEN_DIR = Path.home() / '.garminconnect'
 DIVES_JSON = ROOT / 'src' / 'data' / 'dives.json'
 DIVE_PROFILES_JSON = ROOT / 'src' / 'data' / 'dive_profiles.json'
 PUBLIC_DIVE_PROFILES_JSON = ROOT / 'public' / 'dive_profiles.json'
+DEFAULT_SYNC_START = '2024-01-01'
 
 
 def round_or_none(value: Any, digits: int = 1) -> float | None:
     if value is None:
         return None
     return round(float(value), digits)
+
+
+def get_garmin_client() -> Garmin:
+    garmin = Garmin()
+    garmin.login(str(TOKEN_DIR))
+    return garmin
+
+
+def first_gas(summary: dict[str, Any] | None) -> tuple[float | None, float | None]:
+    gases = (summary or {}).get('summarizedDiveGases') or []
+    if not gases:
+        return None, None
+    gas = gases[0] or {}
+    return gas.get('oxygenContent'), gas.get('heliumContent')
+
+
+def water_type_name(summary: dict[str, Any] | None) -> str | None:
+    water_type = (summary or {}).get('waterType')
+    if water_type is None:
+        return None
+    mapping = {
+        0: 'fresh',
+        1: 'salt',
+    }
+    return mapping.get(int(water_type))
+
+
+def meter_from_cm(value: Any) -> float | None:
+    if value is None:
+        return None
+    return round(float(value) / 100.0, 2)
+
+
+def choose_local_number(cur: sqlite3.Cursor, garmin_dive_number: Any) -> int:
+    max_existing = cur.execute('SELECT COALESCE(MAX(dive_number), 0) FROM dives').fetchone()[0]
+    candidate = None
+    if garmin_dive_number is not None:
+        try:
+            candidate = int(garmin_dive_number)
+        except (TypeError, ValueError):
+            candidate = None
+    if candidate is None or candidate <= 0:
+        return max_existing + 1
+
+    row = cur.execute(
+        'SELECT garmin_activity_id FROM dives WHERE dive_number = ? LIMIT 1',
+        (candidate,),
+    ).fetchone()
+    if row is None:
+        return candidate
+    return max_existing + 1
+
+
+def activity_sort_key(activity: dict[str, Any]) -> tuple[str, str, int]:
+    return (
+        str(activity.get('startTimeLocal') or ''),
+        str(activity.get('startTimeGMT') or ''),
+        int(activity.get('activityId') or 0),
+    )
+
+
+def upsert_activity(conn: sqlite3.Connection, activity: dict[str, Any], *, allow_insert: bool = True) -> tuple[str, int | None]:
+    cur = conn.cursor()
+    activity_id = str(activity['activityId'])
+    existing = cur.execute(
+        'SELECT id, dive_number FROM dives WHERE garmin_activity_id = ?',
+        (activity_id,),
+    ).fetchone()
+
+    summary = activity.get('summarizedDiveInfo') or {}
+    o2_pct, he_pct = first_gas(summary)
+    row_data = {
+        'garmin_activity_id': activity_id,
+        'source': 'garmin',
+        'dive_number': existing[1] if existing else choose_local_number(cur, activity.get('diveNumber')),
+        'date': str(activity.get('startTimeLocal') or activity.get('startTimeGMT') or '')[:10],
+        'start_time_local': activity.get('startTimeLocal'),
+        'start_time_gmt': activity.get('startTimeGMT'),
+        'duration_s': activity.get('bottomTime') or activity.get('duration'),
+        'elapsed_s': activity.get('elapsedDuration') or activity.get('duration'),
+        'max_depth_m': meter_from_cm(activity.get('maxDepth')),
+        'avg_depth_m': meter_from_cm(activity.get('avgDepth')),
+        'water_temp_min_c': activity.get('minTemperature'),
+        'water_temp_max_c': activity.get('maxTemperature'),
+        'water_type': water_type_name(summary),
+        'o2_pct': o2_pct,
+        'he_pct': he_pct,
+        'deco_dive': 1 if activity.get('decoDive') else 0,
+        'avg_hr': activity.get('averageHR'),
+        'max_hr': activity.get('maxHR'),
+        'calories': activity.get('calories'),
+        'surface_interval_s': (activity.get('surfaceInterval') or 0) / 1000.0 if activity.get('surfaceInterval') is not None else None,
+        'start_lat': activity.get('startLatitude') or activity.get('beginLatitude'),
+        'start_lon': activity.get('startLongitude') or activity.get('beginLongitude'),
+        'end_lat': activity.get('endLatitude'),
+        'end_lon': activity.get('endLongitude'),
+        'dive_site': activity.get('locationName'),
+        'location_country': None,
+        'garmin_raw': json.dumps(activity, ensure_ascii=False),
+    }
+
+    if existing:
+        cur.execute(
+            '''
+            UPDATE dives
+            SET
+              source = :source,
+              dive_number = COALESCE(dive_number, :dive_number),
+              date = :date,
+              start_time_local = :start_time_local,
+              start_time_gmt = :start_time_gmt,
+              duration_s = :duration_s,
+              elapsed_s = :elapsed_s,
+              max_depth_m = :max_depth_m,
+              avg_depth_m = :avg_depth_m,
+              water_temp_min_c = :water_temp_min_c,
+              water_temp_max_c = :water_temp_max_c,
+              water_type = COALESCE(:water_type, water_type),
+              o2_pct = :o2_pct,
+              he_pct = :he_pct,
+              deco_dive = :deco_dive,
+              avg_hr = :avg_hr,
+              max_hr = :max_hr,
+              calories = :calories,
+              surface_interval_s = :surface_interval_s,
+              start_lat = COALESCE(:start_lat, start_lat),
+              start_lon = COALESCE(:start_lon, start_lon),
+              end_lat = COALESCE(:end_lat, end_lat),
+              end_lon = COALESCE(:end_lon, end_lon),
+              dive_site = COALESCE(:dive_site, dive_site),
+              location_country = COALESCE(:location_country, location_country),
+              garmin_raw = :garmin_raw
+            WHERE garmin_activity_id = :garmin_activity_id
+            ''',
+            row_data,
+        )
+        return 'updated', existing[0]
+
+    if not allow_insert:
+        return 'skipped', None
+
+    cur.execute(
+        '''
+        INSERT INTO dives (
+          garmin_activity_id, source, dive_number, date,
+          start_time_local, start_time_gmt,
+          duration_s, elapsed_s,
+          max_depth_m, avg_depth_m,
+          water_temp_min_c, water_temp_max_c,
+          water_type, o2_pct, he_pct,
+          deco_dive, avg_hr, max_hr, calories,
+          surface_interval_s,
+          start_lat, start_lon, end_lat, end_lon,
+          dive_site, location_country,
+          garmin_raw
+        ) VALUES (
+          :garmin_activity_id, :source, :dive_number, :date,
+          :start_time_local, :start_time_gmt,
+          :duration_s, :elapsed_s,
+          :max_depth_m, :avg_depth_m,
+          :water_temp_min_c, :water_temp_max_c,
+          :water_type, :o2_pct, :he_pct,
+          :deco_dive, :avg_hr, :max_hr, :calories,
+          :surface_interval_s,
+          :start_lat, :start_lon, :end_lat, :end_lon,
+          :dive_site, :location_country,
+          :garmin_raw
+        )
+        ''',
+        row_data,
+    )
+    return 'inserted', cur.lastrowid
+
+
+def sync_garmin_to_db(garmin: Garmin, start_date: str, end_date: str) -> dict[str, Any]:
+    activities = garmin.get_activities_by_date(start_date, end_date, activitytype='diving')
+    activities = sorted(activities, key=activity_sort_key)
+
+    conn = sqlite3.connect(DB_PATH)
+    inserted = 0
+    updated = 0
+    inserted_ids: list[str] = []
+    updated_ids: list[str] = []
+    try:
+        for activity in activities:
+            status, _ = upsert_activity(conn, activity)
+            if status == 'inserted':
+                inserted += 1
+                inserted_ids.append(str(activity['activityId']))
+            elif status == 'updated':
+                updated += 1
+                updated_ids.append(str(activity['activityId']))
+        conn.commit()
+
+        total_rows = conn.execute('SELECT COUNT(*) FROM dives WHERE duplicate_of IS NULL').fetchone()[0]
+        max_dive_number = conn.execute('SELECT COALESCE(MAX(dive_number), 0) FROM dives').fetchone()[0]
+    finally:
+        conn.close()
+
+    return {
+        'activities_fetched': len(activities),
+        'inserted': inserted,
+        'updated': updated,
+        'inserted_ids': inserted_ids,
+        'updated_ids': updated_ids,
+        'total_rows': total_rows,
+        'max_dive_number': max_dive_number,
+    }
 
 
 def load_dives() -> list[dict[str, Any]]:
@@ -31,6 +243,7 @@ def load_dives() -> list[dict[str, Any]]:
         SELECT
           dive_number,
           date,
+          start_time_local,
           dive_site,
           location_country,
           duration_s,
@@ -46,7 +259,7 @@ def load_dives() -> list[dict[str, Any]]:
           garmin_activity_id
         FROM dives
         WHERE duplicate_of IS NULL
-        ORDER BY dive_number ASC
+        ORDER BY date ASC, COALESCE(start_time_local, date) ASC, dive_number ASC, id ASC
         '''
     ).fetchall()
     conn.close()
@@ -94,10 +307,7 @@ def load_dives() -> list[dict[str, Any]]:
     return dives
 
 
-def build_profiles(dives: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
-    garmin = Garmin()
-    garmin.login(str(TOKEN_DIR))
-
+def build_profiles(garmin: Garmin, dives: Iterable[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     profiles: dict[str, list[dict[str, Any]]] = {}
     for dive in dives:
         activity_id = dive.get('garmin_id')
@@ -149,21 +359,35 @@ def dump_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description='Sync Garmin dive data into dive-log.db and export website JSON.')
+    parser.add_argument('--skip-sync', action='store_true', help='Skip Garmin -> DB sync and export from current DB only.')
+    parser.add_argument('--sync-start', default=DEFAULT_SYNC_START, help='Sync Garmin activities starting from this date (YYYY-MM-DD).')
+    parser.add_argument('--sync-end', default=date.today().isoformat(), help='Sync Garmin activities until this date (YYYY-MM-DD).')
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     if not DB_PATH.exists():
         raise FileNotFoundError(f'Dive DB not found: {DB_PATH}')
     if not TOKEN_DIR.exists():
         raise FileNotFoundError(f'Garmin token dir not found: {TOKEN_DIR}')
 
+    garmin = get_garmin_client()
+    sync_summary: dict[str, Any] | None = None
+    if not args.skip_sync:
+        sync_summary = sync_garmin_to_db(garmin, args.sync_start, args.sync_end)
+
     dives = load_dives()
-    profiles = build_profiles(dives)
+    profiles = build_profiles(garmin, dives)
 
     dump_json(DIVES_JSON, dives)
     dump_json(DIVE_PROFILES_JSON, profiles)
     dump_json(PUBLIC_DIVE_PROFILES_JSON, profiles)
 
     with_profile = sum(1 for dive in dives if str(dive.get('num')) in profiles)
-    print(json.dumps({
+    payload = {
         'db_path': str(DB_PATH),
         'dives': len(dives),
         'dives_with_garmin_id': sum(1 for dive in dives if dive.get('garmin_id')),
@@ -171,7 +395,10 @@ def main() -> None:
         'dives_json': str(DIVES_JSON),
         'dive_profiles_json': str(DIVE_PROFILES_JSON),
         'public_dive_profiles_json': str(PUBLIC_DIVE_PROFILES_JSON),
-    }, ensure_ascii=False, indent=2))
+    }
+    if sync_summary is not None:
+        payload['sync'] = sync_summary
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':
