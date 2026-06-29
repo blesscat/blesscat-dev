@@ -8,6 +8,10 @@ export interface Dive {
   water_temp?: number;
   gas?: string;
   avg_hr?: number | null;
+  entry_lat?: number | null;
+  entry_lon?: number | null;
+  exit_lat?: number | null;
+  exit_lon?: number | null;
   lat?: number | null;
   lon?: number | null;
   garmin_id?: string | null;

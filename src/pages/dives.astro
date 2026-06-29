@@ -174,13 +174,27 @@ const diveYearData = {
               {d.water_temp && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-pill-green text-green">🌡 {d.water_temp}°C</span>}
               {d.gas && d.gas !== 'Air' && <span class="py-[0.2rem] px-[0.6rem] rounded-full text-xs font-semibold bg-pill-red text-red">{d.gas}</span>}
             </div>
-            {d.garmin_id && (
-              <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-accent text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-accent hover:bg-accent/5" data-dive={d.num} aria-expanded="false">
-                <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
-                <span>深度曲線</span>
-              </button>
-            )}
+            <div class="flex items-center gap-2 flex-wrap max-md:w-full max-md:justify-end">
+              {(d.entry_lat != null && d.entry_lon != null) || (d.exit_lat != null && d.exit_lon != null) ? (
+                <button class="mini-map-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-emerald-300 text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-emerald-300 hover:bg-emerald-300/5" data-dive={d.num} aria-expanded="false">
+                  <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
+                  <span>入/出水地圖</span>
+                </button>
+              ) : null}
+              {d.garmin_id && (
+                <button class="chart-toggle group flex items-center gap-[0.3rem] py-[0.3rem] px-[0.7rem] bg-transparent border border-border rounded-md text-accent text-[0.78rem] cursor-pointer transition-all duration-200 whitespace-nowrap hover:border-accent hover:bg-accent/5" data-dive={d.num} aria-expanded="false">
+                  <span class="inline-block transition-transform duration-200 text-[0.6rem] group-aria-[expanded=true]:rotate-90">▶</span>
+                  <span>深度曲線</span>
+                </button>
+              )}
+            </div>
           </div>
+          {(d.entry_lat != null && d.entry_lon != null) || (d.exit_lat != null && d.exit_lon != null) ? (
+            <div class="border-t border-border pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`map-panel-${d.num}`} hidden>
+              <div class="text-[0.78rem] text-subtle mb-2" id={`map-caption-${d.num}`}>載入地圖後會顯示入水 / 出水點</div>
+              <div class="h-56 max-md:h-48 rounded-xl overflow-hidden border border-border/80 bg-[#0f172a]" id={`mini-map-${d.num}`}></div>
+            </div>
+          ) : null}
           {d.garmin_id && (
             <div class="border-t border-border pt-4 px-6 pb-6 max-md:pt-3 max-md:px-3 max-md:pb-4" id={`chart-panel-${d.num}`} hidden>
               <div class="relative h-50 max-md:h-45">
@@ -195,7 +209,8 @@ const diveYearData = {
 </Layout>
 
 <!-- 傳資料給前端 JS（is:inline 確保同步執行，define:vars 之後立刻可取得） -->
-<script define:vars={{ divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }} is:inline>
+<script define:vars={{ dives, divesWithGPS, divesWithProfile, depthChartData, monthChartData, totalDives, diveYearData }} is:inline>
+  window.__DIVES_ALL__ = dives
   window.__DIVES_GPS__ = divesWithGPS
   window.__DIVES_PROFILE__ = divesWithProfile
   window.__DEPTH_CHART_DATA__ = depthChartData
