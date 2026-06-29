@@ -136,6 +136,19 @@ async function initDiveMiniMaps() {
   const diveByNum = new Map(dives.map((d) => [d.num, d]))
   const mapInstances = new Map<number, any>()
 
+  function refreshMapSize(diveNum: number, delay = 0) {
+    const map = mapInstances.get(diveNum)
+    if (!map) return
+    window.setTimeout(() => map.invalidateSize(), delay)
+  }
+
+  function setFullscreenButtonState(btn: HTMLButtonElement, isFullscreen: boolean) {
+    btn.setAttribute('aria-expanded', isFullscreen ? 'true' : 'false')
+    btn.setAttribute('aria-label', isFullscreen ? '離開全螢幕地圖' : '全螢幕查看地圖')
+    const label = btn.querySelector('span:last-child')
+    if (label) label.textContent = isFullscreen ? '縮回' : '全螢幕'
+  }
+
   function mapCaption(points: ReturnType<typeof getDiveMapPoints>): string {
     if (points.length === 2) return '綠色是入水點 IN，紅色是出水點 OUT'
     if (points[0]?.kind === 'entry') return '只有入水點座標 IN'
@@ -155,8 +168,7 @@ async function initDiveMiniMaps() {
 
   async function buildMiniMap(diveNum: number) {
     if (mapInstances.has(diveNum)) {
-      const existing = mapInstances.get(diveNum)
-      setTimeout(() => existing.invalidateSize(), 0)
+      refreshMapSize(diveNum)
       return
     }
 
@@ -204,9 +216,41 @@ async function initDiveMiniMaps() {
       map.setView(latlngs[0], 15)
     }
 
-    setTimeout(() => map.invalidateSize(), 0)
+    refreshMapSize(diveNum)
     mapInstances.set(diveNum, map)
   }
+
+  document.addEventListener('fullscreenchange', () => {
+    document.querySelectorAll<HTMLButtonElement>('.map-fullscreen-toggle').forEach((btn) => {
+      const diveNum = parseInt(btn.dataset.dive ?? '0', 10)
+      const shell = document.getElementById(`mini-map-shell-${diveNum}`)
+      const active = document.fullscreenElement === shell
+      setFullscreenButtonState(btn, active)
+      if (active || !document.fullscreenElement) {
+        refreshMapSize(diveNum, 50)
+      }
+    })
+  })
+
+  document.querySelectorAll<HTMLButtonElement>('.map-fullscreen-toggle').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const diveNum = parseInt(btn.dataset.dive ?? '0', 10)
+      const shell = document.getElementById(`mini-map-shell-${diveNum}`) as HTMLElement | null
+      if (!shell) return
+
+      if (document.fullscreenElement === shell) {
+        await document.exitFullscreen()
+        return
+      }
+
+      if (document.fullscreenElement && document.fullscreenElement !== shell) {
+        await document.exitFullscreen()
+      }
+
+      await shell.requestFullscreen()
+      refreshMapSize(diveNum, 50)
+    })
+  })
 
   document.querySelectorAll<HTMLButtonElement>('.mini-map-toggle').forEach((btn) => {
     btn.addEventListener('click', async () => {
