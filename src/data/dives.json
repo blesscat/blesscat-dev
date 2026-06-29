@@ -636,9 +636,9 @@
     "bottom_time": 46.3,
     "max_depth": 21.0,
     "avg_depth": 12.0,
-    "water_temp": 28.0,
+    "water_temp": 28.5,
     "gas": "EAN32",
-    "avg_hr": 88.0,
+    "avg_hr": 88,
     "lat": 7.1037,
     "lon": 134.2511,
     "garmin_id": "21529563250"
@@ -652,7 +652,7 @@
     "avg_depth": 14.1,
     "water_temp": 29.0,
     "gas": "EAN32",
-    "avg_hr": 93.0,
+    "avg_hr": 93,
     "lat": 7.1201,
     "lon": 134.2691,
     "garmin_id": "21529562834"
@@ -664,9 +664,9 @@
     "bottom_time": 48.8,
     "max_depth": 28.6,
     "avg_depth": 15.7,
-    "water_temp": 28.0,
+    "water_temp": 28.5,
     "gas": "EAN32",
-    "avg_hr": 95.0,
+    "avg_hr": 95,
     "lat": null,
     "lon": null,
     "garmin_id": "21542302125"
@@ -680,7 +680,7 @@
     "avg_depth": 9.9,
     "water_temp": 29.0,
     "gas": "EAN32",
-    "avg_hr": 89.0,
+    "avg_hr": 89,
     "lat": null,
     "lon": null,
     "garmin_id": "21542303508"
@@ -689,12 +689,12 @@
     "num": 50,
     "date": "2026-01-14",
     "location": "Unknown",
-    "bottom_time": 48.6,
+    "bottom_time": 48.7,
     "max_depth": 26.6,
     "avg_depth": 12.1,
     "water_temp": 29.0,
     "gas": "EAN32",
-    "avg_hr": 94.0,
+    "avg_hr": 94,
     "lat": null,
     "lon": null,
     "garmin_id": "21542304681"
@@ -706,9 +706,9 @@
     "bottom_time": 45.8,
     "max_depth": 28.6,
     "avg_depth": 13.8,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "EAN32",
-    "avg_hr": 79.0,
+    "avg_hr": 79,
     "lat": null,
     "lon": null,
     "garmin_id": "21551383313"
@@ -720,12 +720,12 @@
     "bottom_time": 55.6,
     "max_depth": 21.0,
     "avg_depth": 14.8,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "EAN32",
-    "avg_hr": null,
+    "avg_hr": 81,
     "lat": null,
     "lon": null,
-    "garmin_id": null
+    "garmin_id": "21551512596"
   },
   {
     "num": 53,
@@ -734,12 +734,12 @@
     "bottom_time": 50.3,
     "max_depth": 33.9,
     "avg_depth": 16.7,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "EAN32",
-    "avg_hr": null,
+    "avg_hr": 98,
     "lat": null,
     "lon": null,
-    "garmin_id": null
+    "garmin_id": "21551385679"
   },
   {
     "num": 54,
@@ -748,12 +748,12 @@
     "bottom_time": 61.2,
     "max_depth": 24.6,
     "avg_depth": 14.1,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "EAN32",
     "avg_hr": null,
     "lat": null,
     "lon": null,
-    "garmin_id": null
+    "garmin_id": "21562339253"
   },
   {
     "num": 55,
@@ -762,25 +762,25 @@
     "bottom_time": 47.3,
     "max_depth": 30.6,
     "avg_depth": 17.1,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "Air",
     "avg_hr": null,
     "lat": null,
     "lon": null,
-    "garmin_id": null
+    "garmin_id": "21562340154"
   },
   {
     "num": 56,
     "date": "2026-01-16",
     "location": "Koror, Belau",
-    "bottom_time": 57.1,
+    "bottom_time": 57.2,
     "max_depth": 19.6,
     "avg_depth": 13.9,
-    "water_temp": 29.0,
+    "water_temp": 29.5,
     "gas": "EAN32",
-    "avg_hr": null,
+    "avg_hr": 86,
     "lat": 7.1203,
     "lon": 134.2697,
-    "garmin_id": null
+    "garmin_id": "21562339621"
   }
 ]
