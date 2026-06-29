@@ -272,8 +272,8 @@ def load_dives() -> list[dict[str, Any]]:
           o2_pct,
           he_pct,
           avg_hr,
-          start_lat,
-          start_lon,
+          COALESCE(start_lat, end_lat) AS export_lat,
+          COALESCE(start_lon, end_lon) AS export_lon,
           garmin_activity_id
         FROM dives
         WHERE duplicate_of IS NULL
@@ -318,8 +318,8 @@ def load_dives() -> list[dict[str, Any]]:
                 'water_temp': water_temp,
                 'gas': gas,
                 'avg_hr': None if row['avg_hr'] is None else int(round(float(row['avg_hr']))),
-                'lat': round_or_none(row['start_lat'], 4),
-                'lon': round_or_none(row['start_lon'], 4),
+                'lat': round_or_none(row['export_lat'], 4),
+                'lon': round_or_none(row['export_lon'], 4),
                 'garmin_id': str(row['garmin_activity_id']) if row['garmin_activity_id'] else None,
             }
         )

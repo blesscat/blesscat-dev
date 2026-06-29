@@ -715,8 +715,8 @@
     "water_temp": 28.5,
     "gas": "EAN32",
     "avg_hr": 95,
-    "lat": null,
-    "lon": null,
+    "lat": 7.2707,
+    "lon": 134.2453,
     "garmin_id": "21542302125"
   },
   {
@@ -730,8 +730,8 @@
     "water_temp": 29.0,
     "gas": "EAN32",
     "avg_hr": 89,
-    "lat": null,
-    "lon": null,
+    "lat": 7.286,
+    "lon": 134.2505,
     "garmin_id": "21542303508"
   },
   {
@@ -760,8 +760,8 @@
     "water_temp": 29.5,
     "gas": "EAN32",
     "avg_hr": 79,
-    "lat": null,
-    "lon": null,
+    "lat": 7.2708,
+    "lon": 134.2445,
     "garmin_id": "21551383313"
   },
   {
@@ -790,8 +790,8 @@
     "water_temp": 29.5,
     "gas": "EAN32",
     "avg_hr": 98,
-    "lat": null,
-    "lon": null,
+    "lat": 7.3129,
+    "lon": 134.2235,
     "garmin_id": "21551385679"
   },
   {
@@ -805,8 +805,8 @@
     "water_temp": 29.5,
     "gas": "EAN32",
     "avg_hr": null,
-    "lat": null,
-    "lon": null,
+    "lat": 7.1353,
+    "lon": 134.2198,
     "garmin_id": "21562339253"
   },
   {
@@ -820,8 +820,8 @@
     "water_temp": 29.5,
     "gas": "Air",
     "avg_hr": null,
-    "lat": null,
-    "lon": null,
+    "lat": 7.1373,
+    "lon": 134.2217,
     "garmin_id": "21562340154"
   },
   {
@@ -843,30 +843,30 @@
     "num": 57,
     "garmin_dive_number": 59,
     "date": "2026-06-28",
-    "location": "Unknown",
+    "location": "Bat Cave, Taiwan",
     "bottom_time": 41.4,
     "max_depth": 14.1,
     "avg_depth": 7.0,
     "water_temp": 27.5,
     "gas": "Air",
     "avg_hr": 101,
-    "lat": null,
-    "lon": null,
+    "lat": 25.127,
+    "lon": 121.8314,
     "garmin_id": "23403603399"
   },
   {
     "num": 58,
     "garmin_dive_number": 60,
     "date": "2026-06-28",
-    "location": "Unknown",
+    "location": "Bat Cave, Taiwan",
     "bottom_time": 31.3,
     "max_depth": 16.1,
     "avg_depth": 8.1,
     "water_temp": 27.5,
     "gas": "Air",
     "avg_hr": 100,
-    "lat": null,
-    "lon": null,
+    "lat": 25.127,
+    "lon": 121.8315,
     "garmin_id": "23404461270"
   }
 ]
