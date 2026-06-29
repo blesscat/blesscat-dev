@@ -6,7 +6,7 @@ import json
 import math
 import sqlite3
 from collections.abc import Iterable
-from datetime import date, datetime
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -31,6 +31,21 @@ def get_garmin_client() -> Garmin:
     garmin = Garmin()
     garmin.login(str(TOKEN_DIR))
     return garmin
+
+
+def ensure_schema(conn: sqlite3.Connection) -> None:
+    cur = conn.cursor()
+    columns = {row[1] for row in cur.execute('PRAGMA table_info(dives)')}
+    if 'garmin_dive_number' not in columns:
+        cur.execute('ALTER TABLE dives ADD COLUMN garmin_dive_number INTEGER')
+        cur.execute(
+            '''
+            UPDATE dives
+            SET garmin_dive_number = dive_number
+            WHERE source = 'garmin' AND garmin_activity_id IS NOT NULL AND dive_number IS NOT NULL
+            '''
+        )
+        conn.commit()
 
 
 def first_gas(summary: dict[str, Any] | None) -> tuple[float | None, float | None]:
@@ -58,26 +73,6 @@ def meter_from_cm(value: Any) -> float | None:
     return round(float(value) / 100.0, 2)
 
 
-def choose_local_number(cur: sqlite3.Cursor, garmin_dive_number: Any) -> int:
-    max_existing = cur.execute('SELECT COALESCE(MAX(dive_number), 0) FROM dives').fetchone()[0]
-    candidate = None
-    if garmin_dive_number is not None:
-        try:
-            candidate = int(garmin_dive_number)
-        except (TypeError, ValueError):
-            candidate = None
-    if candidate is None or candidate <= 0:
-        return max_existing + 1
-
-    row = cur.execute(
-        'SELECT garmin_activity_id FROM dives WHERE dive_number = ? LIMIT 1',
-        (candidate,),
-    ).fetchone()
-    if row is None:
-        return candidate
-    return max_existing + 1
-
-
 def activity_sort_key(activity: dict[str, Any]) -> tuple[str, str, int]:
     return (
         str(activity.get('startTimeLocal') or ''),
@@ -86,20 +81,42 @@ def activity_sort_key(activity: dict[str, Any]) -> tuple[str, str, int]:
     )
 
 
+def renumber_dives(conn: sqlite3.Connection) -> int:
+    cur = conn.cursor()
+    rows = cur.execute(
+        '''
+        SELECT id
+        FROM dives
+        WHERE duplicate_of IS NULL
+        ORDER BY date ASC, COALESCE(start_time_local, start_time_gmt, date) ASC, id ASC
+        '''
+    ).fetchall()
+    for idx, (row_id,) in enumerate(rows, start=1):
+        cur.execute('UPDATE dives SET dive_number = ? WHERE id = ?', (idx, row_id))
+    conn.commit()
+    return len(rows)
+
+
 def upsert_activity(conn: sqlite3.Connection, activity: dict[str, Any], *, allow_insert: bool = True) -> tuple[str, int | None]:
     cur = conn.cursor()
     activity_id = str(activity['activityId'])
     existing = cur.execute(
-        'SELECT id, dive_number FROM dives WHERE garmin_activity_id = ?',
+        'SELECT id FROM dives WHERE garmin_activity_id = ?',
         (activity_id,),
     ).fetchone()
 
     summary = activity.get('summarizedDiveInfo') or {}
     o2_pct, he_pct = first_gas(summary)
+    garmin_dive_number = activity.get('diveNumber')
+    try:
+        garmin_dive_number = int(garmin_dive_number) if garmin_dive_number is not None else None
+    except (TypeError, ValueError):
+        garmin_dive_number = None
+
     row_data = {
         'garmin_activity_id': activity_id,
         'source': 'garmin',
-        'dive_number': existing[1] if existing else choose_local_number(cur, activity.get('diveNumber')),
+        'garmin_dive_number': garmin_dive_number,
         'date': str(activity.get('startTimeLocal') or activity.get('startTimeGMT') or '')[:10],
         'start_time_local': activity.get('startTimeLocal'),
         'start_time_gmt': activity.get('startTimeGMT'),
@@ -132,7 +149,7 @@ def upsert_activity(conn: sqlite3.Connection, activity: dict[str, Any], *, allow
             UPDATE dives
             SET
               source = :source,
-              dive_number = COALESCE(dive_number, :dive_number),
+              garmin_dive_number = COALESCE(:garmin_dive_number, garmin_dive_number),
               date = :date,
               start_time_local = :start_time_local,
               start_time_gmt = :start_time_gmt,
@@ -169,7 +186,7 @@ def upsert_activity(conn: sqlite3.Connection, activity: dict[str, Any], *, allow
     cur.execute(
         '''
         INSERT INTO dives (
-          garmin_activity_id, source, dive_number, date,
+          garmin_activity_id, source, garmin_dive_number, date,
           start_time_local, start_time_gmt,
           duration_s, elapsed_s,
           max_depth_m, avg_depth_m,
@@ -181,7 +198,7 @@ def upsert_activity(conn: sqlite3.Connection, activity: dict[str, Any], *, allow
           dive_site, location_country,
           garmin_raw
         ) VALUES (
-          :garmin_activity_id, :source, :dive_number, :date,
+          :garmin_activity_id, :source, :garmin_dive_number, :date,
           :start_time_local, :start_time_gmt,
           :duration_s, :elapsed_s,
           :max_depth_m, :avg_depth_m,
@@ -209,6 +226,7 @@ def sync_garmin_to_db(garmin: Garmin, start_date: str, end_date: str) -> dict[st
     inserted_ids: list[str] = []
     updated_ids: list[str] = []
     try:
+        ensure_schema(conn)
         for activity in activities:
             status, _ = upsert_activity(conn, activity)
             if status == 'inserted':
@@ -217,9 +235,7 @@ def sync_garmin_to_db(garmin: Garmin, start_date: str, end_date: str) -> dict[st
             elif status == 'updated':
                 updated += 1
                 updated_ids.append(str(activity['activityId']))
-        conn.commit()
-
-        total_rows = conn.execute('SELECT COUNT(*) FROM dives WHERE duplicate_of IS NULL').fetchone()[0]
+        total_rows = renumber_dives(conn)
         max_dive_number = conn.execute('SELECT COALESCE(MAX(dive_number), 0) FROM dives').fetchone()[0]
     finally:
         conn.close()
@@ -237,11 +253,13 @@ def sync_garmin_to_db(garmin: Garmin, start_date: str, end_date: str) -> dict[st
 
 def load_dives() -> list[dict[str, Any]]:
     conn = sqlite3.connect(DB_PATH)
+    ensure_schema(conn)
     conn.row_factory = sqlite3.Row
     rows = conn.execute(
         '''
         SELECT
           dive_number,
+          garmin_dive_number,
           date,
           start_time_local,
           dive_site,
@@ -259,7 +277,7 @@ def load_dives() -> list[dict[str, Any]]:
           garmin_activity_id
         FROM dives
         WHERE duplicate_of IS NULL
-        ORDER BY date ASC, COALESCE(start_time_local, date) ASC, dive_number ASC, id ASC
+        ORDER BY dive_number ASC
         '''
     ).fetchall()
     conn.close()
@@ -291,6 +309,7 @@ def load_dives() -> list[dict[str, Any]]:
         dives.append(
             {
                 'num': row['dive_number'],
+                'garmin_dive_number': row['garmin_dive_number'],
                 'date': row['date'],
                 'location': location,
                 'bottom_time': round(float(row['duration_s']) / 60, 1) if row['duration_s'] is not None else None,
@@ -374,9 +393,27 @@ def main() -> None:
     if not TOKEN_DIR.exists():
         raise FileNotFoundError(f'Garmin token dir not found: {TOKEN_DIR}')
 
-    garmin = get_garmin_client()
     sync_summary: dict[str, Any] | None = None
-    if not args.skip_sync:
+    if args.skip_sync:
+        conn = sqlite3.connect(DB_PATH)
+        try:
+            ensure_schema(conn)
+            total_rows = renumber_dives(conn)
+            sync_summary = {
+                'activities_fetched': 0,
+                'inserted': 0,
+                'updated': 0,
+                'inserted_ids': [],
+                'updated_ids': [],
+                'total_rows': total_rows,
+                'max_dive_number': conn.execute('SELECT COALESCE(MAX(dive_number), 0) FROM dives').fetchone()[0],
+                'skip_sync': True,
+            }
+        finally:
+            conn.close()
+        garmin = get_garmin_client()
+    else:
+        garmin = get_garmin_client()
         sync_summary = sync_garmin_to_db(garmin, args.sync_start, args.sync_end)
 
     dives = load_dives()

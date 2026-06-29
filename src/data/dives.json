@@ -1,6 +1,7 @@
 [
   {
     "num": 1,
+    "garmin_dive_number": null,
     "date": "2024-04-27",
     "location": "Unknown",
     "bottom_time": 27.5,
@@ -15,6 +16,7 @@
   },
   {
     "num": 2,
+    "garmin_dive_number": null,
     "date": "2024-04-27",
     "location": "Unknown",
     "bottom_time": 37.2,
@@ -29,6 +31,7 @@
   },
   {
     "num": 3,
+    "garmin_dive_number": null,
     "date": "2024-04-27",
     "location": "Unknown",
     "bottom_time": 38.3,
@@ -43,6 +46,7 @@
   },
   {
     "num": 4,
+    "garmin_dive_number": null,
     "date": "2024-04-28",
     "location": "Unknown",
     "bottom_time": 39.4,
@@ -57,6 +61,7 @@
   },
   {
     "num": 5,
+    "garmin_dive_number": null,
     "date": "2024-04-28",
     "location": "Unknown",
     "bottom_time": 33.0,
@@ -71,6 +76,7 @@
   },
   {
     "num": 6,
+    "garmin_dive_number": null,
     "date": "2024-04-28",
     "location": "Unknown",
     "bottom_time": 41.7,
@@ -85,6 +91,7 @@
   },
   {
     "num": 7,
+    "garmin_dive_number": null,
     "date": "2024-04-29",
     "location": "Unknown",
     "bottom_time": 38.5,
@@ -99,6 +106,7 @@
   },
   {
     "num": 8,
+    "garmin_dive_number": null,
     "date": "2024-04-29",
     "location": "Unknown",
     "bottom_time": 43.0,
@@ -113,6 +121,7 @@
   },
   {
     "num": 9,
+    "garmin_dive_number": null,
     "date": "2024-06-01",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 42.6,
@@ -127,6 +136,7 @@
   },
   {
     "num": 10,
+    "garmin_dive_number": null,
     "date": "2024-06-01",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 43.1,
@@ -141,6 +151,7 @@
   },
   {
     "num": 11,
+    "garmin_dive_number": null,
     "date": "2024-06-29",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 38.9,
@@ -155,6 +166,7 @@
   },
   {
     "num": 12,
+    "garmin_dive_number": null,
     "date": "2024-06-29",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 47.8,
@@ -169,6 +181,7 @@
   },
   {
     "num": 13,
+    "garmin_dive_number": null,
     "date": "2024-07-21",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 45.3,
@@ -183,6 +196,7 @@
   },
   {
     "num": 14,
+    "garmin_dive_number": null,
     "date": "2024-07-21",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 51.0,
@@ -197,6 +211,7 @@
   },
   {
     "num": 15,
+    "garmin_dive_number": null,
     "date": "2024-08-04",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 44.7,
@@ -211,6 +226,7 @@
   },
   {
     "num": 16,
+    "garmin_dive_number": null,
     "date": "2024-08-04",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 48.8,
@@ -225,6 +241,7 @@
   },
   {
     "num": 17,
+    "garmin_dive_number": null,
     "date": "2024-08-17",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 46.8,
@@ -239,6 +256,7 @@
   },
   {
     "num": 18,
+    "garmin_dive_number": null,
     "date": "2024-08-17",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 53.4,
@@ -253,6 +271,7 @@
   },
   {
     "num": 19,
+    "garmin_dive_number": null,
     "date": "2025-03-23",
     "location": "Unknown",
     "bottom_time": 39.3,
@@ -267,6 +286,7 @@
   },
   {
     "num": 20,
+    "garmin_dive_number": null,
     "date": "2025-06-20",
     "location": "Church, Taiwan",
     "bottom_time": 39.0,
@@ -281,6 +301,7 @@
   },
   {
     "num": 21,
+    "garmin_dive_number": null,
     "date": "2025-06-20",
     "location": "Moai, Taiwan",
     "bottom_time": 48.4,
@@ -295,6 +316,7 @@
   },
   {
     "num": 22,
+    "garmin_dive_number": null,
     "date": "2025-06-21",
     "location": "Steel Reef, Taiwan",
     "bottom_time": 30.9,
@@ -309,6 +331,7 @@
   },
   {
     "num": 23,
+    "garmin_dive_number": null,
     "date": "2025-06-21",
     "location": "6 Meters Reef, Taiwan",
     "bottom_time": 40.5,
@@ -323,6 +346,7 @@
   },
   {
     "num": 24,
+    "garmin_dive_number": null,
     "date": "2025-06-22",
     "location": "Dabaisha, Taiwan",
     "bottom_time": 31.0,
@@ -337,6 +361,7 @@
   },
   {
     "num": 25,
+    "garmin_dive_number": null,
     "date": "2025-06-22",
     "location": "Telephone Pole Reef, Taiwan",
     "bottom_time": 39.8,
@@ -351,6 +376,7 @@
   },
   {
     "num": 26,
+    "garmin_dive_number": null,
     "date": "2025-07-13",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 48.8,
@@ -365,6 +391,7 @@
   },
   {
     "num": 27,
+    "garmin_dive_number": null,
     "date": "2025-07-13",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 47.2,
@@ -379,6 +406,7 @@
   },
   {
     "num": 28,
+    "garmin_dive_number": null,
     "date": "2025-07-18",
     "location": "Unknown",
     "bottom_time": 42.9,
@@ -393,6 +421,7 @@
   },
   {
     "num": 29,
+    "garmin_dive_number": null,
     "date": "2025-07-18",
     "location": "Unknown",
     "bottom_time": 44.9,
@@ -407,6 +436,7 @@
   },
   {
     "num": 30,
+    "garmin_dive_number": null,
     "date": "2025-08-10",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 55.5,
@@ -421,6 +451,7 @@
   },
   {
     "num": 31,
+    "garmin_dive_number": null,
     "date": "2025-08-10",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 33.7,
@@ -435,6 +466,7 @@
   },
   {
     "num": 32,
+    "garmin_dive_number": null,
     "date": "2025-08-17",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 53.4,
@@ -449,6 +481,7 @@
   },
   {
     "num": 33,
+    "garmin_dive_number": null,
     "date": "2025-08-17",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 31.6,
@@ -463,6 +496,7 @@
   },
   {
     "num": 34,
+    "garmin_dive_number": null,
     "date": "2025-08-24",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 62.0,
@@ -477,6 +511,7 @@
   },
   {
     "num": 35,
+    "garmin_dive_number": null,
     "date": "2025-08-24",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 61.1,
@@ -491,6 +526,7 @@
   },
   {
     "num": 36,
+    "garmin_dive_number": null,
     "date": "2025-08-30",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 54.1,
@@ -505,6 +541,7 @@
   },
   {
     "num": 37,
+    "garmin_dive_number": null,
     "date": "2025-08-31",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 73.7,
@@ -519,6 +556,7 @@
   },
   {
     "num": 38,
+    "garmin_dive_number": null,
     "date": "2025-08-31",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 74.2,
@@ -533,6 +571,7 @@
   },
   {
     "num": 39,
+    "garmin_dive_number": null,
     "date": "2025-09-19",
     "location": "Unknown",
     "bottom_time": 37.3,
@@ -547,6 +586,7 @@
   },
   {
     "num": 40,
+    "garmin_dive_number": null,
     "date": "2025-09-19",
     "location": "Unknown",
     "bottom_time": 46.7,
@@ -561,6 +601,7 @@
   },
   {
     "num": 41,
+    "garmin_dive_number": null,
     "date": "2025-09-19",
     "location": "Unknown",
     "bottom_time": 53.8,
@@ -575,6 +616,7 @@
   },
   {
     "num": 42,
+    "garmin_dive_number": null,
     "date": "2025-09-20",
     "location": "Unknown",
     "bottom_time": 38.9,
@@ -589,6 +631,7 @@
   },
   {
     "num": 43,
+    "garmin_dive_number": null,
     "date": "2025-09-20",
     "location": "Unknown",
     "bottom_time": 41.6,
@@ -603,6 +646,7 @@
   },
   {
     "num": 44,
+    "garmin_dive_number": null,
     "date": "2025-09-20",
     "location": "Unknown",
     "bottom_time": 36.1,
@@ -617,6 +661,7 @@
   },
   {
     "num": 45,
+    "garmin_dive_number": null,
     "date": "2025-09-20",
     "location": "Unknown",
     "bottom_time": 44.4,
@@ -630,35 +675,8 @@
     "garmin_id": null
   },
   {
-    "num": 57,
-    "date": "2026-01-13",
-    "location": "Unknown",
-    "bottom_time": 1.0,
-    "max_depth": 2.7,
-    "avg_depth": 0.4,
-    "water_temp": 30.0,
-    "gas": "EAN32",
-    "avg_hr": 96,
-    "lat": null,
-    "lon": null,
-    "garmin_id": "21593018220"
-  },
-  {
-    "num": 58,
-    "date": "2026-01-13",
-    "location": "Unknown",
-    "bottom_time": 0.3,
-    "max_depth": 2.7,
-    "avg_depth": 1.2,
-    "water_temp": 29.5,
-    "gas": null,
-    "avg_hr": 94,
-    "lat": null,
-    "lon": null,
-    "garmin_id": "21529563749"
-  },
-  {
     "num": 46,
+    "garmin_dive_number": 46,
     "date": "2026-01-13",
     "location": "Koror, Belau",
     "bottom_time": 46.3,
@@ -673,6 +691,7 @@
   },
   {
     "num": 47,
+    "garmin_dive_number": 47,
     "date": "2026-01-13",
     "location": "Koror, Belau",
     "bottom_time": 58.2,
@@ -687,6 +706,7 @@
   },
   {
     "num": 48,
+    "garmin_dive_number": 48,
     "date": "2026-01-14",
     "location": "Koror, Belau",
     "bottom_time": 48.8,
@@ -701,6 +721,7 @@
   },
   {
     "num": 49,
+    "garmin_dive_number": 49,
     "date": "2026-01-14",
     "location": "Koror, Belau",
     "bottom_time": 57.0,
@@ -715,6 +736,7 @@
   },
   {
     "num": 50,
+    "garmin_dive_number": 50,
     "date": "2026-01-14",
     "location": "Unknown",
     "bottom_time": 48.7,
@@ -729,6 +751,7 @@
   },
   {
     "num": 51,
+    "garmin_dive_number": 51,
     "date": "2026-01-15",
     "location": "Koror, Belau",
     "bottom_time": 45.8,
@@ -743,6 +766,7 @@
   },
   {
     "num": 52,
+    "garmin_dive_number": 52,
     "date": "2026-01-15",
     "location": "Unknown",
     "bottom_time": 55.6,
@@ -757,6 +781,7 @@
   },
   {
     "num": 53,
+    "garmin_dive_number": 53,
     "date": "2026-01-15",
     "location": "Koror, Belau",
     "bottom_time": 50.3,
@@ -771,6 +796,7 @@
   },
   {
     "num": 54,
+    "garmin_dive_number": 54,
     "date": "2026-01-16",
     "location": "Koror, Belau",
     "bottom_time": 61.2,
@@ -785,6 +811,7 @@
   },
   {
     "num": 55,
+    "garmin_dive_number": 55,
     "date": "2026-01-16",
     "location": "Koror, Belau",
     "bottom_time": 47.3,
@@ -799,6 +826,7 @@
   },
   {
     "num": 56,
+    "garmin_dive_number": 56,
     "date": "2026-01-16",
     "location": "Koror, Belau",
     "bottom_time": 57.2,
@@ -812,7 +840,8 @@
     "garmin_id": "21562339621"
   },
   {
-    "num": 59,
+    "num": 57,
+    "garmin_dive_number": 59,
     "date": "2026-06-28",
     "location": "Unknown",
     "bottom_time": 41.4,
@@ -826,7 +855,8 @@
     "garmin_id": "23403603399"
   },
   {
-    "num": 60,
+    "num": 58,
+    "garmin_dive_number": 60,
     "date": "2026-06-28",
     "location": "Unknown",
     "bottom_time": 31.3,
