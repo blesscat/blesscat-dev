@@ -61,6 +61,19 @@ function ensureChartLoaded(): Promise<any> {
 // =====================
 // Leaflet 地圖總覽
 // =====================
+function applyReadableDarkTiles(map: any, L: any) {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    maxZoom: 19,
+  }).addTo(map)
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+    pane: 'overlayPane',
+    opacity: 0.9,
+    maxZoom: 19,
+  }).addTo(map)
+}
+
 async function initMap() {
   const L = await ensureLeafletLoaded()
   const isMobile = window.matchMedia('(max-width: 768px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
@@ -84,23 +97,21 @@ async function initMap() {
     }
   }
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    maxZoom: 18,
-  }).addTo(map)
+  applyReadableDarkTiles(map, L)
 
   const dives: Dive[] = window.__DIVES_GPS__ || []
   if (!dives.length) return
 
   const icon = L.divIcon({
     html: `<div style="
-      width:12px; height:12px; border-radius:50%;
-      background:#3bd3fd; border:2px solid #fff;
-      box-shadow: 0 0 8px #3bd3fd;
+      width:16px; height:16px; border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #c8f7ff 0%, #67e8f9 42%, #06b6d4 100%);
+      border:2px solid rgba(255,255,255,0.96);
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.22), 0 0 18px rgba(103,232,249,0.52);
     "></div>`,
     className: '',
-    iconSize: [12, 12],
-    iconAnchor: [6, 6],
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
   })
 
   const markers: ReturnType<typeof L.marker>[] = []
@@ -109,16 +120,16 @@ async function initMap() {
     const marker = L.marker([d.lat, d.lon], { icon })
       .addTo(map)
       .bindTooltip(
-        `<div style="font-family:sans-serif; color:#0f172a; min-width:140px; max-width:200px; word-break:break-word; white-space:normal;">
-          <div style="font-weight:700; font-size:1rem; margin-bottom:4px; line-height:1.3;">#${d.num} ${d.location || 'Unknown'}</div>
-          <div style="color:#64748b; font-size:0.82rem;">${d.date}</div>
+        `<div style="font-family:sans-serif; color:#e2e8f0; min-width:160px; max-width:220px; word-break:break-word; white-space:normal; line-height:1.4;">
+          <div style="font-weight:700; font-size:1rem; margin-bottom:4px; color:#f8fafc; line-height:1.3;">#${d.num} ${d.location || 'Unknown'}</div>
+          <div style="color:#94a3b8; font-size:0.82rem;">${d.date}</div>
           <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
-            <span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:99px;font-size:0.78rem;">▼ ${d.max_depth}m</span>
-            <span style="background:#f0fdf4;color:#16a34a;padding:2px 8px;border-radius:99px;font-size:0.78rem;">⏱ ${Math.floor(d.bottom_time ?? 0)}m</span>
-            ${d.water_temp != null ? `<span style="background:#fef9c3;color:#ca8a04;padding:2px 8px;border-radius:99px;font-size:0.78rem;">🌡 ${d.water_temp}°C</span>` : ''}
+            <span style="background:rgba(34,211,238,0.14);color:#a5f3fc;padding:2px 8px;border-radius:99px;font-size:0.78rem;border:1px solid rgba(34,211,238,0.24);">▼ ${d.max_depth}m</span>
+            <span style="background:rgba(74,222,128,0.12);color:#bbf7d0;padding:2px 8px;border-radius:99px;font-size:0.78rem;border:1px solid rgba(74,222,128,0.2);">⏱ ${Math.floor(d.bottom_time ?? 0)}m</span>
+            ${d.water_temp != null ? `<span style="background:rgba(250,204,21,0.12);color:#fde68a;padding:2px 8px;border-radius:99px;font-size:0.78rem;border:1px solid rgba(250,204,21,0.22);">🌡 ${d.water_temp}°C</span>` : ''}
           </div>
         </div>`,
-        { sticky: true }
+        { sticky: true, direction: 'top', offset: [0, -10], className: 'dive-map-tooltip' }
       )
     markers.push(marker)
   })
@@ -191,10 +202,7 @@ async function initDiveMiniMaps() {
       scrollWheelZoom: false,
     })
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      maxZoom: 18,
-    }).addTo(map)
+    applyReadableDarkTiles(map, L)
 
     const latlngs = points.map((point) => [point.lat, point.lon])
     points.forEach((point) => {
@@ -211,7 +219,7 @@ async function initDiveMiniMaps() {
         opacity: 0.8,
         dashArray: '4 6',
       }).addTo(map)
-      map.fitBounds(L.latLngBounds(latlngs).pad(0.4))
+      map.fitBounds(L.latLngBounds(latlngs).pad(0.65))
     } else {
       map.setView(latlngs[0], 15)
     }
