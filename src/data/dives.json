@@ -1065,7 +1065,7 @@
   },
   {
     "num": 57,
-    "garmin_dive_number": 59,
+    "garmin_dive_number": 7,
     "date": "2026-06-28",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 41.4,
@@ -1084,7 +1084,7 @@
   },
   {
     "num": 58,
-    "garmin_dive_number": 60,
+    "garmin_dive_number": 8,
     "date": "2026-06-28",
     "location": "Bat Cave, Taiwan",
     "bottom_time": 31.3,
@@ -1100,5 +1100,43 @@
     "lat": 25.127,
     "lon": 121.8315,
     "garmin_id": "23404461270"
+  },
+  {
+    "num": 59,
+    "garmin_dive_number": 9,
+    "date": "2026-07-03",
+    "location": "Chaikou, Taiwan",
+    "bottom_time": 47.4,
+    "max_depth": 11.3,
+    "avg_depth": 6.7,
+    "water_temp": 29.0,
+    "gas": "Air",
+    "avg_hr": 99,
+    "entry_lat": null,
+    "entry_lon": null,
+    "exit_lat": null,
+    "exit_lon": null,
+    "lat": null,
+    "lon": null,
+    "garmin_id": "23462781107"
+  },
+  {
+    "num": 60,
+    "garmin_dive_number": 10,
+    "date": "2026-07-03",
+    "location": "Chaikou, Taiwan",
+    "bottom_time": 50.4,
+    "max_depth": 15.3,
+    "avg_depth": 10.4,
+    "water_temp": 29.0,
+    "gas": "Air",
+    "avg_hr": 84,
+    "entry_lat": null,
+    "entry_lon": null,
+    "exit_lat": 22.6778,
+    "exit_lon": 121.4806,
+    "lat": 22.6778,
+    "lon": 121.4806,
+    "garmin_id": "23464269386"
   }
 ]
