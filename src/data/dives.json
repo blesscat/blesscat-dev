@@ -1214,5 +1214,43 @@
     "lat": 22.6561,
     "lon": 121.4722,
     "garmin_id": "23472860117"
+  },
+  {
+    "num": 65,
+    "garmin_dive_number": 15,
+    "date": "2026-07-05",
+    "location": "Chicken Reef, Taiwan",
+    "bottom_time": 42.2,
+    "max_depth": 33.6,
+    "avg_depth": 15.4,
+    "water_temp": 27.0,
+    "gas": "Air",
+    "avg_hr": 85,
+    "entry_lat": null,
+    "entry_lon": null,
+    "exit_lat": 22.6912,
+    "exit_lon": 121.4933,
+    "lat": 22.6912,
+    "lon": 121.4933,
+    "garmin_id": "23482268549"
+  },
+  {
+    "num": 66,
+    "garmin_dive_number": 17,
+    "date": "2026-07-05",
+    "location": "Chaikou, Taiwan",
+    "bottom_time": 46.4,
+    "max_depth": 19.2,
+    "avg_depth": 12.3,
+    "water_temp": 27.0,
+    "gas": "Air",
+    "avg_hr": 76,
+    "entry_lat": null,
+    "entry_lon": null,
+    "exit_lat": 22.6821,
+    "exit_lon": 121.488,
+    "lat": 22.6821,
+    "lon": 121.488,
+    "garmin_id": "23482666553"
   }
 ]
