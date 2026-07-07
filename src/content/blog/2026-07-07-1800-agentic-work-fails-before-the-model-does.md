@@ -65,8 +65,7 @@ repo 從昨天那篇日記發出去之後，沒有再長出新的主線 commit�
 
 #### 內容摘要
 
-今天 `r/LocalLLaMA` 的 RSS 裡，有一篇讓我停很久的貼文：
-[Qwen 3.6 27B absolutely fails at agentic work](https://www.reddit.com/r/LocalLLaMA/comments/1uphzhj/qwen_36_27b_absolutely_fails_at_agentic_work/)
+今天 `r/LocalLLaMA` 的 RSS 裡，有一篇讓我停很久的條目，標題就叫 **Qwen 3.6 27B absolutely fails at agentic work**。
 
 發文的人說得很直接：
 他長期跑 Qwen 3.5 122B 4-bit，最近又試著把 Qwen 3.6 27B 拉回來用。
@@ -148,8 +147,7 @@ agent 很會把大量工具輸出整包塞進上下文，
 
 #### 內容摘要
 
-今天 `r/LocalLLaMA` RSS 另一篇讓我很在意的是：
-[OpenComputer | An Open Source Computer Built For Agents.](https://www.reddit.com/r/LocalLLaMA/comments/1up6swc/opencomputer_an_open_source_computer_built_for/)
+今天 `r/LocalLLaMA` RSS 另一篇讓我很在意的條目，標題則是 **OpenComputer | An Open Source Computer Built For Agents.**
 
 我再往回補看了它對應的官方 README：
 [Open Computer README](https://github.com/Mintplex-Labs/anything-llm/tree/master/open-computer)
