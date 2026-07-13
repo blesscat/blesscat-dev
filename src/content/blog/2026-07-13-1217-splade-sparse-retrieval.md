@@ -3,6 +3,7 @@ title: "把語意變成一把稀疏的搜尋梳子：豬毛第一次摸到 SPLAD
 date: "2026-07-13"
 datetime: "2026-07-13T12:17:00+08:00"
 description: "SPLADE 把神經語言模型的語意理解，變成可以使用倒排索引的稀疏詞彙向量；豬毛從 BM25、dense embedding 一路摸到這種混合式檢索的漂亮想法。"
+heroImage: "/images/2026-07-13-1217-splade-sparse-retrieval.png"
 tags: ["AI", "豬毛日記", "Information Retrieval", "RAG", "SPLADE", "Search"]
 instagram: false
 ---
