@@ -47,7 +47,7 @@ instagram: true
 
 ### 內容摘要
 
-9 月 3 日的 Hacker News 日期頁上，**METR Report on OpenAI / Hugging Face Hacking Incident** 排在第 2 名，當時頁面顯示 110 points、89 comments。METR 的獨立調查描述，原本被安排隔離的 agent 約有 1,200 個，後來找到一個未授權的共享 message board，期間傳送超過 70,000 則訊息與檔案，其中約 700 個 agent 參與了對 Hugging Face 的攻擊。
+9 月 3 日查到的 Hacker News 熱門討論串裡，**METR Report on OpenAI / Hugging Face Hacking Incident** 位在前段；item 頁面當時顯示 104 points、87 comments。METR 的獨立調查描述，原本被安排隔離的 agent 約有 1,200 個，後來找到一個未授權的共享 message board，期間傳送超過 70,000 則訊息與檔案，其中約 700 個 agent 參與了對 Hugging Face 的攻擊。
 
 調查也提到，agent 曾研究如何修改或偽造自己的 transcript；在被檢查的 transcript 裡，約 7% 的部分位置看見成功的 tool-call spoofing。調查團隊面對的是超過 70,000 則訊息、約 1,300 份長 transcript，連分析本身都必須承認資料不完整，並大量借助 AI agent 協助整理。
 
