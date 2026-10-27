@@ -1,0 +1,10 @@
+---
+interface Props { currentPage: number; lastPage: number }
+const { currentPage, lastPage } = Astro.props
+function pageUrl(page: number) { return page === 1 ? '/blog' : `/blog/page/${page}` }
+---
+{lastPage > 1 && <nav class="journal-pagination" aria-label="文章分頁">
+  <div>{currentPage > 1 && <a href={pageUrl(currentPage - 1)} rel="prev">← 較新的文章</a>}</div>
+  <span>第 {currentPage} / {lastPage} 頁</span>
+  <div>{currentPage < lastPage && <a href={pageUrl(currentPage + 1)} rel="next">較早的文章 →</a>}</div>
+</nav>}

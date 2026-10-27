@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
+import { topicUrl } from '../../components/journal/content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
@@ -49,45 +50,45 @@ const jsonLd = {
        style="transition-property: width, top; transition-duration: 100ms, 300ms; transition-timing-function: linear, ease;">
   </div>
 
-  <article class="max-w-2xl mx-auto">
+  <article class="reading-column" data-pagefind-body>
+
+    <header class="article-header">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <span class="article-meta">{post.data.date}</span>
+          <span class="article-meta">約 {readMinutes} 分鐘</span>
+        </div>
+        <a href="/blog" class="text-link">← 回到列表</a>
+      </div>
+      <h1 class="article-title">
+        {displayTitle}
+      </h1>
+      {post.data.tags && (
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map(tag => (
+            <a href={topicUrl(tag)} class="article-tag">{tag}</a>
+          ))}
+        </div>
+      )}
+    </header>
 
     {post.data.heroImage && (
       <div class="mb-8 flex justify-center">
         <img
           src={post.data.heroImage}
           alt={post.data.title}
-          class="w-full sm:w-2/3 sm:max-w-md rounded-2xl object-cover shadow-lg"
+          class="article-hero"
         />
       </div>
     )}
 
-    <header class="mb-8 pb-6 border-b border-border">
-      <div class="flex items-center justify-between mb-3">
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-faint">📅 {post.data.date}</span>
-          <span class="text-xs text-faint">⏱ 約 {readMinutes} 分鐘</span>
-        </div>
-        <a href="/blog" class="text-xs text-[#3bd3fd] hover:underline">← 回到列表</a>
-      </div>
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-#000000 leading-snug mb-4">
-        {displayTitle}
-      </h1>
-      {post.data.tags && (
-        <div class="flex flex-wrap gap-2">
-          {post.data.tags.map(tag => (
-            <span class="text-xs text-#84e7a5 bg-tag-bg px-3 py-1 rounded-full">#{tag}</span>
-          ))}
-        </div>
-      )}
-    </header>
-
-    <div class="prose-content leading-relaxed text-prose">
+    <div class="prose-content text-prose">
       <Content />
     </div>
 
-    <div id="remark42" class="remark42-container mt-12 pt-8 border-t border-border"></div>
+    <div data-pagefind-ignore id="remark42" class="remark42-container mt-12 pt-8 border-t border-border"></div>
 
-    <div class="mt-12 pt-8 border-t border-border flex justify-center">
+    <div data-pagefind-ignore class="mt-12 pt-8 border-t border-border flex justify-center">
       <button
         id="copy-link-btn"
         class="bg-transparent border border-border text-muted px-6 py-2 rounded-lg text-[0.88rem] cursor-pointer transition-all hover:border-[#3bd3fd] hover:text-[#3bd3fd]"
@@ -135,7 +136,7 @@ const jsonLd = {
         copyBtn.textContent = '✓ 已複製！'
         setTimeout(() => { copyBtn.textContent = '🔗 複製連結'; }, 1500)
       } catch {
-        copyBtn.textContent = '✓ 已複製！'
+        copyBtn.textContent = '無法複製，請從網址列複製'
         setTimeout(() => { copyBtn.textContent = '🔗 複製連結'; }, 1500)
       }
     })

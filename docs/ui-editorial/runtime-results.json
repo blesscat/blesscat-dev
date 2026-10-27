@@ -1,0 +1,1013 @@
+{
+  "base": "http://localhost:4323",
+  "matrix": [
+    {
+      "page": "home",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "dark",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "dark",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": true,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "light",
+      "width": 320,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "none",
+      "mobileNav": "flex",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    },
+    {
+      "page": "home",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/"
+      ]
+    },
+    {
+      "page": "archive",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/"
+      ]
+    },
+    {
+      "page": "older",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/page/2/"
+      ]
+    },
+    {
+      "page": "article",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/2026-10-26-1815-silent-token-leak/"
+      ]
+    },
+    {
+      "page": "topic",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/blog/tag/4149/"
+      ]
+    },
+    {
+      "page": "dives",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/dives/"
+      ]
+    },
+    {
+      "page": "ski",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/ski/"
+      ]
+    },
+    {
+      "page": "explore",
+      "theme": "light",
+      "width": 769,
+      "overflow": false,
+      "headers": 1,
+      "dark": false,
+      "desktopNav": "flex",
+      "mobileNav": "none",
+      "canonicals": [
+        "https://blog.blesscat.dev/explore/"
+      ]
+    }
+  ],
+  "interactions": [
+    "Inactive back-to-top control is hidden from keyboard navigation; reached focus is onscreen",
+    "Theme toggle persists through real link navigation",
+    "Repeated search shortcut while open preserves trigger focus on Escape",
+    "Pagefind returns 10 real article links; Escape restores focus and modal focus wraps",
+    "Real topic AI lists 178 articles and opens the original article URL",
+    "Older archive pagination returns to /blog",
+    "Sharing copies the actual article URL; rejected clipboard access shows truthful failure feedback",
+    "Article content, reading progress, comments container/embed, and sharing control remain present",
+    "/dives: 78 rows; zero-result search, year filter (顯示 18 / 78 筆), Leaflet map, and Chart.js rendering work",
+    "Dive entry/exit mini-map opens/closes and depth curve panel expands",
+    "/ski: 19 rows; zero-result search, year filter (顯示 1 / 19 筆), Leaflet map, and Chart.js rendering work",
+    "Explore Leaflet map, dive layer toggle, and year slider update without losing controls"
+  ],
+  "externalFailures": [
+    {
+      "url": "https://remark42.blesscat.dev/web/iframe.html?host=https%3A%2F%2Fremark42.blesscat.dev&site_id=blog&page=http%3A%2F%2Flocalhost%3A4323%2Fblog%2F2026-10-26-1815-silent-token-leak&url=http%3A%2F%2Flocalhost%3A4323%2Fblog%2F2026-10-26-1815-silent-token-leak&theme=dark",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/3/0/3.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/3/0/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/3/5/4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/3/5/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/3/5/3.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/3/0/4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_nolabels/4/12/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_only_labels/4/14/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_only_labels/4/13/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_nolabels/4/12/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_nolabels/4/13/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_nolabels/4/14/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_only_labels/4/13/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_only_labels/4/12/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_only_labels/4/12/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_only_labels/4/14/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_nolabels/4/12/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_only_labels/4/13/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_nolabels/4/13/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_nolabels/4/14/7.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_nolabels/4/13/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_only_labels/4/14/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_nolabels/4/14/6.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_only_labels/4/12/8.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/5/29/12.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/5/28/11.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/5/28/12.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/5/27/12.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/5/27/11.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/5/29/11.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/3/1/4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/3/4/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://a.basemaps.cartocdn.com/dark_all/3/1/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://c.basemaps.cartocdn.com/dark_all/3/4/4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/3/1/3.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://b.basemaps.cartocdn.com/dark_all/3/4/3.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://remark42.blesscat.dev/web/iframe.html?host=https%3A%2F%2Fremark42.blesscat.dev&site_id=blog&page=http%3A%2F%2Flocalhost%3A4323%2Fblog%2F2026-10-26-1815-silent-token-leak&url=http%3A%2F%2Flocalhost%3A4323%2Fblog%2F2026-10-26-1815-silent-token-leak&theme=light",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

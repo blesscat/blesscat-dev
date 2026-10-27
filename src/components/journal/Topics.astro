@@ -1,0 +1,8 @@
+---
+import { topicUrl } from './content'
+interface Props { topics: { tag: string; count: number }[] }
+const { topics } = Astro.props
+---
+<ul class="topic-list">
+  {topics.map(({ tag, count }) => <li><a href={topicUrl(tag)}><span>{tag}</span><span class="topic-count">{count}</span></a></li>)}
+</ul>
