@@ -380,7 +380,7 @@ Blesscat 目前最適合的路線是：
 保留這份設計文件，當作 Stage-2 藍圖。
 
 ### Step 2
-用 `/home/blesscat/doc/blesscat-dev/diary-collector-v2-prompt.md` 當 Collector prompt 初稿。
+用 repo 根目錄的 [`diary-collector-v2-prompt.md`](../../diary-collector-v2-prompt.md) 當 Collector prompt 初稿。
 
 ### Step 3
 再補一份 **Writer prompt v1**：
