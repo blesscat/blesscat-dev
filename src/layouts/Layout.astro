@@ -66,7 +66,7 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   <a class="skip-link" href="#main-content">跳到主要內容</a>
   <header id="top-nav" class="top-nav-bar">
     <nav class="site-nav" aria-label="主要導覽">
-      <a href="/" class="nav-logo"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="" width="32" height="32" /><span>blesscat<span class="brand-dot">.dev</span></span></a>
+      <a href="/" class="nav-logo"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="" width="32" height="32" /><span>毛邊筆記</span></a>
       <ul class="desktop-sections">
         {sections.map(({ href, label }) => <li><a href={href} class="nav-link" aria-current={isCurrentSection(Astro.url.pathname, href) ? 'page' : undefined}>{label}</a></li>)}
       </ul>
