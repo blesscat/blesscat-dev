@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css'
+import '../styles/journal.css'
+import { isCurrentSection } from '../components/journal/content'
 
 export interface Props {
   title: string
@@ -7,6 +9,12 @@ export interface Props {
   ogImage?: string
 }
 const { title, description = 'Diver · Skier · Explorer · Tinkerer', ogImage } = Astro.props
+const sections = [
+  { href: '/blog', label: '日記', icon: '✎' },
+  { href: '/dives', label: '潛水', icon: '≈' },
+  { href: '/ski', label: '滑雪', icon: '△' },
+  { href: '/explore', label: '探索', icon: '◎' },
+]
 const site = 'https://blog.blesscat.dev'
 const pageTitle = title === 'Home' ? 'blesscat.dev' : `${title} · blesscat.dev`
 const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
@@ -54,55 +62,40 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
-<body class="bg-bg text-text min-h-screen font-['Sora',sans-serif]">
-  <nav id="top-nav" class="top-nav-bar z-50 flex items-center justify-between px-4 sm:px-8 py-4 border-b border-border bg-bg/95 backdrop-blur">
-    <a href="/" class="nav-logo text-accent font-bold text-lg no-underline"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="豬毛" /> <span class="nav-brand-text">blesscat.dev</span></a>
-    <div class="flex items-center gap-2">
-      <!-- Dark mode toggle -->
-      <button id="theme-toggle" aria-label="切換深色模式" class="theme-toggle w-9 h-9 flex items-center justify-center rounded-lg border border-border text-muted hover:text-text hover:border-[#84e7a5] transition-all duration-200 cursor-pointer">
-        <span id="theme-icon-moon" class="text-sm">🌙</span>
-        <span id="theme-icon-sun" class="text-sm hidden">☀️</span>
-      </button>
-      <!-- Search trigger -->
-      <button id="search-toggle" aria-label="搜尋文章" class="w-9 h-9 flex items-center justify-center rounded-lg border border-border text-muted hover:text-text hover:border-[#84e7a5] transition-all duration-200 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </button>
-      <ul class="flex gap-3 sm:gap-8 list-none">
-      <li><a href="/dives" class="nav-link text-muted text-sm hover:text-text transition-colors no-underline"><span class="nav-icon">🤿</span><span class="nav-text"> 潛水</span></a></li>
-      <li><a href="/ski" class="nav-link text-muted text-sm hover:text-text transition-colors no-underline"><span class="nav-icon">⛷️</span><span class="nav-text"> 滑雪</span></a></li>
-      <li><a href="/explore" class="nav-link text-muted text-sm hover:text-text transition-colors no-underline"><span class="nav-icon">🌏</span><span class="nav-text"> 探索</span></a></li>
-      <li><a href="/blog" class="nav-link text-muted text-sm hover:text-text transition-colors no-underline"><span class="nav-icon">📝</span><span class="nav-text"> 日記</span></a></li>
-    </ul>
-    </div>
-  </nav>
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+<body class="bg-bg text-text min-h-screen">
+  <a class="skip-link" href="#main-content">跳到主要內容</a>
+  <header id="top-nav" class="top-nav-bar">
+    <nav class="site-nav" aria-label="主要導覽">
+      <a href="/" class="nav-logo"><img src="/zhumao-avatar.jpg" class="nav-avatar" alt="" width="32" height="32" /><span>blesscat<span class="brand-dot">.dev</span></span></a>
+      <ul class="desktop-sections">
+        {sections.map(({ href, label }) => <li><a href={href} class="nav-link" aria-current={isCurrentSection(Astro.url.pathname, href) ? 'page' : undefined}>{label}</a></li>)}
+      </ul>
+      <div class="nav-tools">
+        <button id="search-toggle" aria-label="搜尋文章" class="nav-tool">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="7.5"/><path d="m16.5 16.5 4.5 4.5"/></svg>
+        </button>
+        <button id="theme-toggle" aria-label="切換深色模式" class="nav-tool">
+          <span id="theme-icon-moon" aria-hidden="true">◐</span>
+          <span id="theme-icon-sun" aria-hidden="true" class="hidden">◑</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+  <main id="main-content" class="site-main" tabindex="-1">
     <slot />
   </main>
-  <nav class="bottom-tab-bar">
-    <a href="/" class="tab-item" data-path="/">
-      <span class="tab-icon">🏠</span>
-      <span class="tab-label">首頁</span>
-    </a>
-    <a href="/dives" class="tab-item" data-path="/dives">
-      <span class="tab-icon">🤿</span>
-      <span class="tab-label">潛水</span>
-    </a>
-    <a href="/ski" class="tab-item" data-path="/ski">
-      <span class="tab-icon">⛷️</span>
-      <span class="tab-label">滑雪</span>
-    </a>
-    <a href="/explore" class="tab-item" data-path="/explore">
-      <span class="tab-icon">🌏</span>
-      <span class="tab-label">探索</span>
-    </a>
-    <a href="/blog" class="tab-item" data-path="/blog">
-      <span class="tab-icon">📝</span>
-      <span class="tab-label">日記</span>
-    </a>
+  <footer class="site-footer">
+    <a href="/" class="footer-brand">blesscat.dev</a>
+    <p>寫下踩過的坑，也記下沿途的風景。</p>
+    <a href="/rss.xml">訂閱 RSS ↗</a>
+  </footer>
+  <nav class="bottom-tab-bar" aria-label="行動版主要導覽">
+    <a href="/" class="tab-item" data-path="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}><span class="tab-icon" aria-hidden="true">⌂</span><span class="tab-label">首頁</span></a>
+    {sections.map(({ href, label, icon }) => <a href={href} class="tab-item" data-path={href} aria-current={isCurrentSection(Astro.url.pathname, href) ? 'page' : undefined}><span class="tab-icon" aria-hidden="true">{icon}</span><span class="tab-label">{label}</span></a>)}
   </nav>
 
   <!-- 豬毛探頭 -->
-  <div id="zhumao-peek" title="回到頂部 ↑" aria-label="回到頂部"><img src="/zhumao-avatar.jpg" alt="豬毛" class="peek-avatar" /></div>
+  <button type="button" id="zhumao-peek" title="回到頂部 ↑" aria-label="回到頂部"><img src="/zhumao-avatar.jpg" alt="豬毛" class="peek-avatar" /></button>
 
   <!-- Pagefind search modal -->
   <div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="搜尋文章" style="display:none;">
@@ -123,8 +116,11 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
       var closeBtn = document.getElementById('search-close');
       var pagefind = null;
       var debounceTimer = null;
+      var previousFocus = null;
 
       function openModal() {
+        if (modal.style.display !== 'none') return;
+        previousFocus = document.activeElement;
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         setTimeout(function() { input.focus(); }, 50);
@@ -135,6 +131,7 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
         document.body.style.overflow = '';
         input.value = '';
         results.innerHTML = '';
+        if (previousFocus) previousFocus.focus();
       }
 
       document.getElementById('search-toggle').addEventListener('click', openModal);
@@ -142,6 +139,13 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
       modal.querySelector('.search-backdrop').addEventListener('click', closeModal);
 
       document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab' && modal.style.display !== 'none') {
+          var focusable = Array.from(modal.querySelectorAll('input, button, a[href]'));
+          var first = focusable[0];
+          var last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
         if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
           e.preventDefault();
           openModal();
@@ -171,7 +175,11 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
         var res = await pf.search(q);
         var data = await Promise.all(res.results.slice(0, 10).map(function(r) { return r.data(); }));
         if (data.length === 0) {
-          results.innerHTML = '<div class="search-empty">找不到「' + q + '」的結果</div>';
+          results.innerHTML = '';
+          var empty = document.createElement('p');
+          empty.className = 'search-empty';
+          empty.textContent = '找不到「' + q + '」的結果';
+          results.appendChild(empty);
           return;
         }
         results.innerHTML = data.map(function(item) {
@@ -186,173 +194,7 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 </body>
 </html>
 
-<style>
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    white-space: nowrap;
-    color: #000000;
-    font-weight: 600;
-  }
-  .nav-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #84e7a5;
-    flex-shrink: 0;
-  }
-  .peek-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2.5px solid #84e7a5;
-    box-shadow: -3px 4px 0px rgba(0,0,0,0.12);
-    display: block;
-  }
 
-  /* 手機版：隱藏文字，只留 emoji */
-  @media (max-width: 480px) {
-    .nav-brand-text { display: none; }
-    .nav-text { display: none; }
-    .nav-icon { font-size: 1.1rem; }
-  }
-
-  /* Desktop: sticky，z-index 要高過 Leaflet（預設最高 ~1000） */
-  .top-nav-bar {
-    position: sticky;
-    top: 0;
-    z-index: 1100;
-    background: rgba(250,249,247,0.95);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid #dad4c8;
-  }
-
-  /* 手機版：fixed + transform，transform 才能正常作用 */
-  @media (max-width: 768px) {
-    .top-nav-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1100;
-      transition: transform 0.3s ease;
-    }
-    .top-nav-bar.nav-hidden {
-      transform: translateY(-100%);
-      pointer-events: none;
-    }
-    /* 補上 header 佔位，避免內容被遮 */
-    body {
-      padding-top: 57px;
-    }
-  }
-
-  /* ── 豬毛探頭 ── */
-  #zhumao-peek {
-    position: fixed;
-    bottom: -60px;
-    right: 24px;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 999;
-    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: swing 2.5s ease-in-out infinite;
-    user-select: none;
-  }
-  #zhumao-peek.peeking {
-    bottom: 16px;
-  }
-  #zhumao-peek.peeking.has-tabbar {
-    bottom: 80px;
-  }
-  #zhumao-peek:hover {
-    transform: rotateZ(-6deg) scale(1.05);
-  }
-  #zhumao-peek::after {
-    content: '回到頂部 ↑';
-    position: absolute;
-    bottom: 110%;
-    right: 0;
-    background: #ffffff;
-    border: 1px solid #dad4c8;
-    color: #55534e;
-    font-size: 0.75rem;
-    padding: 0.3rem 0.6rem;
-    border-radius: 8px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    font-family: 'Sora', sans-serif;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  #zhumao-peek:hover::after {
-    opacity: 1;
-  }
-
-  /* Bottom tab bar */
-  .bottom-tab-bar {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    .bottom-tab-bar {
-      display: flex;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: #ffffff;
-      border-top: 1px solid #dad4c8;
-      height: 60px;
-      align-items: stretch;
-      box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
-    }
-
-    main {
-      padding-bottom: 70px;
-    }
-  }
-
-  .tab-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    text-decoration: none;
-    color: #9f9b93;
-    font-size: 0.65rem;
-    transition: color 0.2s, transform 0.2s;
-  }
-
-  .tab-item.active,
-  .tab-item:hover {
-    color: #000000;
-    transform: translateY(-2px);
-  }
-
-  .tab-icon {
-    font-size: 1.3rem;
-    line-height: 1;
-  }
-
-  .tab-label {
-    line-height: 1;
-  }
-
-  @keyframes swing {
-    0%, 100% { transform: rotateZ(0deg); }
-    30%       { transform: rotateZ(-2deg); }
-    70%       { transform: rotateZ(2deg); }
-  }
-</style>
 
 <script>
   // ── Dark mode toggle ──
@@ -365,13 +207,15 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
 
     function applyTheme(dark: boolean) {
       html.classList.toggle('dark', dark)
-      moon.classList.toggle('hidden', dark)
-      sun.classList.toggle('hidden', !dark)
-      localStorage.setItem('theme', dark ? 'dark' : 'light')
+      moon?.classList.toggle('hidden', dark)
+      sun?.classList.toggle('hidden', !dark)
+      btn?.setAttribute('aria-label', dark ? '切換淺色模式' : '切換深色模式')
+      try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch {}
     }
 
     // Init from localStorage or system preference; default to dark
-    const saved = localStorage.getItem('theme')
+    let saved: string | null = null
+    try { saved = localStorage.getItem('theme') } catch {}
     // Dark unless user explicitly chose light
     applyTheme(saved !== 'light')
 
@@ -407,29 +251,6 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
     }
   })
 
-  // 手機版 header 捲動淡出
-  function initNavHide() {
-    const nav = document.getElementById('top-nav')
-    if (!nav || window.innerWidth > 768) return
-    let lastY = 0
-    let ticking = false
-    window.addEventListener('scroll', () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(() => {
-        const y = window.scrollY
-        // 往下捲超過 60px 才隱藏，往上捲立即顯示
-        if (y > lastY && y > 60) {
-          nav.classList.add('nav-hidden')
-        } else {
-          nav.classList.remove('nav-hidden')
-        }
-        lastY = y
-        ticking = false
-      })
-    }, { passive: true })
-  }
-  initNavHide()
 
   // 豬毛探頭
   function initPeekCat() {
@@ -464,100 +285,3 @@ const ogImageUrl = ogImage ? `${site}${ogImage}` : `${site}/og/index.png`
   }
   initPeekCat()
 </script>
-
-<style>
-  /* ── Search Modal ── */
-  .search-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 10vh;
-  }
-  .search-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
-  }
-  .search-panel {
-    position: relative;
-    width: 90%;
-    max-width: 600px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.2);
-    overflow: hidden;
-  }
-  .search-header {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #dad4c8;
-    gap: 0.5rem;
-  }
-  #search-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 1.1rem;
-    font-family: 'Sora', sans-serif;
-    background: transparent;
-    color: #1c1917;
-  }
-  #search-input::placeholder { color: #9f9b93; }
-  #search-close {
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    color: #9f9b93;
-    cursor: pointer;
-    padding: 0.25rem 0.5rem;
-  }
-  #search-close:hover { color: #1c1917; }
-  .search-results {
-    max-height: 60vh;
-    overflow-y: auto;
-    padding: 0.5rem;
-  }
-  .search-result {
-    display: block;
-    padding: 0.75rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s;
-  }
-  .search-result:hover { background: #f5f4f0; }
-  .search-result-title {
-    font-weight: 600;
-    color: #1c1917;
-    margin-bottom: 0.25rem;
-  }
-  .search-result-excerpt {
-    font-size: 0.875rem;
-    color: #6b6560;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .search-empty {
-    padding: 2rem;
-    text-align: center;
-    color: #9f9b93;
-  }
-
-  /* dark mode */
-  :global(.dark) .search-panel { background: #1c1917; border-color: #2c2926; }
-  :global(.dark) .search-header { border-color: #2c2926; }
-  :global(.dark) #search-input { color: #f5f4f0; }
-  :global(.dark) #search-input::placeholder { color: #6b6560; }
-  :global(.dark) #search-close { color: #6b6560; }
-  :global(.dark) #search-close:hover { color: #f5f4f0; }
-  :global(.dark) .search-result:hover { background: #2c2926; }
-  :global(.dark) .search-result-title { color: #f5f4f0; }
-  :global(.dark) .search-result-excerpt { color: #9f9b93; }
-</style>

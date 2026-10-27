@@ -1,85 +1,53 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import type { Dive } from '../types/dive'
-import type { Ski } from '../types/ski'
-import divesRaw from '../data/dives.json'
-import skiRaw from '../data/ski.json'
+import PostList from '../components/journal/PostList.astro'
+import Topics from '../components/journal/Topics.astro'
+import { newestFirst, postTitle, postUrl, topicsFor } from '../components/journal/content'
+import { getCollection } from 'astro:content'
+import dives from '../data/dives.json'
+import ski from '../data/ski.json'
 
-const dives = divesRaw as Dive[]
-const ski = skiRaw as Ski[]
-
-const totalDives = dives.length
-const maxDepth = Math.max(...dives.map(d => d.max_depth || 0))
-const totalSkiDays = ski.length
-const maxSpeed = Math.max(...ski.map(d => d.top_speed_kmh || 0))
+const posts = newestFirst(await getCollection('blog'))
+const [featured, ...recent] = posts
+const topics = topicsFor(posts).filter(topic => topic.tag !== '豬毛日記').slice(0, 7)
+const maxDepth = Math.max(...dives.map(dive => dive.max_depth || 0))
 ---
-<Layout title="Home" description="潛水、滑雪、探索、搗鼓 AI — Blesscat 的個人紀錄網站" ogImage="/og/index.png">
-  <div class="grid grid-cols-[1.1fr_1fr] gap-16 items-center min-h-[80vh] relative max-md:grid-cols-1 max-md:gap-10 max-md:min-h-0 max-md:py-8">
+<Layout title="Home" description="豬毛日記：AI Agent 踩坑筆記，與潛水、滑雪的沿途紀錄。" ogImage="/og/index.png">
+  <section class="journal-masthead" aria-labelledby="journal-title">
+    <div class="masthead-top"><span class="eyebrow">A PERSONAL JOURNAL</span><span class="masthead-note">AI · 生活 · 沿途風景</span></div>
+    <h1 id="journal-title">豬毛日記<span class="masthead-mark" aria-hidden="true">＊</span></h1>
+    <div class="masthead-bottom"><p>在螢幕前搗鼓，也往山海走走。<br class="mobile-break" />把值得記住的事，慢慢寫下來。</p><a href="/blog" class="text-link">所有文章 <span aria-hidden="true">↗</span></a></div>
+  </section>
 
-    <!-- 左：簡介 -->
-    <div class="flex flex-col anim-fade-up delay-1">
-      <p class="text-[0.72rem] tracking-[3px] uppercase text-muted border-l-2 border-[#dad4c8] pl-[10px] mb-4 font-medium">
-        Explorer · Since 2024
-      </p>
-      <h1 class="text-[3.8rem] font-black text-text tracking-[-2px] leading-none mb-5 max-md:text-[2.8rem] max-[480px]:text-[2.2rem]">
-        blesscat<span class="text-[#3bd3fd]">.dev</span>
-      </h1>
-      <p class="text-muted text-base leading-[1.75] mb-8">
-        潛過太平洋的珊瑚礁，滑過日本的粉雪斜坡，<br/>
-        順便把 AI agent 搞爆幾次。<br/>
-        這裡是我的探索紀錄。
-      </p>
-      <div class="flex gap-3 flex-wrap max-[480px]:gap-2">
-        <a href="/dives"
-           class="px-6 py-3 bg-[#3bd3fd] text-black rounded-2xl no-underline font-bold text-[0.9rem] transition-all btn-clay max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
-          🤿 潛水紀錄
-        </a>
-        <a href="/ski"
-           class="px-6 py-3 bg-[#84e7a5] text-black rounded-2xl no-underline font-bold text-[0.9rem] transition-all btn-clay max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
-          ⛷️ 滑雪紀錄
-        </a>
-        <a href="/explore"
-           class="px-6 py-3 bg-[#f8cc65] text-black rounded-2xl no-underline font-bold text-[0.9rem] transition-all btn-clay max-[480px]:px-5 max-[480px]:py-[0.65rem] max-[480px]:text-[0.85rem]">
-          🌏 探索地圖
-        </a>
-        <a href="/blog"
-           class="px-6 py-3 bg-surface border-2 border-[#dad4c8] text-[#55534e] dark:text-[#a89e94] rounded-2xl no-underline font-bold text-[0.9rem] transition-all hover:border-[#000] hover:text-black dark:hover:border-[#84e7a5] btn-clay">
-          📝 日記
-        </a>
-      </div>
+  {featured && <section class="cover-story" aria-labelledby="cover-title">
+    <div class="cover-copy">
+      <div class="eyebrow"><span class="accent-dot"></span> 最新一篇 <span class="cover-number">01 / JOURNAL</span></div>
+      <div class="post-meta"><time datetime={featured.data.datetime ?? featured.data.date}>{featured.data.date}</time><span>{featured.data.tags?.slice(1, 3).join(' / ')}</span></div>
+      <h2 id="cover-title"><a href={postUrl(featured)}>{postTitle(featured)}</a></h2>
+      {featured.data.description && <p>{featured.data.description}</p>}
+      <a class="text-link" href={postUrl(featured)}>讀這篇日記 <span aria-hidden="true">↗</span></a>
     </div>
+    {featured.data.heroImage && <a href={postUrl(featured)} class="cover-image" aria-label={`閱讀：${postTitle(featured)}`}><img src={featured.data.heroImage} alt={postTitle(featured)} width="720" height="560" fetchpriority="high" /></a>}
+  </section>}
 
-    <!-- 右：2×2 數字卡 (Clay Bento Grid) -->
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bento-clay p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-2 hover:shadow-[-4px_8px_0px_#dad4c8] anim-fade-up delay-2 cursor-default">
-        <div class="text-xl mb-2">🤿</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#3bd3fd] count-up max-md:text-[1.6rem]"
-             data-target={totalDives} data-decimals="0">{totalDives}</div>
-        <div class="text-[0.72rem] text-subtle uppercase tracking-[1.5px] mt-1">次潛水</div>
-      </div>
-      <div class="bento-clay p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-2 hover:shadow-[-4px_8px_0px_#dad4c8] anim-fade-up delay-3 cursor-default">
-        <div class="text-xl mb-2">▼</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#3bd3fd] count-up max-md:text-[1.6rem]"
-             data-target={maxDepth} data-decimals="1" data-suffix="m">{maxDepth.toFixed(1)}m</div>
-        <div class="text-[0.72rem] text-subtle uppercase tracking-[1.5px] mt-1">最大深度</div>
-      </div>
-      <div class="bento-clay p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-2 hover:shadow-[-4px_8px_0px_#dad4c8] anim-fade-up delay-4 cursor-default">
-        <div class="text-xl mb-2">⛷️</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#84e7a5] count-up max-md:text-[1.6rem]"
-             data-target={totalSkiDays} data-decimals="0">{totalSkiDays}</div>
-        <div class="text-[0.72rem] text-subtle uppercase tracking-[1.5px] mt-1">滑雪天數</div>
-      </div>
-      <div class="bento-clay p-6 flex flex-col gap-1 transition-all duration-250 hover:-translate-y-2 hover:shadow-[-4px_8px_0px_#dad4c8] anim-fade-up delay-5 cursor-default">
-        <div class="text-xl mb-2">⚡</div>
-        <div class="text-[2rem] font-black tracking-[-0.5px] leading-none text-[#84e7a5] count-up max-md:text-[1.6rem]"
-             data-target={maxSpeed} data-decimals="1" data-suffix="km/h">{maxSpeed.toFixed(1)}km/h</div>
-        <div class="text-[0.72rem] text-subtle uppercase tracking-[1.5px] mt-1">最高速度</div>
-      </div>
-    </div>
-
+  <div class="journal-columns">
+    <section aria-labelledby="latest-title">
+      <div class="section-heading"><h2 id="latest-title">最近寫下的</h2><span class="eyebrow">LATEST NOTES</span></div>
+      <PostList posts={recent.slice(0, 5)} />
+      <a class="archive-link" href="/blog">翻閱全部 {posts.length} 篇文章 <span aria-hidden="true">→</span></a>
+    </section>
+    <aside class="journal-sidebar">
+      <section aria-labelledby="topics-title"><div class="section-heading"><h2 id="topics-title">循著主題讀</h2><span class="eyebrow">INDEX</span></div><Topics topics={topics} /></section>
+      <section class="about-note"><img src="/zhumao-avatar.jpg" alt="豬毛" width="56" height="56" loading="lazy" /><span class="eyebrow">MEET THE JOURNAL</span><h2>嗨，這裡是豬毛。</h2><p>AI Agent 的踩坑筆記，和螢幕之外的探索紀錄。每篇日記，都是一次回頭看看。</p><a href="/rss.xml" class="text-link">用 RSS 慢慢追蹤 ↗</a></section>
+    </aside>
   </div>
-</Layout>
 
-<script>
-  import '../scripts/count-up.ts'
-</script>
+  <section class="field-notes" aria-labelledby="field-title">
+    <div class="section-heading"><h2 id="field-title">螢幕之外</h2><span class="eyebrow">FIELD NOTES</span></div>
+    <div class="field-grid">
+      <a href="/dives"><span class="field-number">01 / OCEAN</span><h3>往海裡去 <span>↗</span></h3><p>{dives.length} 次潛水 · 最深 {maxDepth.toFixed(1)} m</p></a>
+      <a href="/ski"><span class="field-number">02 / SNOW</span><h3>往雪山去 <span>↗</span></h3><p>{ski.length} 天滑雪 · 雪場與滑行紀錄</p></a>
+      <a href="/explore"><span class="field-number">03 / ELSEWHERE</span><h3>把足跡攤開 <span>↗</span></h3><p>在地圖上，看看走過的地方</p></a>
+    </div>
+  </section>
+</Layout>

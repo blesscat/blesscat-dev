@@ -1,0 +1,20 @@
+---
+import { postTitle, postUrl, type Post } from './content'
+interface Props { posts: Post[] }
+const { posts } = Astro.props
+---
+<div class="journal-posts">
+  {posts.map(post => (
+    <article class="journal-post">
+      <div class="post-meta"><time datetime={post.data.datetime ?? post.data.date}>{post.data.date}</time><span>{post.data.tags?.slice(0, 2).join(' / ')}</span></div>
+      <div class="post-summary">
+        <div>
+          <h2><a href={postUrl(post)}>{postTitle(post)}</a></h2>
+          {post.data.description && <p>{post.data.description}</p>}
+          <a class="text-link" href={postUrl(post)} aria-label={`閱讀：${postTitle(post)}`}>閱讀文章 <span aria-hidden="true">↗</span></a>
+        </div>
+        {post.data.heroImage && <a class="post-thumbnail" href={postUrl(post)} tabindex="-1" aria-hidden="true"><img src={post.data.heroImage} alt="" width="160" height="120" loading="lazy" /></a>}
+      </div>
+    </article>
+  ))}
+</div>

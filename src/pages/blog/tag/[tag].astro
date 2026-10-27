@@ -1,0 +1,21 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import PageHeader from '../../../components/PageHeader.astro'
+import PostList from '../../../components/journal/PostList.astro'
+import { postsForTopic, topicsFor, topicSlug, type Post } from '../../../components/journal/content'
+import { getCollection } from 'astro:content'
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return topicsFor(posts).map(({ tag }) => ({
+    params: { tag: topicSlug(tag) },
+    props: { tag, posts: postsForTopic(posts, tag) },
+  }))
+}
+interface Props { tag: string; posts: Post[] }
+const { tag, posts } = Astro.props
+---
+<Layout title={`${tag} · 主題日記`} description={`循著 ${tag}，翻閱 ${posts.length} 篇豬毛日記。`}>
+  <PageHeader title={tag} subtitle={`${posts.length} 篇筆記，從最近的一篇開始。`} />
+  <div class="archive-breadcrumb"><a href="/blog">← 所有文章與主題</a><span class="eyebrow">TOPIC INDEX</span></div>
+  <PostList posts={posts} />
+</Layout>
